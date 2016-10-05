@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <object th:include="fragments/meta :: meta" th:remove="tag" />
+    <title th:text="#{view.signin.title}">Sign in</title>
+</head>
+<body>
+<form class="form-narrow form-horizontal login-form" action="/login" method="post"
+      th:action="@{/login}">
+
+    <div class="form-group">
+        <legend class="col-lg-6" th:text="#{signin.form.title}">Please Sign In</legend>
+        <div class="col-lg-4 col-lg-offset-2">
+            <img alt="Brand Image" th:src="@{/resources/images/pms_logo.gif}" />
+        </div>
+    </div>
+    <div class="login-hr"></div>
+    <fieldset>
+        <th:block th:if="${param.error != null}">
+            <div class="form-group">
+                <div th:replace="fragments/alert :: alert (type='danger', message='Sign in error. Please try again.')">Alert
+                </div>
+            </div>
+        </th:block>
+        <div class="form-group">
+
+            <label for="inputEmail" class="col-lg-2 control-label pull-left" th:text="#{signin.form.email}" >User name</label>
+
+            <div class="col-lg-10">
+                <input type="text" class="form-control" id="inputEmail" th:placeholder="#{signin.form.enter.email}" name="username" th:maxlength="40"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword" class="col-lg-2 control-label" th:text="#{signin.form.password}">Password</label>
+
+            <div class="col-lg-10">
+                <input type="password" class="form-control" id="inputPassword" th:placeholder="#{signin.form.enter.password}"
+                       name="password" th:maxlength="20"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-offset-10 col-lg-2">
+                <button type="submit" class="btn btn-default btn-primary pull-right" th:text="#{signin.form.button.signin}">Sign in</button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
+</body>
+</html>

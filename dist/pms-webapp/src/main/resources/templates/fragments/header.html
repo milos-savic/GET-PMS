@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span> <span class="icon-bar">A</span> <span class="icon-bar">B</span> <span
+                    class="icon-bar">C</span>
+            </button>
+            <nav>
+                <div class="navbar-header">
+                    <a class="navbar-brand" th:href="@{/}"> <img alt="Brand" th:src="@{/resources/images/pms_logo_upd.gif}" /></a>
+                    <span class="project-name project-name-check navbar-brand" th:text="#{project.name.check}"></span>
+                </div>
+                <div class="clear"></div>
+                <div class="project-name project-name-solvency" th:text="#{project.name.pms}"></div>
+            </nav>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/workflows}" th:text="#{menu.item.workflows}"></a></li>
+
+                <li><a th:href="@{/webservices}" th:text="#{menu.item.web.services}"></a></li>
+
+                <li class="dropdown"><a th:href="@{/}" data-toggle="dropdown" class="dropdown-toggle"
+                                        th:text="#{menu.item.dictionaries}"><b class="caret"></b></a>
+                    <ul class="dropdown-menu" style="text-align: left">
+                        <li><a th:href="@{/dictionaries}" th:text="#{menu.item.dictionaries.dictionaries}"></a></li>
+                        <li><a th:href="@{/dictionarywf}" th:text="#{menu.item.dictionaries.wfmapping}"></a></li>
+                    </ul></li>
+
+
+                <li class="dropdown"><a th:href="@{/}" data-toggle="dropdown" class="dropdown-toggle" th:text="#{menu.item.logs}"><b
+                        class="caret"></b></a>
+                    <ul class="dropdown-menu" style="text-align: left">
+                        <li><a th:href="@{/useraudit}" th:text="#{menu.item.user.audit}"></a></li>
+                        <li><a th:href="@{/erroraudit}" th:text="#{menu.item.error.audit}"></a></li>
+                        <li><a th:href="@{/engineaudit}" th:text="#{menu.item.workflow.audit}"></a></li>
+                    </ul></li>
+
+                <li><a th:href="@{/userManagement}" th:text="#{menu.item.usermanagement}"></a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <div th:if="${#authentication != null and #authentication.principal != null}" th:remove="tag">
+                    <li><p class="navbar-text" th:text="${#authentication.principal.displayName}" style="margin-bottom: 0"></p></li>
+                    <br />
+                </div>
+                <li><a th:href="@{/logout}" onclick="$('#form').submit();" th:text="#{button.logout}"></a>
+                    <form style="visibility: hidden" id="form" method="post" th:action="@{/logout}"></form></li>
+            </ul>
+
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+</body>
+</html>
