@@ -18,8 +18,6 @@ public class PmsProperties {
 
 	public static class DefaultSystemProperties {
 		private String locale;
-		private String salt;
-		private String password;
 
 		public String getLocale() {
 			return locale;
@@ -27,22 +25,6 @@ public class PmsProperties {
 
 		public void setLocale(String locale) {
 			this.locale = locale;
-		}
-
-		public String getSalt() {
-			return salt;
-		}
-
-		public void setSalt(String salt) {
-			this.salt = salt;
-		}
-
-		public String getPassword() {
-			return password;
-		}
-
-		public void setPassword(String password) {
-			this.password = password;
 		}
 	}
 
