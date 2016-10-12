@@ -1,5 +1,6 @@
 package by.get.pms.security;
 
+import by.get.pms.dataaccess.UserAccountRepository;
 import by.get.pms.model.Role;
 import by.get.pms.model.UserAccount;
 import org.apache.commons.logging.Log;

@@ -13,7 +13,8 @@ import java.util.Set;
 @Table(name = "useraccount")
 public class UserAccount {
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	// Why not @OneTOne
+	@ManyToOne
 	@JoinColumn(name = "fk_user", unique = true, nullable = false)
 	private User user;
 
