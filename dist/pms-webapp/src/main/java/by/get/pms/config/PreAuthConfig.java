@@ -22,7 +22,7 @@ public class PreAuthConfig {
 
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
-		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, "ApplicationSecurityContextHolderStrategy");
+		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, "by.get.pms.security.ApplicationSecurityContextHolderStrategy");
 
 		final ApplicationAuthenticationProvider preAuthenticationProvider = new ApplicationAuthenticationProvider();
 		preAuthenticationProvider.setPreAuthenticatedUserDetailsService(userDetailsServiceWrapper());

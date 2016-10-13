@@ -16,16 +16,22 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "pms", ignoreUnknownFields = false)
 public class PmsProperties {
 
-	public static class DefaultSystemProperties {
-		private String locale;
+    private final DefaultSystemProperties defaultSystemProperties = new DefaultSystemProperties();
 
-		public String getLocale() {
-			return locale;
-		}
+    public DefaultSystemProperties getDefaultSystemProperties() {
+        return defaultSystemProperties;
+    }
 
-		public void setLocale(String locale) {
-			this.locale = locale;
-		}
-	}
+    public static class DefaultSystemProperties {
+        private String locale;
+
+        public String getLocale() {
+            return locale;
+        }
+
+        public void setLocale(String locale) {
+            this.locale = locale;
+        }
+    }
 
 }
