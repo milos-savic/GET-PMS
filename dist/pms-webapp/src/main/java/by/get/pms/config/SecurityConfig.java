@@ -49,9 +49,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private AuthenticationProvider authenticationProvider;
 
-	@Autowired
-	Http403ForbiddenEntryPoint ajaxAuthEntryPoint;
-
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 
@@ -110,8 +107,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
+	public Http403ForbiddenEntryPoint ajaxAuthEntryPoint(){
+		return new Http403ForbiddenEntryPoint();
+	}
+
+	@Bean
 	public ExceptionTranslationFilter ajaxAuthExceptionTranslationFilter() {
-		return new AjaxAuthExceptionTranslationFilter(ajaxAuthEntryPoint);
+		return new AjaxAuthExceptionTranslationFilter(ajaxAuthEntryPoint());
 	}
 
 	@Bean
