@@ -11,14 +11,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
-import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
@@ -27,7 +22,6 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticat
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
-import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
@@ -47,7 +41,7 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableOAuth2Client
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	OAuth2ClientContext oauth2ClientContext;
@@ -61,17 +55,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 
-		http
-				.antMatcher("/**").authorizeRequests().antMatchers("/signin", "/h2console/**", "/favicon.ico", "/resources/**").permitAll().anyRequest().authenticated()
-				.and()
-				.exceptionHandling()
-				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(WebConstants.SIGNIN_PAGE))
-				.and().logout().logoutSuccessUrl(WebConstants.SIGNIN_PAGE).permitAll()
-				.and()
-				.csrf().disable()
-				.headers().frameOptions().disable()
-				.and()
-				.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
+		http.antMatcher("/**").authorizeRequests()
+				.antMatchers("/signin", "/h2console/**", "/favicon.ico", "/resources/**").permitAll().anyRequest()
+				.authenticated().and().exceptionHandling()
+				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(WebConstants.SIGNIN_PAGE)).and().logout()
+				.logoutSuccessUrl(WebConstants.SIGNIN_PAGE).permitAll().and().csrf().disable().headers().frameOptions()
+				.disable().and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
 				.addFilterAfter(preAuthFilter(), RequestHeaderAuthenticationFilter.class)
 				.addFilterAfter(ajaxAuthExceptionTranslationFilter(), ExceptionTranslationFilter.class);
 	}
@@ -94,8 +83,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(path);
 		OAuth2RestTemplate template = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
 		filter.setRestTemplate(template);
-		filter.setTokenServices(new UserInfoTokenServices(
-				client.getResource().getUserInfoUri(), client.getClient().getClientId()));
+		filter.setTokenServices(
+				new UserInfoTokenServices(client.getResource().getUserInfoUri(), client.getClient().getClientId()));
 		return filter;
 	}
 
@@ -121,7 +110,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	}
 
 	@Bean
-	public ExceptionTranslationFilter ajaxAuthExceptionTranslationFilter(){
+	public ExceptionTranslationFilter ajaxAuthExceptionTranslationFilter() {
 		return new AjaxAuthExceptionTranslationFilter(ajaxAuthEntryPoint);
 	}
 
@@ -130,15 +119,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		PreAuthRequestHeaderAuthenticationFilter filter = new PreAuthRequestHeaderAuthenticationFilter();
 		filter.setAuthenticationManager(authenticationManager());
 		return filter;
-	}
-
-
-	@EnableGlobalMethodSecurity(prePostEnabled = true)
-	private static class GlobalSecurityConfiguration extends GlobalMethodSecurityConfiguration {
-		@Override
-		protected MethodSecurityExpressionHandler createExpressionHandler() {
-			return new OAuth2MethodSecurityExpressionHandler();
-		}
 	}
 
 	// storing the Security Context between requests into HTTP Session
