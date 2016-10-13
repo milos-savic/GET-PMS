@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -29,6 +30,7 @@ import java.util.Locale;
 
 @Configuration
 @ComponentScan
+@EnableAutoConfiguration
 @EnableConfigurationProperties({PmsProperties.class, LiquibaseProperties.class })
 public class PmsApplication extends SpringBootServletInitializer{
 
