@@ -12,19 +12,19 @@ import java.util.List;
 @Table(name = "role")
 public class Role extends PersistentEntity {
 
-	@Column(name = "name_", nullable = false)
+	@Column(name = "name", nullable = false)
 	private String name;
 
-	@Column(name = "description_")
+	@Column(name = "description")
 	private String description;
 
 	@ManyToOne
-	@JoinColumn(name = "fk_roletype", nullable = false)
+	@JoinColumn(name = "roletype", nullable = false)
 	private RoleType roleType;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
 			CascadeType.MERGE }, targetEntity = UserAccount.class)
-	@JoinTable(name = "userrole", joinColumns = @JoinColumn(name = "fk_role"), inverseJoinColumns = @JoinColumn(name = "fk_useraccount"))
+	@JoinTable(name = "userrole", joinColumns = @JoinColumn(name = "role"), inverseJoinColumns = @JoinColumn(name = "useraccount"))
 	private List<UserAccount> userAccounts = new ArrayList<UserAccount>();
 
 	public String getName() {

@@ -12,14 +12,14 @@ import java.util.List;
 @Table(name = "user")
 public class User extends PersistentEntity {
 
-	@Column(name = "firstname_", nullable = false)
+	@Column(name = "firstname", nullable = false)
 	private String firstName;
 
-	@Column(name = "middlename_")
-	private String middleName;
-
-	@Column(name = "lastname_", nullable = false)
+	@Column(name = "lastname", nullable = false)
 	private String lastName;
+
+	@Column(name = "email")
+	private String email;
 
 	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "user")
 	private List<UserAccount> userAccounts = new ArrayList<>();
@@ -40,12 +40,12 @@ public class User extends PersistentEntity {
 		this.lastName = lastName;
 	}
 
-	public String getMiddleName() {
-		return middleName;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setMiddleName(String middleName) {
-		this.middleName = middleName;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getFirstName() {

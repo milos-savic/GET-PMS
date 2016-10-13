@@ -11,26 +11,25 @@ import java.util.Set;
 
 @Entity
 @Table(name = "useraccount")
-public class UserAccount {
+public class UserAccount extends PersistentEntity {
 
-	// Why not @OneTOne
-	@ManyToOne
-	@JoinColumn(name = "fk_user", unique = true, nullable = false)
+	@OneToOne
+	@JoinColumn(name = "user", unique = true, nullable = false)
 	private User user;
 
-	@Column(name = "username_", nullable = false)
+	@Column(name = "username", unique = true, nullable = false)
 	private String username;
 
-	@Column(name = "creationdate_", nullable = false)
+	@Column(name = "creationdate", nullable = false)
 	private Date creationDate;
 
-	@Column(name = "active_", nullable = false)
+	@Column(name = "active", nullable = false)
 	private Character active;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, targetEntity = Role.class)
 	@JoinTable(name = "userrole",
-			joinColumns = @JoinColumn(name = "fk_useraccount"),
-			inverseJoinColumns = @JoinColumn(name = "fk_role"))
+			joinColumns = @JoinColumn(name = "useraccount"),
+			inverseJoinColumns = @JoinColumn(name = "role"))
 	private Set<Role> roles = new HashSet<>();
 
 	public Set<Role> getRoles() {
