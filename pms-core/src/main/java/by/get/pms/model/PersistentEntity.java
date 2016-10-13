@@ -17,11 +17,11 @@ public class PersistentEntity implements Serializable {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "id_")
+	@Column(name = "id")
 	private long id = -1L;
 
 	@Version
-	@Column(name = "version_")
+	@Column(name = "version")
 	private long version;
 
 	public long getId() {
