@@ -53,8 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 
 		http.antMatcher("/**").authorizeRequests()
-				.antMatchers("/signin", "/h2console/**", "/favicon.ico", "/resources/**").permitAll().anyRequest()
-				.authenticated().and().exceptionHandling()
+				.antMatchers("/signin", "/h2console/**", "/favicon.ico", "/resources/**").permitAll()
+				.anyRequest().authenticated().and().exceptionHandling()
 				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(WebConstants.SIGNIN_PAGE)).and().logout()
 				.logoutSuccessUrl(WebConstants.SIGNIN_PAGE).permitAll().and().csrf().disable().headers().frameOptions()
 				.disable().and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)

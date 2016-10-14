@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+                                       http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <property name="autoIncrement" value="true" dbms="mysql,h2,postgresql,oracle"/>
+
+    <!-- USERS AND ROLES -->
+
+    <!-- ROLETYPE -->
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-100">
+        <createTable tableName="ROLETYPE">
+            <column autoIncrement="true" name="ID" type="BIGINT(19)">
+                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_1"/>
+            </column>
+            <column name="CODE" type="VARCHAR(20)"/>
+            <column name="NAME" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="VARCHAR(255)"/>
+            <column name="VERSION" type="BIGINT(19)"/>
+        </createTable>
+    </changeSet>
+
+
+    <!-- ROLE -->
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-101">
+        <createTable tableName="ROLE">
+            <column autoIncrement="true" name="ID" type="BIGINT(19)">
+                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_2"/>
+            </column>
+            <column name="NAME" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="VARCHAR(255)"/>
+            <column name="ROLETYPE" type="BIGINT(19)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="BIGINT(19)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-11">
+        <addForeignKeyConstraint baseColumnNames="ROLETYPE" baseTableName="ROLE"
+                                 constraintName="ROLE_ROLETYPE_FK" deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="ID" referencedTableName="ROLETYPE"/>
+    </changeSet>
+
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-9">
+        <createIndex indexName="ROLE_ROLETYPE_IDX" tableName="ROLE">
+            <column name="ROLETYPE"/>
+        </createIndex>
+    </changeSet>
+
+
+    <!-- USER -->
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-102">
+        <createTable tableName="USER">
+            <column autoIncrement="true" name="ID" type="BIGINT(19)">
+                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_27"/>
+            </column>
+            <column name="FIRSTNAME" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LASTNAME" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EMAIL" type="VARCHAR(30)"/>
+            <column name="VERSION" type="BIGINT(19)"/>
+        </createTable>
+    </changeSet>
+
+
+    <!-- USERACCOUNT -->
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-103">
+        <createTable tableName="USERACCOUNT">
+            <column autoIncrement="true" name="ID" type="BIGINT(19)">
+                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_C"/>
+            </column>
+            <column name="USERNAME" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ACTIVE" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATIONDATE" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USER" type="BIGINT(19)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="BIGINT(19)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-7">
+        <addUniqueConstraint columnNames="USERNAME" constraintName="USERACCOUNT_USERNAME_UQ" tableName="USERACCOUNT"/>
+    </changeSet>
+
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-8">
+        <addUniqueConstraint columnNames="USER" constraintName="USERACCOUNT_USER_UQ" tableName="USERACCOUNT"/>
+    </changeSet>
+
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-13">
+        <addForeignKeyConstraint baseColumnNames="USER" baseTableName="USERACCOUNT" constraintName="USERACCOUNT_USER_FK"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="ID" referencedTableName="USER"/>
+    </changeSet>
+
+
+    <!-- USERACCOUNT -->
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-104">
+        <createTable tableName="USERROLE">
+            <column name="USERACCOUNT" type="BIGINT(19)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ROLE" type="BIGINT(19)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-105">
+        <addPrimaryKey columnNames="USERACCOUNT, ROLE" constraintName="USERROLE_PK" tableName="USERROLE"/>
+    </changeSet>
+
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-12">
+        <addForeignKeyConstraint baseColumnNames="USERACCOUNT" baseTableName="USERROLE" constraintName="USERROLE_USERACCOUNT_FK"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="ID" referencedTableName="USERACCOUNT"/>
+    </changeSet>
+
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-14">
+        <addForeignKeyConstraint baseColumnNames="ROLE" baseTableName="USERROLE" constraintName="USERROLE_ROLE_FK"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="ID" referencedTableName="ROLE"/>
+    </changeSet>
+
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-10">
+        <createIndex indexName="USERROLE_ROLE_IDX" tableName="USERROLE">
+            <column name="ROLE"/>
+        </createIndex>
+    </changeSet>
+
+
+</databaseChangeLog>
