@@ -1,7 +1,8 @@
 package by.get.pms.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,62 +14,77 @@ import java.util.Set;
 @Table(name = "useraccount")
 public class UserAccount extends PersistentEntity {
 
-	@OneToOne
-	@JoinColumn(name = "user", unique = true, nullable = false)
-	private User user;
+    @Column(name = "username", unique = true, nullable = false)
+    private String username;
 
-	@Column(name = "username", unique = true, nullable = false)
-	private String username;
+    @Column(name = "creationdate", nullable = false)
+    private LocalDateTime creationDate;
 
-	@Column(name = "creationdate", nullable = false)
-	private Date creationDate;
+    @Column(name = "active", nullable = false)
+    private Character active;
 
-	@Column(name = "active", nullable = false)
-	private Character active;
+    @OneToOne
+    @JoinColumn(name = "user", unique = true, nullable = false)
+    private User user;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, targetEntity = Role.class)
-	@JoinTable(name = "userrole",
-			joinColumns = @JoinColumn(name = "useraccount"),
-			inverseJoinColumns = @JoinColumn(name = "role"))
-	private Set<Role> roles = new HashSet<>();
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, targetEntity = Role.class)
+    @JoinTable(name = "userrole",
+            joinColumns = @JoinColumn(name = "useraccount"),
+            inverseJoinColumns = @JoinColumn(name = "role"))
+    private Set<Role> roles = new HashSet<>();
 
-	public Set<Role> getRoles() {
-		return roles;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setCreationDate(LocalDateTime startDate) {
+        this.creationDate = startDate;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public Character getActive() {
+        return active;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setActive(Character enabled) {
+        this.active = enabled;
+    }
 
-	public Date getCreationDate() {
-		return creationDate;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public void setCreationDate(Date startDate) {
-		this.creationDate = startDate;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public Character getActive() {
-		return active;
-	}
+    public Set<Role> getRoles() {
+        return roles;
+    }
 
-	public void setActive(Character enabled) {
-		this.active = enabled;
-	}
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public Serializable getIdentifier() {
+        return username;
+    }
+
+    @Override
+    public String toString() {
+        return "UserAccount{" +
+                "id= " + getId() + '\'' +
+                "username='" + username + '\'' +
+                ", creationDate=" + creationDate +
+                ", active=" + active +
+                '}';
+    }
 }

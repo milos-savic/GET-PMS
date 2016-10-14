@@ -60,7 +60,13 @@ public class User extends PersistentEntity {
 		return getFirstName() + " " + getLastName();
 	}
 
-	public String toString() {
-		return "[User id=" + this.getId() + "]";
-	}
+    @Override
+    public String toString() {
+        return "User{" +
+                "id= " + getId() + '\'' +
+                "firstName= '" + firstName + '\'' +
+                ", lastName= '" + lastName + '\'' +
+                ", email= '" + email + '\'' +
+                '}';
+    }
 }

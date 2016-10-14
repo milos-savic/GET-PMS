@@ -1,5 +1,7 @@
 package by.get.pms.model;
 
+import com.google.common.base.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
@@ -11,7 +13,7 @@ import java.io.Serializable;
 @MappedSuperclass
 public class Type<T extends Type> extends PersistentEntity {
 
-	@Column(name = "code")
+	@Column(name = "code", unique = true)
 	private String code = "";
 
 	@Column(name = "name", nullable = false)
@@ -19,6 +21,14 @@ public class Type<T extends Type> extends PersistentEntity {
 
 	@Column(name = "description")
 	private String description;
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
 
 	public String getName() {
 		return name;
@@ -36,17 +46,18 @@ public class Type<T extends Type> extends PersistentEntity {
 		this.description = description;
 	}
 
-	public String getCode() {
-		return code;
-	}
+    @Override
+    public Serializable getIdentifier() {
+        return getCode();
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	@Override
-	public String toString() {
-		return getName();
-	}
-
+    @Override
+    public String toString() {
+        return "Type{" +
+                "id= " + getId() + '\'' +
+                "code= '" + code + '\'' +
+                ", name= '" + name + '\'' +
+                ", description= '" + description + '\'' +
+                '}';
+    }
 }

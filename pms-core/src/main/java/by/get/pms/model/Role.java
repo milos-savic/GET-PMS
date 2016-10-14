@@ -1,6 +1,9 @@
 package by.get.pms.model;
 
+import com.google.common.base.Objects;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +14,9 @@ import java.util.List;
 @Entity
 @Table(name = "role")
 public class Role extends PersistentEntity {
+
+	@Column(name = "code", unique = true, nullable = false)
+	private String code;
 
 	@Column(name = "name", nullable = false)
 	private String name;
@@ -25,7 +31,15 @@ public class Role extends PersistentEntity {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
 			CascadeType.MERGE }, targetEntity = UserAccount.class)
 	@JoinTable(name = "userrole", joinColumns = @JoinColumn(name = "role"), inverseJoinColumns = @JoinColumn(name = "useraccount"))
-	private List<UserAccount> userAccounts = new ArrayList<UserAccount>();
+	private List<UserAccount> userAccounts = new ArrayList<>();
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
 
 	public String getName() {
 		return name;
@@ -58,4 +72,21 @@ public class Role extends PersistentEntity {
 	public void setUserAccounts(List<UserAccount> userAccounts) {
 		this.userAccounts = userAccounts;
 	}
+
+    @Override
+    public Serializable getIdentifier() {
+        return getCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id= " + getId() + '\'' +
+                "code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", roleType=" + roleType +
+                ", userAccounts=" + userAccounts +
+                '}';
+    }
 }
