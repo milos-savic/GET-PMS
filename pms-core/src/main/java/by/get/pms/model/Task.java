@@ -1,6 +1,8 @@
 package by.get.pms.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.time.LocalDate;
 
 /**
@@ -11,12 +13,14 @@ import java.time.LocalDate;
 @Table(name = "task")
 public class Task extends PersistentEntity {
 
-    @Column(name = "name")
+    @Column(name = "name", length = 50)
     private String name;
 
-    @Column(name = "project_status")
-    private ProjectStatus projectStatus = ProjectStatus.NEW;
+    @Column(name = "task_status")
+    private TaskStatus taskStatus = TaskStatus.NEW;
 
+    @Min(0)
+    @Max(100)
     @Column(name = "progress")
     private int progress;
 
@@ -30,8 +34,8 @@ public class Task extends PersistentEntity {
     @JoinColumn(name = "assignee")
     private User assignee;
 
-    @ManyToOne
-    @JoinColumn(name = "project", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "project")
     private Project project;
 
     public String getName() {
@@ -42,12 +46,12 @@ public class Task extends PersistentEntity {
         this.name = name;
     }
 
-    public ProjectStatus getProjectStatus() {
-        return projectStatus;
+    public TaskStatus getTaskStatus() {
+        return taskStatus;
     }
 
-    public void setProjectStatus(ProjectStatus projectStatus) {
-        this.projectStatus = projectStatus;
+    public void setTaskStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
     }
 
     public int getProgress() {
@@ -95,7 +99,7 @@ public class Task extends PersistentEntity {
         return "Task{" +
                 "id= " + getId() + '\'' +
                 "name= '" + name + '\'' +
-                ", projectStatus= " + projectStatus +
+                ", taskStatus= " + taskStatus +
                 ", progress= " + progress +
                 ", deadline= " + deadline +
                 ", description= '" + description + '\'' +

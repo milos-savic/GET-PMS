@@ -14,24 +14,22 @@ import java.util.Set;
 @Table(name = "useraccount")
 public class UserAccount extends PersistentEntity {
 
-    @Column(name = "username", unique = true, nullable = false)
+    @Column(name = "username", unique = true, nullable = false, length = 30)
     private String username;
 
     @Column(name = "creationdate", nullable = false)
     private LocalDateTime creationDate;
 
-    @Column(name = "active", nullable = false)
+    @Column(name = "active", nullable = false, length = 1)
     private Character active;
 
-    @OneToOne
-    @JoinColumn(name = "user", unique = true, nullable = false)
+    @OneToOne(optional = false)
+    @JoinColumn(name = "user")
     private User user;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, targetEntity = Role.class)
-    @JoinTable(name = "userrole",
-            joinColumns = @JoinColumn(name = "useraccount"),
-            inverseJoinColumns = @JoinColumn(name = "role"))
-    private Set<Role> roles = new HashSet<>();
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "role")
+    private Role role;
 
     public String getUsername() {
         return username;
@@ -65,12 +63,12 @@ public class UserAccount extends PersistentEntity {
         this.user = user;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override

@@ -11,9 +11,11 @@
     <changeSet author="Milos.Savic (generated)" id="1476437131769-100">
         <createTable tableName="ROLETYPE">
             <column autoIncrement="true" name="ID" type="BIGINT(19)">
-                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_1"/>
+                <constraints primaryKey="true" primaryKeyName="ROLETYPE_PK"/>
             </column>
-            <column name="CODE" type="VARCHAR(20)"/>
+            <column name="CODE" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
             <column name="NAME" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
@@ -27,7 +29,10 @@
     <changeSet author="Milos.Savic (generated)" id="1476437131769-101">
         <createTable tableName="ROLE">
             <column autoIncrement="true" name="ID" type="BIGINT(19)">
-                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_2"/>
+                <constraints primaryKey="true" primaryKeyName="ROLE_PK"/>
+            </column>
+            <column name="CODE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
             </column>
             <column name="NAME" type="VARCHAR(50)">
                 <constraints nullable="false"/>
@@ -58,25 +63,25 @@
     <changeSet author="Milos.Savic (generated)" id="1476437131769-104">
         <createTable tableName="USER">
             <column autoIncrement="true" name="ID" type="BIGINT(19)">
-                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_27"/>
+                <constraints primaryKey="true" primaryKeyName="USER_PK"/>
             </column>
-            <column name="FIRSTNAME" type="VARCHAR(30)">
+            <column name="FIRSTNAME" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="LASTNAME" type="VARCHAR(30)">
+            <column name="LASTNAME" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="EMAIL" type="VARCHAR(30)"/>
+            <column name="EMAIL" type="VARCHAR(255)"/>
             <column name="VERSION" type="BIGINT(19)"/>
         </createTable>
     </changeSet>
 
 
     <!-- USERACCOUNT -->
-    <changeSet author="Milos.Savic (generated)" id="1476437131769-104">
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-105">
         <createTable tableName="USERACCOUNT">
             <column autoIncrement="true" name="ID" type="BIGINT(19)">
-                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_C"/>
+                <constraints primaryKey="true" primaryKeyName="USERACCOUNT_PK"/>
             </column>
             <column name="USERNAME" type="VARCHAR(30)">
                 <constraints nullable="false"/>
@@ -90,61 +95,128 @@
             <column name="USER" type="BIGINT(19)">
                 <constraints nullable="false"/>
             </column>
+            <column name="ROLE" type="BIGINT(19)">
+                <constraints nullable="false"/>
+            </column>
             <column name="VERSION" type="BIGINT(19)"/>
         </createTable>
     </changeSet>
 
-    <changeSet author="Milos.Savic (generated)" id="1476437131769-105">
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-106">
         <addUniqueConstraint columnNames="USERNAME" constraintName="USERACCOUNT_USERNAME_UQ" tableName="USERACCOUNT"/>
     </changeSet>
 
-    <changeSet author="Milos.Savic (generated)" id="1476437131769-106">
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-107">
         <addUniqueConstraint columnNames="USER" constraintName="USERACCOUNT_USER_UQ" tableName="USERACCOUNT"/>
     </changeSet>
 
-    <changeSet author="Milos.Savic (generated)" id="1476437131769-107">
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-108">
         <addForeignKeyConstraint baseColumnNames="USER" baseTableName="USERACCOUNT" constraintName="USERACCOUNT_USER_FK"
                                  deferrable="false" initiallyDeferred="false"
                                  onDelete="RESTRICT" onUpdate="RESTRICT"
                                  referencedColumnNames="ID" referencedTableName="USER"/>
     </changeSet>
 
-
-    <!-- USERACCOUNT -->
-    <changeSet author="Milos.Savic (generated)" id="1476437131769-108">
-        <createTable tableName="USERROLE">
-            <column name="USERACCOUNT" type="BIGINT(19)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="ROLE" type="BIGINT(19)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-
-    <changeSet author="Milos.Savic (generated)" id="1476437131769-109">
-        <addPrimaryKey columnNames="USERACCOUNT, ROLE" constraintName="USERROLE_PK" tableName="USERROLE"/>
-    </changeSet>
-
-    <changeSet author="Milos.Savic (generated)" id="1476437131769-110">
-        <addForeignKeyConstraint baseColumnNames="USERACCOUNT" baseTableName="USERROLE" constraintName="USERROLE_USERACCOUNT_FK"
-                                 deferrable="false" initiallyDeferred="false"
-                                 onDelete="RESTRICT" onUpdate="RESTRICT"
-                                 referencedColumnNames="ID" referencedTableName="USERACCOUNT"/>
-    </changeSet>
-
-    <changeSet author="Milos.Savic (generated)" id="1476437131769-111">
-        <addForeignKeyConstraint baseColumnNames="ROLE" baseTableName="USERROLE" constraintName="USERROLE_ROLE_FK"
+    <changeSet author="milos (generated)" id="1476657878126-109">
+        <addForeignKeyConstraint baseColumnNames="ROLE" baseTableName="USERACCOUNT" constraintName="USERACCOUNT_ROLE_FK"
                                  deferrable="false" initiallyDeferred="false"
                                  onDelete="RESTRICT" onUpdate="RESTRICT"
                                  referencedColumnNames="ID" referencedTableName="ROLE"/>
     </changeSet>
 
-    <changeSet author="Milos.Savic (generated)" id="1476437131769-112">
-        <createIndex indexName="USERROLE_ROLE_IDX" tableName="USERROLE">
+    <changeSet author="milos (generated)" id="1476657878126-110">
+        <createIndex indexName="USERACCOUNT_ROLE_IDX" tableName="USERACCOUNT">
             <column name="ROLE"/>
         </createIndex>
     </changeSet>
 
+    <!-- END OF USERS AND TASKS -->
+
+
+
+    <!-- PROJECT AND TASKS -->
+    <!-- PROJECT -->
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-200">
+        <createTable tableName="PROJECT">
+            <column autoIncrement="true" name="ID" type="BIGINT(19)">
+                <constraints primaryKey="true" primaryKeyName="PROJECT_PK"/>
+            </column>
+            <column name="CODE" type="VARCHAR(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="VARCHAR(255)"/>
+            <column name="PROJECT_MANAGER" type="BIGINT(19)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="BIGINT(19)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="milos (generated)" id="1476437131769-201">
+        <addUniqueConstraint columnNames="CODE" constraintName="PROJECT_CODE_UQ" tableName="PROJECT"/>
+    </changeSet>
+
+    <changeSet author="milos (generated)" id="1476437131769-202">
+        <addForeignKeyConstraint baseColumnNames="PROJECT_MANAGER" baseTableName="PROJECT" constraintName="PROJECT_PROJECTMANAGER_FK"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="ID" referencedTableName="USER"/>
+    </changeSet>
+
+    <changeSet author="milos (generated)" id="1476437131769-203">
+        <createIndex indexName="PROJECT_PROJECTMANAGER_IDX" tableName="PROJECT">
+            <column name="PROJECT_MANAGER"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- TASK -->
+    <changeSet author="milos (generated)" id="1476437131769-204">
+        <createTable tableName="TASK">
+            <column autoIncrement="true" name="ID" type="BIGINT(19)">
+                <constraints primaryKey="true" primaryKeyName="TASK_PK"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="PROJECT_STATUS" type="INT(10)"/>
+            <column name="PROGRESS" type="INT(10)"/>
+            <column name="DEADLINE" type="DATE"/>
+            <column name="DESCRIPTION" type="VARCHAR(255)"/>
+            <column name="ASSIGNEE" type="BIGINT(19)"/>
+            <column name="PROJECT" type="BIGINT(19)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="VERSION" type="BIGINT(19)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="milos (generated)" id="1476437131769-205">
+        <addForeignKeyConstraint baseColumnNames="ASSIGNEE" baseTableName="TASK" constraintName="FK_NR8XITO928GBAUBR44RQCRG01"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="ID" referencedTableName="USER"/>
+    </changeSet>
+
+    <changeSet author="milos (generated)" id="1476437131769-206">
+        <addForeignKeyConstraint baseColumnNames="PROJECT" baseTableName="TASK" constraintName="FK_RPYOJY5IC4WDHMSG3PAKFWR0D"
+                                 deferrable="false" initiallyDeferred="false"
+                                 onDelete="RESTRICT" onUpdate="RESTRICT"
+                                 referencedColumnNames="ID" referencedTableName="PROJECT"/>
+    </changeSet>
+
+    <changeSet author="milos (generated)" id="1476437131769-207">
+        <createIndex indexName="FK_NR8XITO928GBAUBR44RQCRG01_INDEX_2" tableName="TASK">
+            <column name="ASSIGNEE"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet author="milos (generated)" id="1476437131769-208">
+        <createIndex indexName="FK_RPYOJY5IC4WDHMSG3PAKFWR0D_INDEX_2" tableName="TASK">
+            <column name="PROJECT"/>
+        </createIndex>
+    </changeSet>
+
+    <!-- PROJECT AND TASKS -->
 
 </databaseChangeLog>

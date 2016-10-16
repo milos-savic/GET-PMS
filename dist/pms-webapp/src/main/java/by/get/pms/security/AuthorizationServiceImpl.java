@@ -72,10 +72,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 	public Set<GrantedAuthority> grantAuthorities(UserAccount userAccount) {
 		final Set<GrantedAuthority> granted = new HashSet<GrantedAuthority>();
 
-		final Set<Role> roleList = userAccount.getRoles();
+		final Role currentRole = userAccount.getRole();
 
-		if (!roleList.isEmpty()) {
-			final Role currentRole = roleList.iterator().next();
+		if (currentRole != null) {
 			Application.getInstance().setCredentials(userAccount, currentRole);
 			granted.add(new SimpleGrantedAuthority(currentRole.getRoleType().getCode().toUpperCase()));
 		}

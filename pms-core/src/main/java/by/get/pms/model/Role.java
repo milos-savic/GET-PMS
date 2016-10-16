@@ -15,22 +15,20 @@ import java.util.List;
 @Table(name = "role")
 public class Role extends PersistentEntity {
 
-	@Column(name = "code", unique = true, nullable = false)
+	@Column(name = "code", unique = true, nullable = false, length = 30)
 	private String code;
 
-	@Column(name = "name", nullable = false)
+	@Column(name = "name", nullable = false, length = 50)
 	private String name;
 
 	@Column(name = "description")
 	private String description;
 
-	@ManyToOne
-	@JoinColumn(name = "roletype", nullable = false)
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "roletype")
 	private RoleType roleType;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST,
-			CascadeType.MERGE }, targetEntity = UserAccount.class)
-	@JoinTable(name = "userrole", joinColumns = @JoinColumn(name = "role"), inverseJoinColumns = @JoinColumn(name = "useraccount"))
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
 	private List<UserAccount> userAccounts = new ArrayList<>();
 
 	public String getCode() {

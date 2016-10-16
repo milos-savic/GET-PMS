@@ -1,8 +1,6 @@
 package by.get.pms.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -13,14 +11,18 @@ import java.io.Serializable;
 @Table(name = "project")
 public class Project extends PersistentEntity {
 
-    @Column(name = "code", unique = true, nullable = false)
+    @Column(name = "code", unique = true, nullable = false, length = 30)
     private String code;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
 
     @Column(name = "description")
     private String description;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "project_manager")
+    private User projectManager;
 
     public String getCode() {
         return code;
@@ -44,6 +46,14 @@ public class Project extends PersistentEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public User getProjectManager() {
+        return projectManager;
+    }
+
+    public void setProjectManager(User projectManager) {
+        this.projectManager = projectManager;
     }
 
     @Override

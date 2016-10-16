@@ -1,0 +1,55 @@
+# Setting up the development environment
+
+Install the following:
+
+* Oracle Java SDK 1.8
+* Maven 3.3.9 and higher
+
+You can use any IDE that has support for maven.
+
+## Build & start webapp
+
+See README.md
+
+## Dependencies
+
+All Maven repositories and dependencies should be declared in dependencies/pom.xml. The idea is to have a central place
+where dependency versions are specified instead of them being scattered accross many pom's.
+Any terminal (leaf) maven module should have its parent set to the dependencies module, e.g. for commons module we have:
+
+    <parent>
+        <groupId>by.get.pms</groupId>
+        <artifactId>dependencies</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../../dependencies/pom.xml</relativePath>
+    </parent>
+
+Dependency declarations in all maven modules (other than dependencies) should not contain <version> element.
+
+### Database setup
+
+1. Initial database file (tables without any data) creation should be done with Hibernate (from @Entity classes).
+   Configuration:
+   liquibase.enabled=false
+   spring.jpa.generate-ddl=true
+   spring.jpa.hibernate.ddl-auto=create-drop
+
+   Build & start webapp
+
+   Database file: ~/h2db/pms
+
+   This procedure should be repeated every time we add new entity.
+
+2. Creation of Liquibase DDL script (changelog.xml) based on database file.
+   cd GET-PMS
+   mvn infrastructure/liquibase liquibase:generateChangeLog
+
+   Copy from console output parts related to new entities.
+
+3. Starting database with liquibase:
+   Configuration:
+   liquibase.enabled=true
+   spring.jpa.generate-ddl=false
+   spring.jpa.hibernate.ddl-auto=none
+
+   Build & start webapp

@@ -13,10 +13,10 @@ import java.io.Serializable;
 @MappedSuperclass
 public class Type<T extends Type> extends PersistentEntity {
 
-	@Column(name = "code", unique = true)
+	@Column(name = "code", nullable = false, unique = true, length = 30)
 	private String code = "";
 
-	@Column(name = "name", nullable = false)
+	@Column(name = "name", nullable = false, length = 50)
 	private String name;
 
 	@Column(name = "description")

@@ -47,7 +47,7 @@ public class SpringJpaConfig {
 		LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
 		emf.setDataSource(dataSource);
 		emf.setJpaVendorAdapter(jpaVendorAdapter);
-		emf.setPackagesToScan("by.get.pms.model");
+		emf.setPackagesToScan("by.get.pms.model", "by.get.pms.utility.jpaconverters");
 		emf.setPersistenceUnitName("default"); // <- giving 'default' as name
 		emf.afterPropertiesSet();
 		return emf;
