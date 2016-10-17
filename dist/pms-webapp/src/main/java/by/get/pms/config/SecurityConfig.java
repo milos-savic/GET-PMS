@@ -1,7 +1,6 @@
 package by.get.pms.config;
 
 import by.get.pms.security.AjaxAuthExceptionTranslationFilter;
-import by.get.pms.security.PreAuthRequestHeaderAuthenticationFilter;
 import by.get.pms.web.controller.WebConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
@@ -11,6 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -52,14 +52,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 
-		http.antMatcher("/**").authorizeRequests()
-				.antMatchers("/signin", "/h2console/**", "/favicon.ico", "/resources/**").permitAll()
-				.anyRequest().authenticated().and().exceptionHandling()
-				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(WebConstants.SIGNIN_PAGE)).and().logout()
-				.logoutSuccessUrl(WebConstants.SIGNIN_PAGE).permitAll().and().csrf().disable().headers().frameOptions()
-				.disable().and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
-				.addFilterAfter(preAuthFilter(), RequestHeaderAuthenticationFilter.class)
+		http.authorizeRequests()
+				.antMatchers("/signin", "/h2-console/**", "/favicon.ico", "/resources/**").permitAll()
+				.antMatchers("/**").authenticated().and().exceptionHandling()
+				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(WebConstants.SIGNIN_PAGE))
+				.and().logout().logoutUrl(WebConstants.LOGOUT_URL).logoutSuccessUrl(WebConstants.LOGOUT_SUCCESS_URL).invalidateHttpSession(true).deleteCookies("JSESSIONID").permitAll()
+				.and().csrf().disable()
+				.headers().frameOptions().disable()
+				.and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
+//				.addFilterAfter(preAuthFilter(), RequestHeaderAuthenticationFilter.class)
 				.addFilterAfter(ajaxAuthExceptionTranslationFilter(), ExceptionTranslationFilter.class);
+	}
+
+	@Override
+	@Bean
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
 	}
 
 	@Override
@@ -116,12 +124,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		return new AjaxAuthExceptionTranslationFilter(ajaxAuthEntryPoint());
 	}
 
-	@Bean
-	public PreAuthRequestHeaderAuthenticationFilter preAuthFilter() throws Exception {
-		PreAuthRequestHeaderAuthenticationFilter filter = new PreAuthRequestHeaderAuthenticationFilter();
-		filter.setAuthenticationManager(authenticationManager());
-		return filter;
-	}
+//	@Bean
+//	public PreAuthRequestHeaderAuthenticationFilter preAuthFilter() throws Exception {
+//		PreAuthRequestHeaderAuthenticationFilter filter = new PreAuthRequestHeaderAuthenticationFilter();
+//		filter.setAuthenticationManager(authenticationManager());
+//		return filter;
+//	}
 
 	// storing the Security Context between requests into HTTP Session
 	@Bean

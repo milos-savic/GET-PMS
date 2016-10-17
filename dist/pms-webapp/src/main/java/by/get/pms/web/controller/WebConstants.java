@@ -18,4 +18,6 @@ public final class WebConstants {
 
 	public final static String PROJECTS_URL = "/projects";
 
+	public final static String LOGOUT_URL = "/logout";
+	public final static String LOGOUT_SUCCESS_URL = SIGNIN_PAGE + "?logout";
 }
