@@ -130,6 +130,10 @@
         </createIndex>
     </changeSet>
 
+    <changeSet author="milos.savic" id="1476657878126-111" dbms="h2">
+        <sqlFile encoding="UTF-8" path="users_and_roles.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
     <!-- END OF USERS AND TASKS -->
 
 
@@ -192,27 +196,27 @@
     </changeSet>
 
     <changeSet author="milos (generated)" id="1476437131769-205">
-        <addForeignKeyConstraint baseColumnNames="ASSIGNEE" baseTableName="TASK" constraintName="FK_NR8XITO928GBAUBR44RQCRG01"
+        <addForeignKeyConstraint baseColumnNames="ASSIGNEE" baseTableName="TASK" constraintName="TASK_USER_FK"
                                  deferrable="false" initiallyDeferred="false"
                                  onDelete="RESTRICT" onUpdate="RESTRICT"
                                  referencedColumnNames="ID" referencedTableName="USER"/>
     </changeSet>
 
     <changeSet author="milos (generated)" id="1476437131769-206">
-        <addForeignKeyConstraint baseColumnNames="PROJECT" baseTableName="TASK" constraintName="FK_RPYOJY5IC4WDHMSG3PAKFWR0D"
+        <addForeignKeyConstraint baseColumnNames="PROJECT" baseTableName="TASK" constraintName="TASK_PROJECT_FK"
                                  deferrable="false" initiallyDeferred="false"
                                  onDelete="RESTRICT" onUpdate="RESTRICT"
                                  referencedColumnNames="ID" referencedTableName="PROJECT"/>
     </changeSet>
 
     <changeSet author="milos (generated)" id="1476437131769-207">
-        <createIndex indexName="FK_NR8XITO928GBAUBR44RQCRG01_INDEX_2" tableName="TASK">
+        <createIndex indexName="TASK_ASSIGNEE_IDX" tableName="TASK">
             <column name="ASSIGNEE"/>
         </createIndex>
     </changeSet>
 
     <changeSet author="milos (generated)" id="1476437131769-208">
-        <createIndex indexName="FK_RPYOJY5IC4WDHMSG3PAKFWR0D_INDEX_2" tableName="TASK">
+        <createIndex indexName="TASK_PROJECT_IDX" tableName="TASK">
             <column name="PROJECT"/>
         </createIndex>
     </changeSet>
