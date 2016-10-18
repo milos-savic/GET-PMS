@@ -16,9 +16,6 @@ public interface UserAccountRepository extends CrudRepository<UserAccount, Long>
     @Query("select ua from UserAccount ua where ua.user.id = :userId")
     UserAccount findUserAccountByUser(@Param("userId") Long userId);
 
-    @Query("select ua from UserAccount ua where ua.id in (:aids) order by ua.user.firstName")
-    List<UserAccount> findUserAccountsByIds(@Param("aids") Set<Long> aids);
-
     @Query("select ua from UserAccount ua where UPPER(ua.username) = UPPER(:username)")
     UserAccount findUserAccountByUsername(@Param("username") String username);
 
