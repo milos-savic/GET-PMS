@@ -1,10 +1,13 @@
 package by.get.pms.dto;
 
+import by.get.pms.model.Task;
 import by.get.pms.validation.ValidRole;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Milos.Savic on 10/17/2016.
@@ -23,6 +26,8 @@ public class UserDTO extends DTO {
 	@Size(min = 1, max = 255)
 	private String email;
 
+	private List<Task> assignedTasks;
+
 	@NotNull
 	@Size(min = 1, max = 30)
 	private String username;
@@ -35,12 +40,13 @@ public class UserDTO extends DTO {
 	@ValidRole
 	private String roleCode;
 
-	public UserDTO(long id, String firstName, String lastName, String email, String username,
+	public UserDTO(long id, String firstName, String lastName, String email, List<Task> assignedTasks, String username,
 			LocalDateTime creationDate, Boolean active, String roleCode) {
 		super(id);
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.assignedTasks = (assignedTasks != null) ? assignedTasks : new LinkedList<>();
 		this.username = username;
 		this.creationDate = creationDate;
 		this.active = active;
@@ -74,6 +80,14 @@ public class UserDTO extends DTO {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<Task> getAssignedTasks() {
+		return assignedTasks;
+	}
+
+	public void setAssignedTasks(List<Task> assignedTasks) {
+		this.assignedTasks = assignedTasks;
 	}
 
 	public String getUsername() {
