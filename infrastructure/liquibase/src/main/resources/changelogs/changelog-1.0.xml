@@ -71,7 +71,9 @@
             <column name="LASTNAME" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="EMAIL" type="VARCHAR(255)"/>
+            <column name="EMAIL" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
             <column name="VERSION" type="BIGINT(19)"/>
         </createTable>
     </changeSet>
@@ -182,12 +184,24 @@
             <column autoIncrement="true" name="ID" type="BIGINT(19)">
                 <constraints primaryKey="true" primaryKeyName="TASK_PK"/>
             </column>
-            <column name="NAME" type="VARCHAR(255)"/>
-            <column name="PROJECT_STATUS" type="INT(10)"/>
-            <column name="PROGRESS" type="INT(10)"/>
-            <column name="DEADLINE" type="DATE"/>
-            <column name="DESCRIPTION" type="VARCHAR(255)"/>
-            <column name="ASSIGNEE" type="BIGINT(19)"/>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TASK_STATUS" type="INT(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PROGRESS" type="INT(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DEADLINE" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DESCRIPTION" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ASSIGNEE" type="BIGINT(19)">
+                <constraints nullable="false"/>
+            </column>
             <column name="PROJECT" type="BIGINT(19)">
                 <constraints nullable="false"/>
             </column>

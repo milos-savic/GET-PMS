@@ -16,7 +16,7 @@ public class User extends PersistentEntity {
     @Column(name = "lastname", nullable = false)
     private String lastName;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
     @OneToOne(optional = false, cascade = CascadeType.ALL,

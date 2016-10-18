@@ -13,24 +13,24 @@ import java.time.LocalDate;
 @Table(name = "task")
 public class Task extends PersistentEntity {
 
-    @Column(name = "name", length = 50)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    @Column(name = "task_status")
+    @Column(name = "task_status", nullable = false)
     private TaskStatus taskStatus = TaskStatus.NEW;
 
     @Min(0)
     @Max(100)
-    @Column(name = "progress")
+    @Column(name = "progress", nullable = false)
     private int progress;
 
-    @Column(name = "deadline")
+    @Column(name = "deadline", nullable = false)
     private LocalDate deadline;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "assignee")
     private User assignee;
 
