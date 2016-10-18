@@ -9,6 +9,5 @@ import org.springframework.context.annotation.PropertySource;
  */
 @Configuration
 @Import(PackageConfig.class)
-@PropertySource("classpath:commons-default.properties")
 public class CoreConfig {
 }
