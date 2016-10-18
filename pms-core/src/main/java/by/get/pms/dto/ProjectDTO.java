@@ -1,5 +1,7 @@
 package by.get.pms.dto;
 
+import by.get.pms.validation.ProjectCode;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -10,6 +12,7 @@ public class ProjectDTO extends DTO {
 
 	@NotNull
 	@Size(min = 1, max = 30)
+	@ProjectCode
 	private String code;
 
 	@NotNull

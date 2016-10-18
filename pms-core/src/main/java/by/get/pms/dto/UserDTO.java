@@ -1,6 +1,7 @@
 package by.get.pms.dto;
 
 import by.get.pms.model.Task;
+import by.get.pms.validation.Username;
 import by.get.pms.validation.ValidRole;
 
 import javax.validation.constraints.NotNull;
@@ -30,6 +31,7 @@ public class UserDTO extends DTO {
 
 	@NotNull
 	@Size(min = 1, max = 30)
+	@Username
 	private String username;
 
 	@NotNull
