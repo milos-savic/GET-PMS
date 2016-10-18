@@ -20,8 +20,8 @@ public class UserAccount extends PersistentEntity {
     @Column(name = "creationdate", nullable = false)
     private LocalDateTime creationDate;
 
-    @Column(name = "active", nullable = false, length = 1)
-    private Character active;
+    @Column(name = "active")
+    private Boolean active;
 
     @OneToOne(optional = false)
     @JoinColumn(name = "user")
@@ -47,11 +47,11 @@ public class UserAccount extends PersistentEntity {
         this.creationDate = startDate;
     }
 
-    public Character getActive() {
+    public Boolean isActive() {
         return active;
     }
 
-    public void setActive(Character enabled) {
+    public void setActive(Boolean enabled) {
         this.active = enabled;
     }
 

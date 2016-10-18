@@ -88,9 +88,7 @@
             <column name="USERNAME" type="VARCHAR(30)">
                 <constraints nullable="false"/>
             </column>
-            <column name="ACTIVE" type="CHAR(1)">
-                <constraints nullable="false"/>
-            </column>
+            <column name="ACTIVE" type="BOOLEAN(1)"/>
             <column name="CREATIONDATE" type="TIMESTAMP">
                 <constraints nullable="false"/>
             </column>

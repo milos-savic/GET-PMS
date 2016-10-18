@@ -40,7 +40,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserAccount userAccount = userAccountRepository.findUserAccountByUsername(username);
 
-		if (userAccount != null && !(userAccount.getActive() == 'Y')) {
+		if (userAccount != null && !(userAccount.isActive())) {
 			throw new LockedException("User account is locked");
 		}
 
@@ -60,7 +60,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 		boolean accountNonExpired = true;
 		boolean isCredentialsNotExpired = true;
 		final Set<GrantedAuthority> granted = grantAuthorities(userAccount);
-		boolean isActive = userAccount.getActive() == 'Y';
+		boolean isActive = userAccount.isActive();
 
 		final User user = new User(userAccount.getUsername(), null, isActive, accountNonExpired,
 				isCredentialsNotExpired, isActive, granted);
