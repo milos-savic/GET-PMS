@@ -1,6 +1,7 @@
 package by.get.pms.validation;
 
 import javax.validation.Constraint;
+import javax.validation.Payload;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -14,5 +15,10 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = ValidRoleValidator.class)
 public @interface ValidRole {
 
-	String message() default "Role code is not in predifined set!";
+    String message() default "{by.get.pms.validation.ValidRole.message}";
+
+    Class<?>[] groups() default {};
+
+    Class<? extends Payload>[] payload() default {};
+
 }

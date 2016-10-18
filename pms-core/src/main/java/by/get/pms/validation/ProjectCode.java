@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = ProjectCodeValidator.class)
 public @interface ProjectCode {
 
-	String message() default "Project code is blank or already exists!";
+	String message() default "{by.get.pms.validation.ProjectCode.message}";
 
 	Class<?>[] groups() default {};
 

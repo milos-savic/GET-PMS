@@ -1,8 +1,8 @@
 package by.get.pms.security;
 
 import by.get.pms.dataaccess.UserAccountRepository;
-import by.get.pms.model.Role;
 import by.get.pms.model.UserAccount;
+import by.get.pms.model.UserRole;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,68 +31,68 @@ import java.util.Set;
 @Transactional
 public class AuthorizationServiceImpl implements AuthorizationService {
 
-	protected static final Log LOGGER = LogFactory.getLog(AuthorizationServiceImpl.class);
+    protected static final Log LOGGER = LogFactory.getLog(AuthorizationServiceImpl.class);
 
-	@Autowired
-	private UserAccountRepository userAccountRepository;
+    @Autowired
+    private UserAccountRepository userAccountRepository;
 
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UserAccount userAccount = userAccountRepository.findUserAccountByUsername(username);
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserAccount userAccount = userAccountRepository.findUserAccountByUsername(username);
 
-		if (userAccount != null && !(userAccount.isActive())) {
-			throw new LockedException("User account is locked");
-		}
+        if (userAccount != null && !(userAccount.isActive())) {
+            throw new LockedException("User account is locked");
+        }
 
-		if (userAccount == null) {
-			throw new UsernameNotFoundException("No user account registered in the system");
-		}
-		UserDetails userDetails = createUserDetails(userAccount);
+        if (userAccount == null) {
+            throw new UsernameNotFoundException("No user account registered in the system");
+        }
+        UserDetails userDetails = createUserDetails(userAccount);
 
-		final List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(userDetails.getAuthorities());
-		if (authorities.size() == 0) {
-			throw new CredentialsExpiredException("No active role available");
-		}
-		return userDetails;
-	}
+        final List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(userDetails.getAuthorities());
+        if (authorities.size() == 0) {
+            throw new CredentialsExpiredException("No active role available");
+        }
+        return userDetails;
+    }
 
-	private UserDetails createUserDetails(UserAccount userAccount) {
-		boolean accountNonExpired = true;
-		boolean isCredentialsNotExpired = true;
-		final Set<GrantedAuthority> granted = grantAuthorities(userAccount);
-		boolean isActive = userAccount.isActive();
+    private UserDetails createUserDetails(UserAccount userAccount) {
+        boolean accountNonExpired = true;
+        boolean isCredentialsNotExpired = true;
+        final Set<GrantedAuthority> granted = grantAuthorities(userAccount);
+        boolean isActive = userAccount.isActive();
 
-		final User user = new User(userAccount.getUsername(), null, isActive, accountNonExpired,
-				isCredentialsNotExpired, isActive, granted);
-		user.setDisplayName(userAccount.getUser().getFirstName() + " " + userAccount.getUser().getLastName());
-		return user;
-	}
+        final User user = new User(userAccount.getUsername(), null, isActive, accountNonExpired,
+                isCredentialsNotExpired, isActive, granted);
+        user.setDisplayName(userAccount.getUser().getFirstName() + " " + userAccount.getUser().getLastName());
+        return user;
+    }
 
-	@Override
-	public Set<GrantedAuthority> grantAuthorities(UserAccount userAccount) {
-		final Set<GrantedAuthority> granted = new HashSet<GrantedAuthority>();
+    @Override
+    public Set<GrantedAuthority> grantAuthorities(UserAccount userAccount) {
+        final Set<GrantedAuthority> granted = new HashSet<GrantedAuthority>();
 
-		final Role currentRole = userAccount.getRole();
+        final UserRole currentRole = userAccount.getRole();
 
-		if (currentRole != null) {
-			Application.getInstance().setCredentials(userAccount, currentRole);
-			granted.add(new SimpleGrantedAuthority(currentRole.getCode().toUpperCase()));
-		}
+        if (currentRole != null) {
+            Application.getInstance().setCredentials(userAccount, currentRole);
+            granted.add(new SimpleGrantedAuthority(currentRole.name()));
+        }
 
-		return granted;
-	}
+        return granted;
+    }
 
-	@Override
-	public void onApplicationEvent(ApplicationEvent applicationEvent) {
-		if (applicationEvent instanceof AuthenticationSuccessEvent) {
+    @Override
+    public void onApplicationEvent(ApplicationEvent applicationEvent) {
+        if (applicationEvent instanceof AuthenticationSuccessEvent) {
 
-			AuthenticationSuccessEvent event = (AuthenticationSuccessEvent) applicationEvent;
-			final String userName = event.getAuthentication().getName();
-			LOGGER.info("User " + userName + " has been successfully authenticated");
-		} else if (applicationEvent instanceof AuthorizationFailureEvent) {
-			AuthorizationFailureEvent event = (AuthorizationFailureEvent) applicationEvent;
-			final String userName = ((AuthorizationFailureEvent) applicationEvent).getAuthentication().getName();
-			LOGGER.info("Unauthorized access to" + event.getSource() + " has been detected.");
-		}
-	}
+            AuthenticationSuccessEvent event = (AuthenticationSuccessEvent) applicationEvent;
+            final String userName = event.getAuthentication().getName();
+            LOGGER.info("User " + userName + " has been successfully authenticated");
+        } else if (applicationEvent instanceof AuthorizationFailureEvent) {
+            AuthorizationFailureEvent event = (AuthorizationFailureEvent) applicationEvent;
+            final String userName = ((AuthorizationFailureEvent) applicationEvent).getAuthentication().getName();
+            LOGGER.info("Unauthorized access to" + event.getSource() + " has been detected.");
+        }
+    }
 }

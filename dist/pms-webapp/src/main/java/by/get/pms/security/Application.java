@@ -1,7 +1,7 @@
 package by.get.pms.security;
 
-import by.get.pms.model.Role;
 import by.get.pms.model.UserAccount;
+import by.get.pms.model.UserRole;
 
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -14,7 +14,7 @@ public class Application {
 
     private LocalDateTime created;
     private UserAccount userAccount;
-    private Role currentRole;
+    private UserRole currentRole;
     private by.get.pms.model.User user;
 
     public Application(ApplicationAttributes attributes) {
@@ -60,15 +60,11 @@ public class Application {
         return userAccount;
     }
 
-    public Role getCurrentRole() {
+    public UserRole getCurrentRole() {
         return currentRole;
     }
 
-    public Long getRoleId() {
-        return currentRole != null ? currentRole.getId() : -1L;
-    }
-
-    public void setCurrentRole(Role currentRole) {
+    public void setCurrentRole(UserRole currentRole) {
         this.currentRole = currentRole;
         setAttribute("currentRole", currentRole);
     }
@@ -92,7 +88,7 @@ public class Application {
         setAttribute("userAccount", userAccount);
     }
 
-    public void setCredentials(UserAccount userAccount, Role currentRole) {
+    public void setCredentials(UserAccount userAccount, UserRole currentRole) {
         clearState();
         setUserAccount(userAccount);
         setCurrentRole(currentRole);

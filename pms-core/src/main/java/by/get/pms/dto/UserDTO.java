@@ -40,10 +40,10 @@ public class UserDTO extends DTO {
 	private Boolean active;
 
 	@ValidRole
-	private String roleCode;
+	private String roleName;
 
 	public UserDTO(long id, String firstName, String lastName, String email, List<Task> assignedTasks, String username,
-			LocalDateTime creationDate, Boolean active, String roleCode) {
+			LocalDateTime creationDate, Boolean active, String roleName) {
 		super(id);
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -52,7 +52,7 @@ public class UserDTO extends DTO {
 		this.username = username;
 		this.creationDate = creationDate;
 		this.active = active;
-		this.roleCode = roleCode;
+		this.roleName = roleName;
 	}
 
 	@Override
@@ -116,11 +116,11 @@ public class UserDTO extends DTO {
 		this.active = active;
 	}
 
-	public String getRoleCode() {
-		return roleCode;
+	public String getRoleName() {
+		return roleName;
 	}
 
-	public void setRoleCode(String roleCode) {
-		this.roleCode = roleCode;
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 }

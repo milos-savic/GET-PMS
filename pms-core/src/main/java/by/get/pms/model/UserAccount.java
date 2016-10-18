@@ -3,8 +3,6 @@ package by.get.pms.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Milos.Savic on 10/12/2016.
@@ -27,11 +25,10 @@ public class UserAccount extends PersistentEntity {
     @JoinColumn(name = "user")
     private User user;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "role")
-    private Role role;
+    @Column(name = "role", nullable = false)
+    private UserRole role;
 
-    public UserAccount(){
+    public UserAccount() {
         super();
     }
 
@@ -67,11 +64,11 @@ public class UserAccount extends PersistentEntity {
         this.user = user;
     }
 
-    public Role getRole() {
+    public UserRole getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(UserRole role) {
         this.role = role;
     }
 
