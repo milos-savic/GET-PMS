@@ -1,8 +1,10 @@
 package by.get.pms.dto;
 
-import javax.persistence.Column;
+import by.get.pms.validation.ValidRole;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 /**
  * Created by Milos.Savic on 10/17/2016.
@@ -10,22 +12,44 @@ import javax.validation.constraints.Size;
 public class UserDTO extends DTO {
 
 	@NotNull
-	@Size(min = 1, max = 50)
+	@Size(min = 1, max = 255)
 	private String firstName;
 
 	@NotNull
-	@Size(min = 1, max = 50)
+	@Size(min = 1, max = 255)
 	private String lastName;
 
 	@NotNull
-	@Size(min = 1, max = 50)
+	@Size(min = 1, max = 255)
 	private String email;
 
-	public UserDTO(long id, String firstName, String lastName, String email) {
+	@NotNull
+	@Size(min = 1, max = 30)
+	private String username;
+
+	@NotNull
+	private LocalDateTime creationDate;
+
+	private Boolean active;
+
+	@ValidRole
+	private String roleCode;
+
+	public UserDTO(long id, String firstName, String lastName, String email, String username,
+			LocalDateTime creationDate, Boolean active, String roleCode) {
 		super(id);
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.username = username;
+		this.creationDate = creationDate;
+		this.active = active;
+		this.roleCode = roleCode;
+	}
+
+	@Override
+	public String getBusinessIdentifier() {
+		return username;
 	}
 
 	public String getFirstName() {
@@ -52,13 +76,35 @@ public class UserDTO extends DTO {
 		this.email = email;
 	}
 
-	@Override
-	public String toString() {
-		return "UserDTO{" + '\'' +
-				"id='" + getId() +
-				"firstName='" + firstName + '\'' +
-				", lastName='" + lastName + '\'' +
-				", email='" + email + '\'' +
-				'}';
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public LocalDateTime getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(LocalDateTime creationDate) {
+		this.creationDate = creationDate;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public String getRoleCode() {
+		return roleCode;
+	}
+
+	public void setRoleCode(String roleCode) {
+		this.roleCode = roleCode;
 	}
 }

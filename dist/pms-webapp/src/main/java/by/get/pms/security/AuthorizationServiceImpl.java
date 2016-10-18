@@ -76,7 +76,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
 		if (currentRole != null) {
 			Application.getInstance().setCredentials(userAccount, currentRole);
-			granted.add(new SimpleGrantedAuthority(currentRole.getRoleType().getCode().toUpperCase()));
+			granted.add(new SimpleGrantedAuthority(currentRole.getCode().toUpperCase()));
 		}
 
 		return granted;

@@ -24,10 +24,6 @@ public class Role extends PersistentEntity {
 	@Column(name = "description")
 	private String description;
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "roletype")
-	private RoleType roleType;
-
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
 	private List<UserAccount> userAccounts = new ArrayList<>();
 
@@ -55,14 +51,6 @@ public class Role extends PersistentEntity {
 		this.description = description;
 	}
 
-	public RoleType getRoleType() {
-		return roleType;
-	}
-
-	public void setRoleType(RoleType roleType) {
-		this.roleType = roleType;
-	}
-
 	public List<UserAccount> getUserAccounts() {
 		return userAccounts;
 	}
@@ -83,7 +71,6 @@ public class Role extends PersistentEntity {
                 "code='" + code + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", roleType=" + roleType +
                 ", userAccounts=" + userAccounts +
                 '}';
     }

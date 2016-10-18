@@ -1,10 +1,6 @@
-INSERT INTO roletype (id, code, name, description, version) VALUES (1, 'dev', 'developer', 'role user type', 0);
-INSERT INTO roletype (id, code, name, description, version) VALUES (2, 'pm', 'project_manager', 'role project manager type', 0);
-INSERT INTO roletype (id, code, name, description, version) VALUES (3, 'admin', 'administrator','role administrator type', 0);
-
-INSERT INTO role (id, code, roletype, name, description, version) VALUES (1, 'dev', 1, 'developer', 'developer', 0);
-INSERT INTO role (id, code, roletype, name, description, version) VALUES (2, 'pm', 2, 'project_manager', 'project_manager', 0);
-INSERT INTO role (id, code, roletype, name, description, version) VALUES (3, 'admin', 3, 'administrator',  'administrator', 0);
+INSERT INTO role (id, code, name, description, version) VALUES (1, 'DEV', 'developer', 'developer user role', 0);
+INSERT INTO role (id, code, name, description, version) VALUES (2, 'PROJECT_MANAGER', 'project_manager', 'project_manager user role', 0);
+INSERT INTO role (id, code, name, description, version) VALUES (3, 'ADMIN', 'administrator',  'administrator user role', 0);
 
 INSERT INTO user (id, firstname, lastname, email, version) VALUES (11, 'James', 'Bond', 'james.bond@mail.com', 0);
 INSERT INTO user (id, firstname, lastname, email, version) VALUES (12, 'Jason', 'Born'   ,'jason.born@mail.com', 0);

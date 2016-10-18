@@ -7,24 +7,6 @@
 
     <!-- USERS AND ROLES -->
 
-    <!-- ROLETYPE -->
-    <changeSet author="Milos.Savic (generated)" id="1476437131769-100">
-        <createTable tableName="ROLETYPE">
-            <column autoIncrement="true" name="ID" type="BIGINT(19)">
-                <constraints primaryKey="true" primaryKeyName="ROLETYPE_PK"/>
-            </column>
-            <column name="CODE" type="VARCHAR(20)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="NAME" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="DESCRIPTION" type="VARCHAR(255)"/>
-            <column name="VERSION" type="BIGINT(19)"/>
-        </createTable>
-    </changeSet>
-
-
     <!-- ROLE -->
     <changeSet author="Milos.Savic (generated)" id="1476437131769-101">
         <createTable tableName="ROLE">
@@ -38,26 +20,9 @@
                 <constraints nullable="false"/>
             </column>
             <column name="DESCRIPTION" type="VARCHAR(255)"/>
-            <column name="ROLETYPE" type="BIGINT(19)">
-                <constraints nullable="false"/>
-            </column>
             <column name="VERSION" type="BIGINT(19)"/>
         </createTable>
     </changeSet>
-
-    <changeSet author="Milos.Savic (generated)" id="1476437131769-102">
-        <addForeignKeyConstraint baseColumnNames="ROLETYPE" baseTableName="ROLE"
-                                 constraintName="ROLE_ROLETYPE_FK" deferrable="false" initiallyDeferred="false"
-                                 onDelete="RESTRICT" onUpdate="RESTRICT"
-                                 referencedColumnNames="ID" referencedTableName="ROLETYPE"/>
-    </changeSet>
-
-    <changeSet author="Milos.Savic (generated)" id="1476437131769-103">
-        <createIndex indexName="ROLE_ROLETYPE_IDX" tableName="ROLE">
-            <column name="ROLETYPE"/>
-        </createIndex>
-    </changeSet>
-
 
     <!-- USER -->
     <changeSet author="Milos.Savic (generated)" id="1476437131769-104">
