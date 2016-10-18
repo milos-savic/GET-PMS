@@ -27,6 +27,10 @@ public class User extends PersistentEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assignee")
 	private List<Task> assignedTasks;
 
+	public User() {
+		super();
+	}
+
 	public UserAccount getUserAccount() {
 		return userAccount;
 	}

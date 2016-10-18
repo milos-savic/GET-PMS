@@ -31,6 +31,10 @@ public class UserAccount extends PersistentEntity {
     @JoinColumn(name = "role")
     private Role role;
 
+    public UserAccount(){
+        super();
+    }
+
     public String getUsername() {
         return username;
     }

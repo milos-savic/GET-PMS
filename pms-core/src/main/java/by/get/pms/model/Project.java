@@ -28,6 +28,10 @@ public class Project extends PersistentEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
 	private List<Task> tasks;
 
+	public Project() {
+		super();
+	}
+
 	public String getCode() {
 		return code;
 	}

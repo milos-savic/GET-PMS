@@ -27,6 +27,10 @@ public class Role extends PersistentEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "role")
 	private List<UserAccount> userAccounts = new ArrayList<>();
 
+	public Role(){
+		super();
+	}
+
 	public String getCode() {
 		return code;
 	}

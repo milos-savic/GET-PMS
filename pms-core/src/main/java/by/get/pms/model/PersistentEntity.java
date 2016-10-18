@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 
 @MappedSuperclass
-public class PersistentEntity implements Serializable {
+public abstract class PersistentEntity implements Serializable {
 
 	@Id
 	@GeneratedValue

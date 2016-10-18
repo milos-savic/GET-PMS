@@ -13,98 +13,102 @@ import java.time.LocalDate;
 @Table(name = "task")
 public class Task extends PersistentEntity {
 
-    @Column(name = "name", nullable = false, length = 50)
-    private String name;
+	@Column(name = "name", nullable = false, length = 50)
+	private String name;
 
-    @Column(name = "task_status", nullable = false)
-    private TaskStatus taskStatus = TaskStatus.NEW;
+	@Column(name = "task_status", nullable = false)
+	private TaskStatus taskStatus = TaskStatus.NEW;
 
-    @Min(0)
-    @Max(100)
-    @Column(name = "progress", nullable = false)
-    private int progress;
+	@Min(0)
+	@Max(100)
+	@Column(name = "progress", nullable = false)
+	private int progress;
 
-    @Column(name = "deadline", nullable = false)
-    private LocalDate deadline;
+	@Column(name = "deadline", nullable = false)
+	private LocalDate deadline;
 
-    @Column(name = "description", nullable = false)
-    private String description;
+	@Column(name = "description", nullable = false)
+	private String description;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "assignee")
-    private User assignee;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "assignee")
+	private User assignee;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "project")
-    private Project project;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "project")
+	private Project project;
 
-    public String getName() {
-        return name;
-    }
+	public Task() {
+		super();
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public TaskStatus getTaskStatus() {
-        return taskStatus;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setTaskStatus(TaskStatus taskStatus) {
-        this.taskStatus = taskStatus;
-    }
+	public TaskStatus getTaskStatus() {
+		return taskStatus;
+	}
 
-    public int getProgress() {
-        return progress;
-    }
+	public void setTaskStatus(TaskStatus taskStatus) {
+		this.taskStatus = taskStatus;
+	}
 
-    public void setProgress(int progress) {
-        this.progress = progress;
-    }
+	public int getProgress() {
+		return progress;
+	}
 
-    public LocalDate getDeadline() {
-        return deadline;
-    }
+	public void setProgress(int progress) {
+		this.progress = progress;
+	}
 
-    public void setDeadline(LocalDate deadline) {
-        this.deadline = deadline;
-    }
+	public LocalDate getDeadline() {
+		return deadline;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setDeadline(LocalDate deadline) {
+		this.deadline = deadline;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public User getAssignee() {
-        return assignee;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void setAssignee(User assignee) {
-        this.assignee = assignee;
-    }
+	public User getAssignee() {
+		return assignee;
+	}
 
-    public Project getProject() {
-        return project;
-    }
+	public void setAssignee(User assignee) {
+		this.assignee = assignee;
+	}
 
-    public void setProject(Project project) {
-        this.project = project;
-    }
+	public Project getProject() {
+		return project;
+	}
 
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id= " + getId() + '\'' +
-                "name= '" + name + '\'' +
-                ", taskStatus= " + taskStatus +
-                ", progress= " + progress +
-                ", deadline= " + deadline +
-                ", description= '" + description + '\'' +
-                ", assignee= " + assignee +
-                ", project= " + project +
-                '}';
-    }
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
+	@Override
+	public String toString() {
+		return "Task{" +
+				"id= " + getId() + '\'' +
+				"name= '" + name + '\'' +
+				", taskStatus= " + taskStatus +
+				", progress= " + progress +
+				", deadline= " + deadline +
+				", description= '" + description + '\'' +
+				", assignee= " + assignee +
+				", project= " + project +
+				'}';
+	}
 }
