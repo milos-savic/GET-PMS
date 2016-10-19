@@ -25,9 +25,6 @@ public class Project extends PersistentEntity {
 	@JoinColumn(name = "project_manager")
 	private User projectManager;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
-	private List<Task> tasks;
-
 	public Project() {
 		super();
 	}
@@ -62,14 +59,6 @@ public class Project extends PersistentEntity {
 
 	public void setProjectManager(User projectManager) {
 		this.projectManager = projectManager;
-	}
-
-	public List<Task> getTasks() {
-		return tasks;
-	}
-
-	public void setTasks(List<Task> tasks) {
-		this.tasks = tasks;
 	}
 
 	@Override

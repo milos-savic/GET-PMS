@@ -24,9 +24,6 @@ public class User extends PersistentEntity {
 			mappedBy = "user", targetEntity = UserAccount.class)
 	private UserAccount userAccount;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "assignee")
-	private List<Task> assignedTasks;
-
 	public User() {
 		super();
 	}
@@ -65,14 +62,6 @@ public class User extends PersistentEntity {
 
 	public String getFullName() {
 		return getFirstName() + " " + getLastName();
-	}
-
-	public List<Task> getAssignedTasks() {
-		return assignedTasks;
-	}
-
-	public void setAssignedTasks(List<Task> assignedTasks) {
-		this.assignedTasks = assignedTasks;
 	}
 
 	@Override

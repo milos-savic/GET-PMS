@@ -30,7 +30,7 @@ public class Task extends PersistentEntity {
 	@Column(name = "description", nullable = false)
 	private String description;
 
-	@ManyToOne(optional = false)
+	@ManyToOne
 	@JoinColumn(name = "assignee")
 	private User assignee;
 

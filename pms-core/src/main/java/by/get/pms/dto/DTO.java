@@ -7,44 +7,47 @@ import java.io.Serializable;
  */
 public class DTO implements Serializable {
 
-	private Long id;
+    private Long id;
 
-	public DTO(long id) {
-		this.id = id;
-	}
+    public DTO() {
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public DTO(long id) {
+        this.id = id;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	protected Serializable getBusinessIdentifier() {
-		return id;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		} else if (other == null) {
-			return false;
-		} else if (getClass().isAssignableFrom(other.getClass())) {
-			if (getBusinessIdentifier() == null) {
-				return false;
-			} else {
-				final DTO dto = (DTO) other;
-				return getBusinessIdentifier().equals(dto.getBusinessIdentifier());
-			}
-		}
-		return false;
-	}
+    protected Serializable getBusinessIdentifier() {
+        return id;
+    }
 
-	public int hashCode() {
-		if (getBusinessIdentifier() != null) {
-			return getBusinessIdentifier().hashCode();
-		}
-		return super.hashCode();
-	}
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        } else if (other == null) {
+            return false;
+        } else if (getClass().isAssignableFrom(other.getClass())) {
+            if (getBusinessIdentifier() == null) {
+                return false;
+            } else {
+                final DTO dto = (DTO) other;
+                return getBusinessIdentifier().equals(dto.getBusinessIdentifier());
+            }
+        }
+        return false;
+    }
+
+    public int hashCode() {
+        if (getBusinessIdentifier() != null) {
+            return getBusinessIdentifier().hashCode();
+        }
+        return super.hashCode();
+    }
 }

@@ -1,6 +1,5 @@
 package by.get.pms.dto;
 
-import by.get.pms.model.Task;
 import by.get.pms.validation.Username;
 import by.get.pms.validation.ValidRole;
 
@@ -15,112 +14,104 @@ import java.util.List;
  */
 public class UserDTO extends DTO {
 
-	@NotNull
-	@Size(min = 1, max = 255)
-	private String firstName;
+    @NotNull
+    @Size(min = 1, max = 255)
+    private String firstName;
 
-	@NotNull
-	@Size(min = 1, max = 255)
-	private String lastName;
+    @NotNull
+    @Size(min = 1, max = 255)
+    private String lastName;
 
-	@NotNull
-	@Size(min = 1, max = 255)
-	private String email;
+    @NotNull
+    @Size(min = 1, max = 255)
+    private String email;
 
-	private List<Task> assignedTasks;
+    @NotNull
+    @Size(min = 1, max = 30)
+    @Username
+    private String username;
 
-	@NotNull
-	@Size(min = 1, max = 30)
-	@Username
-	private String username;
+    @NotNull
+    private LocalDateTime creationDate;
 
-	@NotNull
-	private LocalDateTime creationDate;
+    private Boolean active;
 
-	private Boolean active;
+    @ValidRole
+    private String roleName;
 
-	@ValidRole
-	private String roleName;
+    public UserDTO() {
+    }
 
-	public UserDTO(long id, String firstName, String lastName, String email, List<Task> assignedTasks, String username,
-			LocalDateTime creationDate, Boolean active, String roleName) {
-		super(id);
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.assignedTasks = (assignedTasks != null) ? assignedTasks : new LinkedList<>();
-		this.username = username;
-		this.creationDate = creationDate;
-		this.active = active;
-		this.roleName = roleName;
-	}
+    public UserDTO(long id, String firstName, String lastName, String email, String username,
+                   LocalDateTime creationDate, Boolean active, String roleName) {
+        super(id);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.username = username;
+        this.creationDate = creationDate;
+        this.active = active;
+        this.roleName = roleName;
+    }
 
-	@Override
-	public String getBusinessIdentifier() {
-		return username;
-	}
+    @Override
+    public String getBusinessIdentifier() {
+        return username;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public List<Task> getAssignedTasks() {
-		return assignedTasks;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public void setAssignedTasks(List<Task> assignedTasks) {
-		this.assignedTasks = assignedTasks;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public String getUsername() {
-		return username;
-	}
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
 
-	public LocalDateTime getCreationDate() {
-		return creationDate;
-	}
+    public Boolean getActive() {
+        return active;
+    }
 
-	public void setCreationDate(LocalDateTime creationDate) {
-		this.creationDate = creationDate;
-	}
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 
-	public Boolean getActive() {
-		return active;
-	}
+    public String getRoleName() {
+        return roleName;
+    }
 
-	public void setActive(Boolean active) {
-		this.active = active;
-	}
-
-	public String getRoleName() {
-		return roleName;
-	}
-
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
 }

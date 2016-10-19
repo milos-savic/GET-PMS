@@ -15,7 +15,7 @@ import java.util.function.Function;
 public class Transformers {
 
 	public static final Function<User, UserDTO> USER_ENTITY_2_USER_DTO_TRANSFORMER = user -> new UserDTO(user.getId(),
-			user.getFirstName(), user.getLastName(), user.getEmail(), user.getAssignedTasks(),
+			user.getFirstName(), user.getLastName(), user.getEmail(),
 			user.getUserAccount().getUsername(), user.getUserAccount().getCreationDate(),
 			user.getUserAccount().isActive(), user.getUserAccount().getRole().name());
 

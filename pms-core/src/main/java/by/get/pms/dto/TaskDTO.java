@@ -13,109 +13,112 @@ import java.time.LocalDate;
  */
 public class TaskDTO extends DTO {
 
-	@NotNull
-	@Size(min = 1, max = 50)
-	private String name;
+    @NotNull
+    @Size(min = 1, max = 50)
+    private String name;
 
-	private TaskStatus taskStatus = TaskStatus.NEW;
+    @NotNull
+    private TaskStatus taskStatus;
 
-	@NotNull
-	@Min(0)
-	@Max(100)
-	private int progress;
+    @NotNull
+    @Min(0)
+    @Max(100)
+    private int progress;
 
-	@NotNull
-	private LocalDate deadline;
+    @NotNull
+    private LocalDate deadline;
 
-	@NotNull
-	@Size(min = 1, max = 255)
-	private String description;
+    @NotNull
+    @Size(min = 1, max = 255)
+    private String description;
 
-	@NotNull
-	private UserDTO assigneeDTO;
+    private UserDTO assigneeDTO;
 
-	@NotNull
-	private ProjectDTO projectDTO;
+    @NotNull
+    private ProjectDTO projectDTO;
 
-	public TaskDTO(long id, String name, TaskStatus taskStatus, int progress, LocalDate deadline, String description,
-			UserDTO assigneeDTO, ProjectDTO projectDTO) {
-		super(id);
-		this.name = name;
-		this.taskStatus = taskStatus;
-		this.progress = progress;
-		this.deadline = deadline;
-		this.description = description;
-		this.assigneeDTO = assigneeDTO;
-		this.projectDTO = projectDTO;
-	}
+    public TaskDTO() {
+    }
 
-	public String getName() {
-		return name;
-	}
+    public TaskDTO(long id, String name, TaskStatus taskStatus, int progress, LocalDate deadline, String description,
+                   UserDTO assigneeDTO, ProjectDTO projectDTO) {
+        super(id);
+        this.name = name;
+        this.taskStatus = taskStatus;
+        this.progress = progress;
+        this.deadline = deadline;
+        this.description = description;
+        this.assigneeDTO = assigneeDTO;
+        this.projectDTO = projectDTO;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public TaskStatus getTaskStatus() {
-		return taskStatus;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setTaskStatus(TaskStatus taskStatus) {
-		this.taskStatus = taskStatus;
-	}
+    public TaskStatus getTaskStatus() {
+        return taskStatus;
+    }
 
-	public int getProgress() {
-		return progress;
-	}
+    public void setTaskStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
+    }
 
-	public void setProgress(int progress) {
-		this.progress = progress;
-	}
+    public int getProgress() {
+        return progress;
+    }
 
-	public LocalDate getDeadline() {
-		return deadline;
-	}
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
 
-	public void setDeadline(LocalDate deadline) {
-		this.deadline = deadline;
-	}
+    public LocalDate getDeadline() {
+        return deadline;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setDeadline(LocalDate deadline) {
+        this.deadline = deadline;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public UserDTO getAssigneeDTO() {
-		return assigneeDTO;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setAssigneeDTO(UserDTO assigneeDTO) {
-		this.assigneeDTO = assigneeDTO;
-	}
+    public UserDTO getAssigneeDTO() {
+        return assigneeDTO;
+    }
 
-	public ProjectDTO getProjectDTO() {
-		return projectDTO;
-	}
+    public void setAssigneeDTO(UserDTO assigneeDTO) {
+        this.assigneeDTO = assigneeDTO;
+    }
 
-	public void setProjectDTO(ProjectDTO projectDTO) {
-		this.projectDTO = projectDTO;
-	}
+    public ProjectDTO getProjectDTO() {
+        return projectDTO;
+    }
 
-	@Override
-	public String toString() {
-		return "TaskDTO{" +
-				"id='" + getId() + '\'' +
-				"name='" + name + '\'' +
-				", taskStatus=" + taskStatus +
-				", progress=" + progress +
-				", deadline=" + deadline +
-				", description='" + description + '\'' +
-				", assigneeDTO=" + assigneeDTO +
-				", projectDTO=" + projectDTO +
-				'}';
-	}
+    public void setProjectDTO(ProjectDTO projectDTO) {
+        this.projectDTO = projectDTO;
+    }
+
+    @Override
+    public String toString() {
+        return "TaskDTO{" +
+                "id='" + getId() + '\'' +
+                "name='" + name + '\'' +
+                ", taskStatus=" + taskStatus +
+                ", progress=" + progress +
+                ", deadline=" + deadline +
+                ", description='" + description + '\'' +
+                ", assigneeDTO=" + assigneeDTO +
+                ", projectDTO=" + projectDTO +
+                '}';
+    }
 }

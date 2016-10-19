@@ -132,9 +132,7 @@
             <column name="DESCRIPTION" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="ASSIGNEE" type="BIGINT(19)">
-                <constraints nullable="false"/>
-            </column>
+            <column name="ASSIGNEE" type="BIGINT(19)"/>
             <column name="PROJECT" type="BIGINT(19)">
                 <constraints nullable="false"/>
             </column>

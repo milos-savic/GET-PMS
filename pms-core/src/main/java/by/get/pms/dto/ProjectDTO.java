@@ -1,6 +1,7 @@
 package by.get.pms.dto;
 
 import by.get.pms.validation.ProjectCode;
+import by.get.pms.validation.ProjectManager;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -10,75 +11,79 @@ import javax.validation.constraints.Size;
  */
 public class ProjectDTO extends DTO {
 
-	@NotNull
-	@Size(min = 1, max = 30)
-	@ProjectCode
-	private String code;
+    @NotNull
+    @Size(min = 1, max = 30)
+    @ProjectCode
+    private String code;
 
-	@NotNull
-	@Size(min = 1, max = 50)
-	private String name;
+    @NotNull
+    @Size(min = 1, max = 50)
+    private String name;
 
-	@NotNull
-	@Size(min = 1, max = 255)
-	private String description;
+    @NotNull
+    @Size(min = 1, max = 255)
+    private String description;
 
-	@NotNull
-	private UserDTO projectManager;
+    @NotNull
+    @ProjectManager
+    private UserDTO projectManager;
 
-	public ProjectDTO(long id, String code, String name, String description, UserDTO projectManager) {
-		super(id);
-		this.code = code;
-		this.name = name;
-		this.description = description;
-		this.projectManager = projectManager;
-	}
+    public ProjectDTO() {
+    }
 
-	@Override
-	public String getBusinessIdentifier() {
-		return code;
-	}
+    public ProjectDTO(long id, String code, String name, String description, UserDTO projectManager) {
+        super(id);
+        this.code = code;
+        this.name = name;
+        this.description = description;
+        this.projectManager = projectManager;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    @Override
+    public String getBusinessIdentifier() {
+        return code;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public UserDTO getProjectManager() {
-		return projectManager;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setProjectManager(UserDTO projectManager) {
-		this.projectManager = projectManager;
-	}
+    public UserDTO getProjectManager() {
+        return projectManager;
+    }
 
-	@Override
-	public String toString() {
-		return "ProjectDTO{" +
-				"id='" + getId() + '\'' +
-				"code='" + code + '\'' +
-				", name='" + name + '\'' +
-				", description='" + description + '\'' +
-				", projectManager=" + projectManager +
-				'}';
-	}
+    public void setProjectManager(UserDTO projectManager) {
+        this.projectManager = projectManager;
+    }
+
+    @Override
+    public String toString() {
+        return "ProjectDTO{" +
+                "id='" + getId() + '\'' +
+                "code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", projectManager=" + projectManager +
+                '}';
+    }
 }

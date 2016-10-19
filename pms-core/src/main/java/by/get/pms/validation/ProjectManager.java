@@ -8,14 +8,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by Milos.Savic on 10/18/2016.
+ * Created by milos on 19-Oct-16.
  */
+
 @Target({ ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = ValidRoleValidator.class)
-public @interface ValidRole {
+@Constraint(validatedBy = ProjectManagerValidator.class)
+public @interface ProjectManager {
 
-    String message() default "{by.get.pms.validation.ValidRole.message}";
+    String message() default "{by.get.pms.validation.ProjectManager.message}";
 
     Class<?>[] groups() default {};
 
