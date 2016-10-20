@@ -16,7 +16,7 @@ public class Transformers {
 
 	public static final Function<User, UserDTO> USER_ENTITY_2_USER_DTO_TRANSFORMER = user -> new UserDTO(user.getId(),
 			user.getFirstName(), user.getLastName(), user.getEmail(),
-			user.getUserAccount().getUsername(), user.getUserAccount().getCreationDate(),
+			user.getUserAccount().getUsername(), user.getUserAccount().getCreationDateTime(),
 			user.getUserAccount().isActive(), user.getUserAccount().getRole().name());
 
 	public static final Function<Project, ProjectDTO> PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER = project -> new ProjectDTO(

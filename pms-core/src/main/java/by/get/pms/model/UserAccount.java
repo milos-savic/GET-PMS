@@ -16,7 +16,7 @@ public class UserAccount extends PersistentEntity {
     private String username;
 
     @Column(name = "creationdate", nullable = false)
-    private LocalDateTime creationDate;
+    private LocalDateTime creationDateTime;
 
     @Column(name = "active")
     private Boolean active;
@@ -40,12 +40,12 @@ public class UserAccount extends PersistentEntity {
         this.username = username;
     }
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
+    public LocalDateTime getCreationDateTime() {
+        return creationDateTime;
     }
 
-    public void setCreationDate(LocalDateTime startDate) {
-        this.creationDate = startDate;
+    public void setCreationDateTime(LocalDateTime startDate) {
+        this.creationDateTime = startDate;
     }
 
     public Boolean isActive() {
@@ -82,7 +82,7 @@ public class UserAccount extends PersistentEntity {
         return "UserAccount{" +
                 "id= " + getId() + '\'' +
                 "username='" + username + '\'' +
-                ", creationDate=" + creationDate +
+                ", creationDateTime=" + creationDateTime +
                 ", active=" + active +
                 '}';
     }

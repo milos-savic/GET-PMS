@@ -1,6 +1,7 @@
 package by.get.pms.service.user;
 
 import by.get.pms.dto.UserDTO;
+import by.get.pms.model.User;
 
 import java.util.List;
 
@@ -11,11 +12,11 @@ import java.util.List;
 // only allowed to admin
 public interface UserService {
 
-	List<UserDTO> getAllUsers(Long userId);
+	List<UserDTO> getAllUsers();
 
 	UserDTO createUser(UserDTO userParams);
 
-	void updateUser(UserDTO userDTO);
+	void updateUser(UserDTO userParams);
 
 	void removeUser(Long userId);
 }

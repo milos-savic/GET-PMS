@@ -1,6 +1,7 @@
 package by.get.pms.dataaccess;
 
 import by.get.pms.model.Project;
+import by.get.pms.model.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +16,6 @@ public interface ProjectRepository extends CrudRepository<Project, Long>{
 	@Query("select p from Project p where p.code = :projectCode")
 	public Project findProjectByCode(@Param("projectCode") String projectCode);
 
-	@Query("select p from Project p where p = :projectManager")
-	public List<Project> findProjectManagerProjects(@Param("projectManager") String projectManager);
+	@Query("select p from Project p where p.projectManager = :projectManager")
+	public List<Project> findProjectManagerProjects(@Param("projectManager") User projectManager);
 }
