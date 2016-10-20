@@ -13,31 +13,40 @@ import java.util.List;
 @Service
 public class UserFacadeImpl implements UserFacade {
 
-	@Autowired
-	private UserPrecondition userPrecondition;
+    @Autowired
+    private UserPrecondition userPrecondition;
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private UserService userService;
 
-	@Override
-	public List<UserDTO> getAllUsers() {
-		return userService.getAllUsers();
-	}
+    @Override
+    public UserDTO getUser(Long userId) {
+        return userService.getUser(userId);
+    }
 
-	@Override
-	public UserDTO createUser(UserDTO userParams) {
-		return userService.createUser(userParams);
-	}
+    @Override
+    public List<UserDTO> getAllUsers() {
+        return userService.getAllUsers();
+    }
 
-	@Override
-	public void updateUser(UserDTO userParams) throws ApplicationException {
-		userPrecondition.checkUpdateUserPreconditions(userParams);
-		userService.updateUser(userParams);
-	}
+    public boolean userExists(Long userId) {
+        return userService.userExists(userId);
+    }
 
-	@Override
-	public void removeUser(Long userId) throws ApplicationException {
-		userPrecondition.checkRemoveUserPreconditions(userId);
-		userService.removeUser(userId);
-	}
+    @Override
+    public UserDTO createUser(UserDTO userParams) {
+        return userService.createUser(userParams);
+    }
+
+    @Override
+    public void updateUser(UserDTO userParams) throws ApplicationException {
+        userPrecondition.checkUpdateUserPreconditions(userParams);
+        userService.updateUser(userParams);
+    }
+
+    @Override
+    public void removeUser(Long userId) throws ApplicationException {
+        userPrecondition.checkRemoveUserPreconditions(userId);
+        userService.removeUser(userId);
+    }
 }

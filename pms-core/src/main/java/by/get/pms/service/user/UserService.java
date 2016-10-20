@@ -14,6 +14,10 @@ public interface UserService {
 
 	List<UserDTO> getAllUsers();
 
+    UserDTO getUser(Long userId);
+
+    boolean userExists(Long userId);
+
 	UserDTO createUser(UserDTO userParams);
 
 	void updateUser(UserDTO userParams);

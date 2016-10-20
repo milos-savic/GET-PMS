@@ -10,11 +10,15 @@ import java.util.List;
  */
 public interface UserFacade {
 
-	List<UserDTO> getAllUsers();
+    UserDTO getUser(Long userId);
 
-	UserDTO createUser(UserDTO userParams);
+    List<UserDTO> getAllUsers();
 
-	void updateUser(UserDTO userParams) throws ApplicationException;
+    boolean userExists(Long userId);
 
-	void removeUser(Long userId) throws ApplicationException;
+    UserDTO createUser(UserDTO userParams);
+
+    void updateUser(UserDTO userParams) throws ApplicationException;
+
+    void removeUser(Long userId) throws ApplicationException;
 }
