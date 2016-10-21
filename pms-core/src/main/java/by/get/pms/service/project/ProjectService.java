@@ -17,7 +17,7 @@ public interface ProjectService {
     List<ProjectDTO> getProjectManagerProjects(UserDTO projectManager);
 
     // for dev
-    List<ProjectDTO> getProjectAvailableForDeveloper(UserDTO developer);
+    List<ProjectDTO> getProjectsAvailableForDeveloper(UserDTO developer);
 
     // allowed to admin and pm
     UserDTO createProject(ProjectDTO projectDTO);
