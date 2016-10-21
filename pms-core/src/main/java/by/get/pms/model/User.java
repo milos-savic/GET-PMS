@@ -1,7 +1,6 @@
 package by.get.pms.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
  * Created by Milos.Savic on 10/12/2016.
@@ -62,6 +61,18 @@ public class User extends PersistentEntity {
 
 	public String getFullName() {
 		return getFirstName() + " " + getLastName();
+	}
+
+	public boolean isAdmin() {
+		return UserRole.ADMIN.equals(userAccount.getRole());
+	}
+
+	public boolean isProjectManager() {
+		return UserRole.PROJECT_MANAGER.equals(userAccount.getRole());
+	}
+
+	public boolean isDelveloper() {
+		return UserRole.DEV.equals(userAccount.getRole());
 	}
 
 	@Override

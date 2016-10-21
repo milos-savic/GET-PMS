@@ -10,21 +10,22 @@ import java.util.List;
  */
 public interface ProjectService {
 
-    // for admin
-    List<ProjectDTO> getAllProjects();
+	// for admin
+	List<ProjectDTO> getAllProjects();
 
-    // for pm
-    List<ProjectDTO> getProjectManagerProjects(UserDTO projectManager);
+	// for pm
+	// TODO: fix to getProjectsAvailableForPM
+	List<ProjectDTO> getProjectManagerProjects(UserDTO projectManager);
 
-    // for dev
-    List<ProjectDTO> getProjectsAvailableForDeveloper(UserDTO developer);
+	// for dev
+	List<ProjectDTO> getProjectsAvailableForDeveloper(UserDTO developer);
 
-    // allowed to admin and pm
-    UserDTO createProject(ProjectDTO projectDTO);
+	// allowed to admin and pm
+	UserDTO createProject(ProjectDTO projectDTO);
 
-    // allowed to admin
-    void updateProject(ProjectDTO projectDTO);
+	// allowed to admin
+	void updateProject(ProjectDTO projectDTO);
 
-    // allowed to admin
-    void deleteProject(Long projectId);
+	// allowed to admin
+	void deleteProject(Long projectId);
 }

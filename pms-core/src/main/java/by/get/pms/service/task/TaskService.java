@@ -3,6 +3,7 @@ package by.get.pms.service.task;
 import by.get.pms.dto.ProjectDTO;
 import by.get.pms.dto.TaskDTO;
 import by.get.pms.dto.UserDTO;
+import by.get.pms.model.Task;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public interface TaskService {
     List<TaskDTO> getProjectTasks(ProjectDTO projectDTO);
 
     // for dev
+    List<TaskDTO> getTasksAvailableForDeveloper(UserDTO developer);
     List<TaskDTO> getProjectTasksAvailableForDeveloper(ProjectDTO projectDTO, UserDTO developer);
 
     // allowed to admin and pm
