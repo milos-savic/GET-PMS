@@ -1,22 +1,19 @@
-package by.get.pms.service.task;
+package by.get.pms.dto;
 
-import by.get.pms.dto.UserDTO;
 import by.get.pms.model.TaskStatus;
 
-import java.time.LocalDate;
+import java.io.Serializable;
 
 /**
  * Created by milos on 19-Oct-16.
  */
-public class TaskUpdateParamsForPM {
+public class TaskUpdateParamsForDev extends DTO {
 
     private TaskStatus taskStatus;
     private int progress;
     private String description;
-    private LocalDate deadline;
-    private UserDTO assigneeDTO;
 
-    public TaskUpdateParamsForPM() {
+    public TaskUpdateParamsForDev() {
     }
 
     public TaskStatus getTaskStatus() {
@@ -41,21 +38,5 @@ public class TaskUpdateParamsForPM {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public LocalDate getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(LocalDate deadline) {
-        this.deadline = deadline;
-    }
-
-    public UserDTO getAssigneeDTO() {
-        return assigneeDTO;
-    }
-
-    public void setAssigneeDTO(UserDTO assigneeDTO) {
-        this.assigneeDTO = assigneeDTO;
     }
 }
