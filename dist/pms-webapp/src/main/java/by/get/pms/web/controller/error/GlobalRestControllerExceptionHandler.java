@@ -1,4 +1,4 @@
-package by.get.pms.web.error;
+package by.get.pms.web.controller.error;
 
 import by.get.pms.exception.ApplicationException;
 import by.get.pms.web.response.Response;

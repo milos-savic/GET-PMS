@@ -1,4 +1,4 @@
-package by.get.pms.web.error;
+package by.get.pms.web.controller.error;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
