@@ -23,5 +23,8 @@ public final class WebConstants {
     public final static String CREATE_UPDATE_USER = "/createUpdateUser";
     public final static String DELETE_USER = "/deleteUser";
 
+    public final static String TASKS_URL = "/tasks";
+    public final static String TASKS_HTML_PAH = "/task/tasks";
+
     public final static String PROJECTS_URL = "/projects";
 }

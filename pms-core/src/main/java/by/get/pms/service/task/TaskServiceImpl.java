@@ -63,7 +63,6 @@ public class TaskServiceImpl implements TaskService {
                 .collect(Collectors.toList());
     }
 
-
     @Override
     @Transactional
     public TaskDTO createTask(TaskDTO taskDTO) {
