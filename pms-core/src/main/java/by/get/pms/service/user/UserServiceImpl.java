@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
         return Transformers.USER_ENTITY_2_USER_DTO_TRANSFORMER.apply(user);
     }
 
-    public boolean userExists(Long userId){
+    public boolean userExists(Long userId) {
         return userRepository.exists(userId);
     }
 
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
         UserAccount newUserAccount = new UserAccount();
         BeanUtils.copyProperties(userParams, newUserAccount, "creationDate");
         newUserAccount.setUser(newUser);
-        newUserAccount.setRole(UserRole.make(userParams.getRoleName()));
+        newUserAccount.setRole(userParams.getRole());
         newUserAccount.setCreationDateTime(LocalDateTime.now());
         newUserAccount = userAccountRepository.save(newUserAccount);
 
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
         UserAccount userAccountFromDb = userAccountRepository.findUserAccountByUser(userParams.getId());
         BeanUtils.copyProperties(userParams, userAccountFromDb, "creationDate");
 
-        userAccountFromDb.setRole(UserRole.make(userParams.getRoleName()));
+        userAccountFromDb.setRole(userParams.getRole());
     }
 
     @Override

@@ -1,10 +1,15 @@
 package by.get.pms.config;
 
+import by.get.pms.web.conversion.ProjectFormatter;
+import by.get.pms.web.conversion.TaskStatusFormatter;
+import by.get.pms.web.conversion.UserFormatter;
+import by.get.pms.web.conversion.UserRoleFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -36,6 +41,35 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Bean
     public LocaleResolver localeResolver() {
         return new FixedLocaleResolver(Locale.US);
+    }
+
+    @Override
+    public void addFormatters(final FormatterRegistry registry) {
+        super.addFormatters(registry);
+        registry.addFormatter(userFormatter());
+        registry.addFormatter(projectFormatter());
+        registry.addFormatter(userRoleFormatter());
+        registry.addFormatter(taskStatusFormatter());
+    }
+
+    @Bean
+    public UserFormatter userFormatter() {
+        return new UserFormatter();
+    }
+
+    @Bean
+    public ProjectFormatter projectFormatter() {
+        return new ProjectFormatter();
+    }
+
+    @Bean
+    public UserRoleFormatter userRoleFormatter() {
+        return new UserRoleFormatter();
+    }
+
+    @Bean
+    public TaskStatusFormatter taskStatusFormatter(){
+        return new TaskStatusFormatter();
     }
 
     /**

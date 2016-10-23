@@ -50,7 +50,7 @@ public class UserPreconditionImpl implements UserPrecondition {
 
 		if (!projectManagerProjects.isEmpty()) {
 			ApplicationException applicationException = new ApplicationException("users.updateUser.roleUpdate");
-			applicationException.setParams(new String[] { userParams.getRoleName(), String.join(", ",
+			applicationException.setParams(new String[] { userParams.getRole().name(), String.join(", ",
 					projectManagerProjects.parallelStream().map(Project::getName).collect(Collectors.toList())) });
 			throw applicationException;
 		}
