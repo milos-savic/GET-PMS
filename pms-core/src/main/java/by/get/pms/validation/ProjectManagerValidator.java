@@ -17,11 +17,9 @@ public class ProjectManagerValidator implements ConstraintValidator<ProjectManag
     }
 
     @Override
-    public boolean isValid(final UserDTO projectManager, final ConstraintValidatorContext context) {
-        if (projectManager == null) {
-            return false;
-        }
+    public boolean isValid(final UserDTO user, final ConstraintValidatorContext context) {
+        if (user == null) return false;
 
-        return UserRole.PROJECT_MANAGER.name().equals(projectManager.getRoleName());
+        return user.isProjectManager();
     }
 }
