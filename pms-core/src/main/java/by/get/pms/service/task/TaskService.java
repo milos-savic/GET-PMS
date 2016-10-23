@@ -1,9 +1,9 @@
 package by.get.pms.service.task;
 
-import by.get.pms.dto.ProjectDTO;
-import by.get.pms.dto.TaskDTO;
-import by.get.pms.dto.UserDTO;
-import by.get.pms.model.Task;
+import by.get.pms.dto.*;
+import by.get.pms.validation.Admin;
+import by.get.pms.validation.Developer;
+import by.get.pms.validation.ProjectManager;
 
 import java.util.List;
 
@@ -12,12 +12,11 @@ import java.util.List;
  */
 public interface TaskService {
 
-    // for admin and pm for that projectDTO
-    List<TaskDTO> getProjectTasks(ProjectDTO projectDTO);
+    List<TaskDTO> getProjectTasksAvailableForAdmin(ProjectDTO projectDTO, @Admin UserDTO admin);
 
-    // for dev
-    List<TaskDTO> getTasksAvailableForDeveloper(UserDTO developer);
-    List<TaskDTO> getProjectTasksAvailableForDeveloper(ProjectDTO projectDTO, UserDTO developer);
+    List<TaskDTO> getProjectTasksAvailableForPM(ProjectDTO projectDTO, @ProjectManager UserDTO projectManager);
+
+    List<TaskDTO> getProjectTasksAvailableForDeveloper(ProjectDTO projectDTO, @Developer UserDTO developer);
 
     // allowed to admin and pm
     TaskDTO createTask(TaskDTO taskDTO);
@@ -31,5 +30,5 @@ public interface TaskService {
     // allowed to dev
     void updateTaskByDeveloper(TaskUpdateParamsForDev taskUpdateParamsForDev);
 
-    void deleteTask(TaskDTO taskDTO);
+    void removeTask(TaskDTO taskDTO);
 }
