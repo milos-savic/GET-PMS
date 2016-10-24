@@ -45,7 +45,6 @@ public class TaskController {
 	}
 
 	private List<TaskDTO> retrieveProjectTasks(ProjectDTO project, UserDTO user) {
-
 		switch (user.getRole()) {
 		case ADMIN:
 			return adminProjectTasks(project, user);
@@ -64,8 +63,8 @@ public class TaskController {
 	}
 
 	@PreAuthorize("hasRole('ROLE_PROJECT_MANAGER_USER')")
-	private List<TaskDTO> projectManagerProjectTasks(ProjectDTO project, @ProjectManager UserDTO projecManager) {
-		return taskFacade.getProjectTasksAvailableForPM(project, projecManager);
+	private List<TaskDTO> projectManagerProjectTasks(ProjectDTO project, @ProjectManager UserDTO projectManager) {
+		return taskFacade.getProjectTasksAvailableForPM(project, projectManager);
 	}
 
 	@PreAuthorize("hasRole('ROLE_DEV_USER')")
