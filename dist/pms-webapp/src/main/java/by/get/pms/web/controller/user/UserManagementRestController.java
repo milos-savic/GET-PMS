@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = WebConstants.REST_API_URL)
-public class RestUserManagementController {
+public class UserManagementRestController {
 
 	@Autowired
 	private ResponseBuilderFactoryBean responseBuilder;
@@ -29,7 +29,7 @@ public class RestUserManagementController {
 	@Autowired
 	private UserFacade userFacade;
 
-	@RequestMapping(value = WebConstants.CREATE_UPDATE_USER, method = RequestMethod.POST)
+	@RequestMapping(value = WebConstants.CREATE_UPDATE_USER_URL, method = RequestMethod.POST)
 	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
 	public Response createUpdateUser(@Validated UserDTO userParams, BindingResult errors) {
 		ResponseBuilder builder = responseBuilder.instance();
@@ -56,15 +56,10 @@ public class RestUserManagementController {
 				.build();
 	}
 
-	@RequestMapping(value = WebConstants.DELETE_USER + "/{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = WebConstants.DELETE_USER_URL + "/{id}", method = RequestMethod.DELETE)
 	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
 	public Response deleteUser(@PathVariable("id") final Long id) {
 		final ResponseBuilder builder = responseBuilder.instance();
-
-		// Spring MVC doesn't support @Validated @ExistingRecord for @PathVariable
-		if (id == null || !userFacade.userExists(id)) {
-			return builder.addErrorMessage("users.removeUser.NonExistingRecordForRemove", id).build();
-		}
 
 		try {
 			userFacade.removeUser(id);

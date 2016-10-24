@@ -28,6 +28,11 @@ public class ProjectServiceImpl implements ProjectService {
 	private UserRepository userRepository;
 
 	@Override
+	public ProjectDTO getProject(Long projectId) {
+		return Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(projectRepository.findOne(projectId));
+	}
+
+	@Override
 	public List<ProjectDTO> getAllProjects() {
 		List<Project> projects = Lists.newArrayList(projectRepository.findAll());
 		return projects.parallelStream()
@@ -46,12 +51,17 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
+	public List<ProjectDTO> getProjectsAvailableForPM(UserDTO projectManager) {
+		return null;
+	}
+
+	@Override
 	public List<ProjectDTO> getProjectsAvailableForDeveloper(UserDTO developer) {
 		return null;
 	}
 
 	@Override
-	public UserDTO createProject(ProjectDTO projectDTO) {
+	public ProjectDTO createProject(ProjectDTO projectDTO) {
 		return null;
 	}
 

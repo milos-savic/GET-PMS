@@ -20,7 +20,6 @@ public class TaskDTO extends DTO {
     @NotNull
     private TaskStatus taskStatus;
 
-    @NotNull
     @Min(0)
     @Max(100)
     private int progress;

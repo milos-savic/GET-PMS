@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Table(name = "task")
 public class Task extends PersistentEntity {
 
-	@Column(name = "name", nullable = false, length = 50)
+	@Column(name = "name", nullable = false, unique = true, length = 50)
 	private String name;
 
 	@Column(name = "task_status", nullable = false)

@@ -1,7 +1,6 @@
 package by.get.pms.service.user;
 
 import by.get.pms.dto.UserDTO;
-import by.get.pms.model.User;
 
 import java.util.List;
 
@@ -9,14 +8,15 @@ import java.util.List;
  * Created by Milos.Savic on 10/18/2016.
  */
 
-// only allowed to admin
 public interface UserService {
 
 	List<UserDTO> getAllUsers();
 
-    UserDTO getUser(Long userId);
+	UserDTO getUser(Long userId);
 
-    boolean userExists(Long userId);
+	UserDTO getUserByUserName(String username);
+
+	boolean userExists(Long userId);
 
 	UserDTO createUser(UserDTO userParams);
 

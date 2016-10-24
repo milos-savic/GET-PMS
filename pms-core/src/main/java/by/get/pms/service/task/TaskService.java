@@ -1,9 +1,6 @@
 package by.get.pms.service.task;
 
 import by.get.pms.dto.*;
-import by.get.pms.validation.Admin;
-import by.get.pms.validation.Developer;
-import by.get.pms.validation.ProjectManager;
 
 import java.util.List;
 
@@ -12,23 +9,25 @@ import java.util.List;
  */
 public interface TaskService {
 
-    List<TaskDTO> getProjectTasksAvailableForAdmin(ProjectDTO projectDTO, @Admin UserDTO admin);
+	boolean taskExists(Long id);
 
-    List<TaskDTO> getProjectTasksAvailableForPM(ProjectDTO projectDTO, @ProjectManager UserDTO projectManager);
+	TaskDTO getTaskByName(String name);
 
-    List<TaskDTO> getProjectTasksAvailableForDeveloper(ProjectDTO projectDTO, @Developer UserDTO developer);
+	List<TaskDTO> getProjectTasksAvailableForAdmin(ProjectDTO projectDTO);
 
-    // allowed to admin and pm
-    TaskDTO createTask(TaskDTO taskDTO);
+	List<TaskDTO> getProjectTasksAvailableForPM(ProjectDTO projectDTO, UserDTO projectManager);
 
-    // allowed to admin
-    void updateTask(TaskDTO taskDTO);
+	List<TaskDTO> getProjectTasksAvailableForDeveloper(ProjectDTO projectDTO, UserDTO developer);
 
-    // allowed to pm
-    void updateTaskByProjectManager(TaskUpdateParamsForPM taskUpdateParamsForPM);
+	List<TaskDTO> getTasksAssignedToUser(UserDTO userDTO);
 
-    // allowed to dev
-    void updateTaskByDeveloper(TaskUpdateParamsForDev taskUpdateParamsForDev);
+	TaskDTO createTask(TaskDTO taskDTO);
 
-    void removeTask(TaskDTO taskDTO);
+	void updateTask(TaskDTO taskDTO);
+
+	void updateTaskByProjectManager(TaskUpdateParamsForPM taskUpdateParamsForPM);
+
+	void updateTaskByDeveloper(TaskUpdateParamsForDev taskUpdateParamsForDev);
+
+	void removeTask(Long taskId);
 }

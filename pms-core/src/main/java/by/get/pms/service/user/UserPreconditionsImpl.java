@@ -1,14 +1,11 @@
 package by.get.pms.service.user;
 
-import by.get.pms.dataaccess.ProjectRepository;
-import by.get.pms.dataaccess.TaskRepository;
-import by.get.pms.dataaccess.UserAccountRepository;
-import by.get.pms.dataaccess.UserRepository;
+import by.get.pms.dto.ProjectDTO;
+import by.get.pms.dto.TaskDTO;
 import by.get.pms.dto.UserDTO;
 import by.get.pms.exception.ApplicationException;
-import by.get.pms.model.Project;
-import by.get.pms.model.Task;
-import by.get.pms.model.User;
+import by.get.pms.service.project.ProjectService;
+import by.get.pms.service.task.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,21 +16,16 @@ import java.util.stream.Collectors;
  * Created by Milos.Savic on 10/20/2016.
  */
 @Component
-public class UserPreconditionImpl implements UserPrecondition {
+public class UserPreconditionsImpl implements UserPreconditions {
 
+	@Autowired
 	private UserService userService;
 
 	@Autowired
-	private UserRepository userRepository;
+	private ProjectService projectService;
 
 	@Autowired
-	private UserAccountRepository userAccountRepository;
-
-	@Autowired
-	private ProjectRepository projectRepository;
-
-	@Autowired
-	private TaskRepository taskRepository;
+	private TaskService taskService;
 
 	@Override
 	public void checkCreateUserPreconditions(UserDTO userParams) throws ApplicationException {
@@ -47,16 +39,16 @@ public class UserPreconditionImpl implements UserPrecondition {
 	@Override
 	public void checkUpdateUserPreconditions(UserDTO userParams) throws ApplicationException {
 
-		if (!userRepository.exists(userParams.getId())) {
+		if (!userService.userExists(userParams.getId())) {
 			ApplicationException applicationException = new ApplicationException(
 					"users.updateUser.NonExistingRecordForUpdate");
 			applicationException.setParams(new String[] { userParams.getId().toString() });
 			throw applicationException;
 		}
 
-		if(userExistsByUsername(userParams.getUsername())){
-			User user = userAccountRepository.findUserAccountByUsername(userParams.getUsername()).getUser();
-			if(!user.getId().equals(userParams.getId())){
+		if (userExistsByUsername(userParams.getUsername())) {
+			UserDTO user = userService.getUserByUserName(userParams.getUsername());
+			if (!user.getId().equals(userParams.getId())) {
 				ApplicationException applicationException = new ApplicationException("users.updateUser.AlreadyExists");
 				applicationException.setParams(new String[] { userParams.getUsername() });
 				throw applicationException;
@@ -68,46 +60,53 @@ public class UserPreconditionImpl implements UserPrecondition {
 		if (userParams.isProjectManager())
 			return;
 
-		User projectManager = userRepository.findOne(userParams.getId());
+		UserDTO projectManager = userService.getUser(userParams.getId());
 		if (!projectManager.isProjectManager())
 			return;
 
-		List<Project> projectManagerProjects = projectRepository.findProjectManagerProjects(projectManager);
+		List<ProjectDTO> projectManagerProjects = projectService.getProjectManagerProjects(projectManager);
 
 		if (!projectManagerProjects.isEmpty()) {
 			ApplicationException applicationException = new ApplicationException("users.updateUser.roleUpdate");
 			applicationException.setParams(new String[] { userParams.getRole().name(), String.join(", ",
-					projectManagerProjects.parallelStream().map(Project::getName).collect(Collectors.toList())) });
+					projectManagerProjects.parallelStream().map(ProjectDTO::getName).collect(Collectors.toList())) });
 			throw applicationException;
 		}
 	}
 
 	@Override
 	public void checkRemoveUserPreconditions(Long userId) throws ApplicationException {
+		if (userId == null || !userService.userExists(userId)) {
+			ApplicationException applicationException = new ApplicationException(
+					"users.removeUser.NonExistingRecordForRemove");
+			applicationException.setParams(new String[] { userId == null ? "null" : userId.longValue() + "" });
+			throw applicationException;
+		}
+
 		// precondition for referential integrities (user assigned to task, pm assidned to project)
+		UserDTO user = userService.getUser(userId);
 
-		User user = userRepository.findOne(userId);
-
-		List<Task> tasksAssignedToUser = taskRepository.findTasksAssignedToUser(user);
+		List<TaskDTO> tasksAssignedToUser = taskService.getTasksAssignedToUser(user);
 		if (!tasksAssignedToUser.isEmpty()) {
 			ApplicationException applicationException = new ApplicationException("users.removeUser.userWithTasks");
 			applicationException.setParams(new String[] { String.join(", ",
-					tasksAssignedToUser.parallelStream().map(Task::getName).collect(Collectors.toList())) });
+					tasksAssignedToUser.parallelStream().map(TaskDTO::getName).collect(Collectors.toList())) });
 			throw applicationException;
 		}
 
 		if (user.isProjectManager()) {
-			List<Project> projectManagerProjects = projectRepository.findProjectManagerProjects(user);
+			List<ProjectDTO> projectManagerProjects = projectService.getProjectManagerProjects(user);
 			if (!projectManagerProjects.isEmpty()) {
 				ApplicationException applicationException = new ApplicationException("users.removeUser.pmWithProjects");
 				applicationException.setParams(new String[] { String.join(", ",
-						projectManagerProjects.parallelStream().map(Project::getName).collect(Collectors.toList())) });
+						projectManagerProjects.parallelStream().map(ProjectDTO::getName)
+								.collect(Collectors.toList())) });
 				throw applicationException;
 			}
 		}
 	}
 
 	private boolean userExistsByUsername(String username) {
-		return userAccountRepository.findUserAccountByUsername(username) != null;
+		return userService.getUserByUserName(username) != null;
 	}
 }

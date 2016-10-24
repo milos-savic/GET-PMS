@@ -10,18 +10,24 @@ import java.util.List;
  */
 public interface ProjectService {
 
+	ProjectDTO getProject(Long projectId);
+
 	// for admin
 	List<ProjectDTO> getAllProjects();
 
-	// for pm
-	// TODO: fix to getProjectsAvailableForPM
+	/**
+	 * List of projects on wich @param projectManager is assigened as project manager.
+	 */
 	List<ProjectDTO> getProjectManagerProjects(UserDTO projectManager);
+
+	// for pm
+	List<ProjectDTO> getProjectsAvailableForPM(UserDTO projectManager);
 
 	// for dev
 	List<ProjectDTO> getProjectsAvailableForDeveloper(UserDTO developer);
 
 	// allowed to admin and pm
-	UserDTO createProject(ProjectDTO projectDTO);
+	ProjectDTO createProject(ProjectDTO projectDTO);
 
 	// allowed to admin
 	void updateProject(ProjectDTO projectDTO);

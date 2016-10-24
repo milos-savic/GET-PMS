@@ -2,41 +2,51 @@ package by.get.pms.dto;
 
 import by.get.pms.model.TaskStatus;
 
-import java.io.Serializable;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Created by milos on 19-Oct-16.
  */
 public class TaskUpdateParamsForDev extends DTO {
 
-    private TaskStatus taskStatus;
-    private int progress;
-    private String description;
+	@NotNull
+	private TaskStatus taskStatus;
 
-    public TaskUpdateParamsForDev() {
-    }
+	@Min(0)
+	@Max(100)
+	private int progress;
 
-    public TaskStatus getTaskStatus() {
-        return taskStatus;
-    }
+	@NotNull
+	@Size(min = 1, max = 255)
+	private String description;
 
-    public void setTaskStatus(TaskStatus taskStatus) {
-        this.taskStatus = taskStatus;
-    }
+	public TaskUpdateParamsForDev() {
+	}
 
-    public int getProgress() {
-        return progress;
-    }
+	public TaskStatus getTaskStatus() {
+		return taskStatus;
+	}
 
-    public void setProgress(int progress) {
-        this.progress = progress;
-    }
+	public void setTaskStatus(TaskStatus taskStatus) {
+		this.taskStatus = taskStatus;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public int getProgress() {
+		return progress;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setProgress(int progress) {
+		this.progress = progress;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }

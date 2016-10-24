@@ -14,9 +14,7 @@ public interface UserFacade {
 
     List<UserDTO> getAllUsers();
 
-    boolean userExists(Long userId);
-
-    UserDTO createUser(UserDTO userParams);
+    UserDTO createUser(UserDTO userParams) throws ApplicationException;
 
     void updateUser(UserDTO userParams) throws ApplicationException;
 

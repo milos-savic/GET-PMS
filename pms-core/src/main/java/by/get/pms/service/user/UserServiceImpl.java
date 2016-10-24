@@ -5,7 +5,6 @@ import by.get.pms.dataaccess.UserRepository;
 import by.get.pms.dto.UserDTO;
 import by.get.pms.model.User;
 import by.get.pms.model.UserAccount;
-import by.get.pms.model.UserRole;
 import by.get.pms.utility.Transformers;
 import com.google.common.collect.Lists;
 import org.springframework.beans.BeanUtils;
@@ -24,66 +23,74 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Autowired
-    private UserAccountRepository userAccountRepository;
+	@Autowired
+	private UserAccountRepository userAccountRepository;
 
-    @Override
-    public List<UserDTO> getAllUsers() {
-        List<User> users = Lists.newArrayList(userRepository.findAll());
-        return users.parallelStream().map(user -> Transformers.USER_ENTITY_2_USER_DTO_TRANSFORMER.apply(user))
-                .collect(Collectors.toList());
-    }
+	@Override
+	public boolean userExists(Long userId) {
+		return userRepository.exists(userId);
+	}
 
-    @Override
-    public UserDTO getUser(Long userId) {
-        User user = userRepository.findOne(userId);
-        return Transformers.USER_ENTITY_2_USER_DTO_TRANSFORMER.apply(user);
-    }
+	@Override
+	public List<UserDTO> getAllUsers() {
+		List<User> users = Lists.newArrayList(userRepository.findAll());
+		return users.parallelStream().map(user -> Transformers.USER_ENTITY_2_USER_DTO_TRANSFORMER.apply(user))
+				.collect(Collectors.toList());
+	}
 
-    public boolean userExists(Long userId) {
-        return userRepository.exists(userId);
-    }
+	@Override
+	public UserDTO getUser(Long userId) {
+		User user = userRepository.findOne(userId);
+		return Transformers.USER_ENTITY_2_USER_DTO_TRANSFORMER.apply(user);
+	}
 
-    @Override
-    @Transactional
-    public UserDTO createUser(UserDTO userParams) {
-        User newUser = new User();
-        BeanUtils.copyProperties(userParams, newUser);
-        newUser = userRepository.save(newUser);
+	@Override
+	public UserDTO getUserByUserName(String username) {
+		UserAccount userAccount = userAccountRepository.findUserAccountByUsername(username);
+		User user = userAccount.getUser();
+		return Transformers.USER_ENTITY_2_USER_DTO_TRANSFORMER.apply(user);
+	}
 
-        UserAccount newUserAccount = new UserAccount();
-        BeanUtils.copyProperties(userParams, newUserAccount, "creationDate");
-        newUserAccount.setUser(newUser);
-        newUserAccount.setRole(userParams.getRole());
-        newUserAccount.setCreationDateTime(LocalDateTime.now());
-        newUserAccount = userAccountRepository.save(newUserAccount);
+	@Override
+	@Transactional
+	public UserDTO createUser(UserDTO userParams) {
+		User newUser = new User();
+		BeanUtils.copyProperties(userParams, newUser);
+		newUser = userRepository.save(newUser);
 
-        newUser.setUserAccount(newUserAccount);
+		UserAccount newUserAccount = new UserAccount();
+		BeanUtils.copyProperties(userParams, newUserAccount, "creationDate");
+		newUserAccount.setUser(newUser);
+		newUserAccount.setRole(userParams.getRole());
+		newUserAccount.setCreationDateTime(LocalDateTime.now());
+		newUserAccount = userAccountRepository.save(newUserAccount);
 
-        return Transformers.USER_ENTITY_2_USER_DTO_TRANSFORMER.apply(newUser);
-    }
+		newUser.setUserAccount(newUserAccount);
 
-    @Override
-    @Transactional
-    public void updateUser(UserDTO userParams) {
-        User userFromDb = userRepository.findOne(userParams.getId());
-        BeanUtils.copyProperties(userParams, userFromDb);
+		return Transformers.USER_ENTITY_2_USER_DTO_TRANSFORMER.apply(newUser);
+	}
 
-        UserAccount userAccountFromDb = userAccountRepository.findUserAccountByUser(userParams.getId());
-        BeanUtils.copyProperties(userParams, userAccountFromDb, "creationDate");
+	@Override
+	@Transactional
+	public void updateUser(UserDTO userParams) {
+		User userFromDb = userRepository.findOne(userParams.getId());
+		BeanUtils.copyProperties(userParams, userFromDb);
 
-        userAccountFromDb.setRole(userParams.getRole());
-    }
+		UserAccount userAccountFromDb = userAccountRepository.findUserAccountByUser(userParams.getId());
+		BeanUtils.copyProperties(userParams, userAccountFromDb, "creationDate");
 
-    @Override
-    @Transactional
-    public void removeUser(Long userId) {
-        UserAccount userAccount = userAccountRepository.findUserAccountByUser(userId);
-        userAccountRepository.delete(userAccount);
+		userAccountFromDb.setRole(userParams.getRole());
+	}
 
-        userRepository.delete(userId);
-    }
+	@Override
+	@Transactional
+	public void removeUser(Long userId) {
+		UserAccount userAccount = userAccountRepository.findUserAccountByUser(userId);
+		userAccountRepository.delete(userAccount);
+
+		userRepository.delete(userId);
+	}
 }

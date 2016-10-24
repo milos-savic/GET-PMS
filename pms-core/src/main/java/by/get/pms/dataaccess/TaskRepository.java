@@ -14,6 +14,8 @@ import java.util.List;
  */
 public interface TaskRepository extends CrudRepository<Task, Long> {
 
+    Task findTaskByName(@Param("name") String name);
+
     @Query("select t from Task t where t.assignee = :assignee")
     List<Task> findTasksAssignedToUser(@Param("assignee") User assignee);
 

@@ -72,7 +72,6 @@
     <!-- END OF USERS AND TASKS -->
 
 
-
     <!-- PROJECT AND TASKS -->
     <!-- PROJECT -->
     <changeSet author="Milos.Savic (generated)" id="1476437131769-200">
@@ -154,13 +153,17 @@
                                  referencedColumnNames="ID" referencedTableName="PROJECT"/>
     </changeSet>
 
-    <changeSet author="milos (generated)" id="1476437131769-207">
+    <changeSet author="Milos.Savic (generated)" id="1476437131769-207">
+        <addUniqueConstraint columnNames="NAME" constraintName="TASK_NAME_UQ" tableName="TASK"/>
+    </changeSet>
+
+    <changeSet author="milos (generated)" id="1476437131769-208">
         <createIndex indexName="TASK_ASSIGNEE_IDX" tableName="TASK">
             <column name="ASSIGNEE"/>
         </createIndex>
     </changeSet>
 
-    <changeSet author="milos (generated)" id="1476437131769-208">
+    <changeSet author="milos (generated)" id="1476437131769-209">
         <createIndex indexName="TASK_PROJECT_IDX" tableName="TASK">
             <column name="PROJECT"/>
         </createIndex>

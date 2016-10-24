@@ -1,8 +1,11 @@
 package by.get.pms.dto;
 
-import by.get.pms.dto.UserDTO;
 import by.get.pms.model.TaskStatus;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 /**
@@ -10,52 +13,62 @@ import java.time.LocalDate;
  */
 public class TaskUpdateParamsForPM extends DTO {
 
-    private TaskStatus taskStatus;
-    private int progress;
-    private String description;
-    private LocalDate deadline;
-    private UserDTO assigneeDTO;
+	@NotNull
+	private TaskStatus taskStatus;
 
-    public TaskUpdateParamsForPM() {
-    }
+	@Min(0)
+	@Max(100)
+	private int progress;
 
-    public TaskStatus getTaskStatus() {
-        return taskStatus;
-    }
+	@NotNull
+	@Size(min = 1, max = 255)
+	private String description;
 
-    public void setTaskStatus(TaskStatus taskStatus) {
-        this.taskStatus = taskStatus;
-    }
+	@NotNull
+	private LocalDate deadline;
 
-    public int getProgress() {
-        return progress;
-    }
+	private UserDTO assigneeDTO;
 
-    public void setProgress(int progress) {
-        this.progress = progress;
-    }
+	public TaskUpdateParamsForPM() {
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public TaskStatus getTaskStatus() {
+		return taskStatus;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setTaskStatus(TaskStatus taskStatus) {
+		this.taskStatus = taskStatus;
+	}
 
-    public LocalDate getDeadline() {
-        return deadline;
-    }
+	public int getProgress() {
+		return progress;
+	}
 
-    public void setDeadline(LocalDate deadline) {
-        this.deadline = deadline;
-    }
+	public void setProgress(int progress) {
+		this.progress = progress;
+	}
 
-    public UserDTO getAssigneeDTO() {
-        return assigneeDTO;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setAssigneeDTO(UserDTO assigneeDTO) {
-        this.assigneeDTO = assigneeDTO;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public LocalDate getDeadline() {
+		return deadline;
+	}
+
+	public void setDeadline(LocalDate deadline) {
+		this.deadline = deadline;
+	}
+
+	public UserDTO getAssigneeDTO() {
+		return assigneeDTO;
+	}
+
+	public void setAssigneeDTO(UserDTO assigneeDTO) {
+		this.assigneeDTO = assigneeDTO;
+	}
 }
