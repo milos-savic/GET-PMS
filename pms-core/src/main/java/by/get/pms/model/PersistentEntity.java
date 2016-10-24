@@ -18,21 +18,21 @@ public abstract class PersistentEntity implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
-	private long id = -1L;
+	private Long id = -1L;
 
 	@Version
 	@Column(name = "version")
-	private long version;
+	private Long version;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public long getVersion() {
+	public Long getVersion() {
 		return version;
 	}
 

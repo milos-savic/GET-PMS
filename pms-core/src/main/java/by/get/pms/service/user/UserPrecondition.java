@@ -8,6 +8,8 @@ import by.get.pms.exception.ApplicationException;
  */
 public interface UserPrecondition {
 
+	void checkCreateUserPreconditions(UserDTO userParams) throws ApplicationException;
+
 	void checkUpdateUserPreconditions(UserDTO userParams) throws ApplicationException;
 
 	void checkRemoveUserPreconditions(Long userId) throws ApplicationException;

@@ -36,7 +36,33 @@ public class UserPreconditionImpl implements UserPrecondition {
 	private TaskRepository taskRepository;
 
 	@Override
+	public void checkCreateUserPreconditions(UserDTO userParams) throws ApplicationException {
+		if (userExistsByUsername(userParams.getUsername())) {
+			ApplicationException applicationException = new ApplicationException("users.createUser.AlreadyExists");
+			applicationException.setParams(new String[] { userParams.getUsername() });
+			throw applicationException;
+		}
+	}
+
+	@Override
 	public void checkUpdateUserPreconditions(UserDTO userParams) throws ApplicationException {
+
+		if (!userRepository.exists(userParams.getId())) {
+			ApplicationException applicationException = new ApplicationException(
+					"users.updateUser.NonExistingRecordForUpdate");
+			applicationException.setParams(new String[] { userParams.getId().toString() });
+			throw applicationException;
+		}
+
+		if(userExistsByUsername(userParams.getUsername())){
+			User user = userAccountRepository.findUserAccountByUsername(userParams.getUsername()).getUser();
+			if(!user.getId().equals(userParams.getId())){
+				ApplicationException applicationException = new ApplicationException("users.updateUser.AlreadyExists");
+				applicationException.setParams(new String[] { userParams.getUsername() });
+				throw applicationException;
+			}
+		}
+
 		// precondition for role update;
 		// situation: PM -> DEV, ADMIN and PM is assigned to project
 		if (userParams.isProjectManager())
@@ -79,6 +105,9 @@ public class UserPreconditionImpl implements UserPrecondition {
 				throw applicationException;
 			}
 		}
+	}
 
+	private boolean userExistsByUsername(String username) {
+		return userAccountRepository.findUserAccountByUsername(username) != null;
 	}
 }
