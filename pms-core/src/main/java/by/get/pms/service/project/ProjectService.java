@@ -16,7 +16,7 @@ public interface ProjectService {
 	List<ProjectDTO> getAllProjects();
 
 	/**
-	 * List of projects on wich @param projectManager is assigened as project manager.
+	 * List of projects on which @param projectManager is assigned as project manager.
 	 */
 	List<ProjectDTO> getProjectManagerProjects(UserDTO projectManager);
 
@@ -27,10 +27,10 @@ public interface ProjectService {
 	List<ProjectDTO> getProjectsAvailableForDeveloper(UserDTO developer);
 
 	// allowed to admin and pm
-	ProjectDTO createProject(ProjectDTO projectDTO);
+	ProjectDTO createProject(ProjectDTO projectParams);
 
 	// allowed to admin
-	void updateProject(ProjectDTO projectDTO);
+	void updateProject(ProjectDTO projectParams);
 
 	// allowed to admin
 	void deleteProject(Long projectId);
