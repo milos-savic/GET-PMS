@@ -5,6 +5,7 @@ import by.get.pms.exception.ApplicationException;
 import by.get.pms.validation.Admin;
 import by.get.pms.validation.Developer;
 import by.get.pms.validation.ProjectManager;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,12 +51,20 @@ public class TaskFacadeImpl implements TaskFacade {
 	}
 
 	@Override
-	public void updateTaskByProjectManager(TaskUpdateParamsForPM taskUpdateParamsForPM) {
+	public void updateTaskByProjectManager(TaskDTO taskParams) throws ApplicationException{
+		taskPreconditions.checkUpdateTaskPreconditions(taskParams);
+		taskPreconditions.checkUpdateTaskByProjectManager(taskParams);
+		TaskUpdateParamsForPM taskUpdateParamsForPM = new TaskUpdateParamsForPM();
+		BeanUtils.copyProperties(taskParams, taskUpdateParamsForPM);
 		taskService.updateTaskByProjectManager(taskUpdateParamsForPM);
 	}
 
 	@Override
-	public void updateTaskByDeveloper(TaskUpdateParamsForDev taskUpdateParamsForDev) {
+	public void updateTaskByDeveloper(TaskDTO taskParams) throws ApplicationException{
+		taskPreconditions.checkUpdateTaskPreconditions(taskParams);
+		taskPreconditions.checkUpdateTaskByDeveloper(taskParams);
+		TaskUpdateParamsForDev taskUpdateParamsForDev = new TaskUpdateParamsForDev();
+		BeanUtils.copyProperties(taskParams, taskUpdateParamsForDev);
 		taskService.updateTaskByDeveloper(taskUpdateParamsForDev);
 	}
 

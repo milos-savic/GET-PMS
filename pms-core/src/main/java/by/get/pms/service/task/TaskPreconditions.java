@@ -12,5 +12,9 @@ public interface TaskPreconditions {
 
 	void checkUpdateTaskPreconditions(TaskDTO taskParams) throws ApplicationException;
 
+	void checkUpdateTaskByProjectManager(TaskDTO taskParams) throws ApplicationException;
+
+	void checkUpdateTaskByDeveloper(TaskDTO taskParams) throws ApplicationException;
+
 	void checkRemoveTaskPreconditions(Long taskId) throws ApplicationException;
 }
