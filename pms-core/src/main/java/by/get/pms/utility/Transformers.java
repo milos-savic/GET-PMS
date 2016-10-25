@@ -12,7 +12,7 @@ import java.util.function.Function;
 /**
  * Created by Milos.Savic on 10/18/2016.
  */
-public class Transformers {
+public final class Transformers {
 
 	public static final Function<User, UserDTO> USER_ENTITY_2_USER_DTO_TRANSFORMER = user -> new UserDTO(user.getId(),
 			user.getFirstName(), user.getLastName(), user.getEmail(),
