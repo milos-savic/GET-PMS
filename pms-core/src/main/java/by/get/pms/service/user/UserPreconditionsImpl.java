@@ -83,7 +83,7 @@ public class UserPreconditionsImpl implements UserPreconditions {
 			throw applicationException;
 		}
 
-		// precondition for referential integrities (user assigned to task, pm assidned to project)
+		// precondition for referential integrities (user assigned to task, pm assigned to project)
 		UserDTO user = userService.getUser(userId);
 
 		List<TaskDTO> tasksAssignedToUser = taskService.getTasksAssignedToUser(user);

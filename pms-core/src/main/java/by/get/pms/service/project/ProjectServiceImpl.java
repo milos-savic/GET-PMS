@@ -25,82 +25,93 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class ProjectServiceImpl implements ProjectService {
 
-    @Autowired
-    private ProjectRepository projectRepository;
+	@Autowired
+	private ProjectRepository projectRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Autowired
-    private TaskService taskService;
+	@Autowired
+	private TaskService taskService;
 
-    @Override
-    public ProjectDTO getProject(Long projectId) {
-        return Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(projectRepository.findOne(projectId));
-    }
+	@Override
+	public boolean projectExists(Long projectId) {
+		return projectRepository.exists(projectId);
+	}
 
-    @Override
-    public List<ProjectDTO> getAllProjects() {
-        List<Project> projects = Lists.newArrayList(projectRepository.findAll());
-        return projects.parallelStream()
-                .map(project -> Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(project))
-                .collect(Collectors.toList());
-    }
+	@Override
+	public ProjectDTO getProject(Long projectId) {
+		return Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(projectRepository.findOne(projectId));
+	}
 
-    @Override
-    public List<ProjectDTO> getProjectManagerProjects(UserDTO projectManager) {
-        List<Project> projectManagerProjects = projectRepository
-                .findProjectManagerProjects(userRepository.findOne(projectManager.getId()));
+	@Autowired
+	public ProjectDTO getProjectByCode(String projectCode) {
+		return Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER
+				.apply(projectRepository.findProjectByCode(projectCode));
+	}
 
-        return projectManagerProjects.parallelStream()
-                .map(project -> Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(project))
-                .collect(Collectors.toList());
-    }
+	@Override
+	public List<ProjectDTO> getAllProjects() {
+		List<Project> projects = Lists.newArrayList(projectRepository.findAll());
+		return projects.parallelStream()
+				.map(project -> Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(project))
+				.collect(Collectors.toList());
+	}
 
-    @Override
-    public List<ProjectDTO> getProjectsAvailableForPM(UserDTO projectManager) {
-        Set<ProjectDTO> allProjects = Sets.newHashSet(getAllProjects());
-        Set<ProjectDTO> projectManagerProjects = Sets.newHashSet(getProjectManagerProjects(projectManager));
+	@Override
+	public List<ProjectDTO> getProjectManagerProjects(UserDTO projectManager) {
+		List<Project> projectManagerProjects = projectRepository
+				.findProjectManagerProjects(userRepository.findOne(projectManager.getId()));
 
-        allProjects.removeAll(projectManagerProjects);
+		return projectManagerProjects.parallelStream()
+				.map(project -> Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(project))
+				.collect(Collectors.toList());
+	}
 
-        Set<ProjectDTO> projectsAvailableToPMBasedOnTasks = allProjects.parallelStream()
-                .filter(projectDTO -> !taskService.getProjectTasksAvailableForPM(projectDTO, projectManager).isEmpty())
-                .collect(Collectors.toSet());
+	@Override
+	public List<ProjectDTO> getProjectsAvailableForPM(UserDTO projectManager) {
+		Set<ProjectDTO> allProjects = Sets.newHashSet(getAllProjects());
+		Set<ProjectDTO> projectManagerProjects = Sets.newHashSet(getProjectManagerProjects(projectManager));
 
-        projectManagerProjects.addAll(projectsAvailableToPMBasedOnTasks);
-        return Lists.newArrayList(projectManagerProjects);
-    }
+		allProjects.removeAll(projectManagerProjects);
 
-    @Override
-    public List<ProjectDTO> getProjectsAvailableForDeveloper(UserDTO developer) {
-        Set<ProjectDTO> allProjects = Sets.newHashSet(getAllProjects());
+		Set<ProjectDTO> projectsAvailableToPMBasedOnTasks = allProjects.parallelStream()
+				.filter(projectDTO -> !taskService.getProjectTasksAvailableForPM(projectDTO, projectManager).isEmpty())
+				.collect(Collectors.toSet());
 
-        return allProjects.parallelStream()
-                .filter(projectDTO -> !taskService.getProjectTasksAvailableForDeveloper(projectDTO, developer).isEmpty())
-                .collect(Collectors.toList());
-    }
+		projectManagerProjects.addAll(projectsAvailableToPMBasedOnTasks);
+		return Lists.newArrayList(projectManagerProjects);
+	}
 
-    @Override
-    @Transactional
-    public ProjectDTO createProject(ProjectDTO projectParams) {
-        Project newProject = new Project();
-        BeanUtils.copyProperties(projectParams, newProject);
-        newProject = projectRepository.save(newProject);
+	@Override
+	public List<ProjectDTO> getProjectsAvailableForDeveloper(UserDTO developer) {
+		Set<ProjectDTO> allProjects = Sets.newHashSet(getAllProjects());
 
-        return Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(newProject);
-    }
+		return allProjects.parallelStream()
+				.filter(projectDTO -> !taskService.getProjectTasksAvailableForDeveloper(projectDTO, developer)
+						.isEmpty()).collect(Collectors.toList());
+	}
 
-    @Override
-    @Transactional
-    public void updateProject(ProjectDTO projectParams) {
-        Project projectFromDb = projectRepository.findOne(projectParams.getId());
-        BeanUtils.copyProperties(projectParams, projectFromDb);
-    }
+	@Override
+	@Transactional
+	public ProjectDTO createProject(ProjectDTO projectParams) {
+		Project newProject = new Project();
+		BeanUtils.copyProperties(projectParams, newProject);
+		newProject = projectRepository.save(newProject);
 
-    @Override
-    @Transactional
-    public void deleteProject(Long projectId) {
-        projectRepository.delete(projectId);
-    }
+		return Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(newProject);
+	}
+
+	@Override
+	@Transactional
+	public void updateProject(ProjectDTO projectParams) {
+		Project projectFromDb = projectRepository.findOne(projectParams.getId());
+		BeanUtils.copyProperties(projectParams, projectFromDb);
+	}
+
+	@Override
+	@Transactional
+	public void removeProject(Long projectId) {
+		projectRepository.delete(projectId);
+	}
 }

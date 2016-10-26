@@ -10,9 +10,12 @@ import java.util.List;
  */
 public interface ProjectService {
 
+	boolean projectExists(Long projectId);
+
 	ProjectDTO getProject(Long projectId);
 
-	// for admin
+	ProjectDTO getProjectByCode(String projectCode);
+
 	List<ProjectDTO> getAllProjects();
 
 	/**
@@ -20,18 +23,13 @@ public interface ProjectService {
 	 */
 	List<ProjectDTO> getProjectManagerProjects(UserDTO projectManager);
 
-	// for pm
 	List<ProjectDTO> getProjectsAvailableForPM(UserDTO projectManager);
 
-	// for dev
 	List<ProjectDTO> getProjectsAvailableForDeveloper(UserDTO developer);
 
-	// allowed to admin and pm
 	ProjectDTO createProject(ProjectDTO projectParams);
 
-	// allowed to admin
 	void updateProject(ProjectDTO projectParams);
 
-	// allowed to admin
-	void deleteProject(Long projectId);
+	void removeProject(Long projectId);
 }

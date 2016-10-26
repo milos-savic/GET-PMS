@@ -32,7 +32,7 @@ public class TaskServiceImpl implements TaskService {
 	@Autowired
 	private UserRepository userRepository;
 
-	public boolean taskExists(Long taskId){
+	public boolean taskExists(Long taskId) {
 		return userRepository.exists(taskId);
 	}
 
@@ -42,6 +42,15 @@ public class TaskServiceImpl implements TaskService {
 		return Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(task);
 	}
 
+	@Override
+	public List<TaskDTO> getProjectTasks(ProjectDTO projectDTO) {
+		Project project = projectRepository.findOne(projectDTO.getId());
+		List<Task> projectTasks = taskRepository.findProjectTasks(project);
+
+		return projectTasks.parallelStream().map(task -> Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(task))
+				.collect(Collectors.toList());
+	}
+
 	public List<TaskDTO> getProjectTasksAvailableForAdmin(ProjectDTO projectDTO) {
 		return getProjectTasks(projectDTO);
 	}
@@ -49,7 +58,7 @@ public class TaskServiceImpl implements TaskService {
 	public List<TaskDTO> getProjectTasksAvailableForPM(ProjectDTO projectDTO, UserDTO projectManager) {
 		List<TaskDTO> projectTasks = getProjectTasks(projectDTO);
 
-		if (projectDTO.getProjectManager().equals(projectManager))
+		if (projectDTO.isMyProjectManager(projectManager))
 			return projectTasks;
 
 		return filterTasksAvailableForUser(projectTasks, projectManager);
@@ -64,14 +73,6 @@ public class TaskServiceImpl implements TaskService {
 	private List<TaskDTO> filterTasksAvailableForUser(List<TaskDTO> tasks, UserDTO user) {
 		return tasks.parallelStream()
 				.filter(taskDTO -> (taskDTO.getAssigneeDTO() == null) || user.equals(taskDTO.getAssigneeDTO()))
-				.collect(Collectors.toList());
-	}
-
-	private List<TaskDTO> getProjectTasks(ProjectDTO projectDTO) {
-		Project project = projectRepository.findOne(projectDTO.getId());
-		List<Task> projectTasks = taskRepository.findProjectTasks(project);
-
-		return projectTasks.parallelStream().map(task -> Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(task))
 				.collect(Collectors.toList());
 	}
 

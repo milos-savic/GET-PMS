@@ -13,6 +13,8 @@ public interface TaskService {
 
 	TaskDTO getTaskByName(String name);
 
+	List<TaskDTO> getProjectTasks(ProjectDTO projectDTO);
+
 	List<TaskDTO> getProjectTasksAvailableForAdmin(ProjectDTO projectDTO);
 
 	List<TaskDTO> getProjectTasksAvailableForPM(ProjectDTO projectDTO, UserDTO projectManager);
