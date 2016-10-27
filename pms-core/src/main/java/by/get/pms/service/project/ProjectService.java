@@ -4,6 +4,7 @@ import by.get.pms.dto.ProjectDTO;
 import by.get.pms.dto.UserDTO;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by milos on 19-Oct-16.
@@ -16,16 +17,12 @@ public interface ProjectService {
 
 	ProjectDTO getProjectByCode(String projectCode);
 
-	List<ProjectDTO> getAllProjects();
+	List<ProjectDTO> getProjectsByIds(Set<Long> projectIds);
 
 	/**
 	 * List of projects on which @param projectManager is assigned as project manager.
 	 */
 	List<ProjectDTO> getProjectManagerProjects(UserDTO projectManager);
-
-	List<ProjectDTO> getProjectsAvailableForPM(UserDTO projectManager);
-
-	List<ProjectDTO> getProjectsAvailableForDeveloper(UserDTO developer);
 
 	ProjectDTO createProject(ProjectDTO projectParams);
 

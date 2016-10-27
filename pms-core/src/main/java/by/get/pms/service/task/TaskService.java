@@ -3,6 +3,7 @@ package by.get.pms.service.task;
 import by.get.pms.dto.*;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by milos on 19-Oct-16.
@@ -13,13 +14,9 @@ public interface TaskService {
 
 	TaskDTO getTaskByName(String name);
 
+	List<TaskDTO> getTasksByIds(Set<Long> taskIds);
+
 	List<TaskDTO> getProjectTasks(ProjectDTO projectDTO);
-
-	List<TaskDTO> getProjectTasksAvailableForAdmin(ProjectDTO projectDTO);
-
-	List<TaskDTO> getProjectTasksAvailableForPM(ProjectDTO projectDTO, UserDTO projectManager);
-
-	List<TaskDTO> getProjectTasksAvailableForDeveloper(ProjectDTO projectDTO, UserDTO developer);
 
 	List<TaskDTO> getTasksAssignedToUser(UserDTO userDTO);
 
@@ -32,4 +29,5 @@ public interface TaskService {
 	void updateTaskByDeveloper(TaskUpdateParamsForDev taskUpdateParamsForDev);
 
 	void removeTask(Long taskId);
+
 }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -45,41 +46,22 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public List<TaskDTO> getProjectTasks(ProjectDTO projectDTO) {
 		Project project = projectRepository.findOne(projectDTO.getId());
-		List<Task> projectTasks = taskRepository.findProjectTasks(project);
+		List<Task> projectTasks = taskRepository.findTasksByProject(project);
 
 		return projectTasks.parallelStream().map(task -> Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(task))
 				.collect(Collectors.toList());
 	}
 
-	public List<TaskDTO> getProjectTasksAvailableForAdmin(ProjectDTO projectDTO) {
-		return getProjectTasks(projectDTO);
-	}
-
-	public List<TaskDTO> getProjectTasksAvailableForPM(ProjectDTO projectDTO, UserDTO projectManager) {
-		List<TaskDTO> projectTasks = getProjectTasks(projectDTO);
-
-		if (projectDTO.isMyProjectManager(projectManager))
-			return projectTasks;
-
-		return filterTasksAvailableForUser(projectTasks, projectManager);
-	}
-
-	public List<TaskDTO> getProjectTasksAvailableForDeveloper(ProjectDTO projectDTO, UserDTO developer) {
-		List<TaskDTO> projectTasks = getProjectTasks(projectDTO);
-
-		return filterTasksAvailableForUser(projectTasks, developer);
-	}
-
-	private List<TaskDTO> filterTasksAvailableForUser(List<TaskDTO> tasks, UserDTO user) {
-		return tasks.parallelStream()
-				.filter(taskDTO -> (taskDTO.getAssigneeDTO() == null) || user.equals(taskDTO.getAssigneeDTO()))
+	public List<TaskDTO> getTasksByIds(Set<Long> taskIds) {
+		List<Task> tasks = taskRepository.findTasksByIds(taskIds);
+		return tasks.parallelStream().map(task -> Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(task))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public List<TaskDTO> getTasksAssignedToUser(UserDTO userDTO) {
 		User user = userRepository.findOne(userDTO.getId());
-		List<Task> tasksAssigneToUser = taskRepository.findTasksAssignedToUser(user);
+		List<Task> tasksAssigneToUser = taskRepository.findTasksByAssignee(user);
 		return tasksAssigneToUser.parallelStream().map(task -> Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(task))
 				.collect(Collectors.toList());
 	}

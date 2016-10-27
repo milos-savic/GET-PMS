@@ -56,7 +56,6 @@ public class TaskRestController {
 			return builder.addErrors(errors).build();
 		}
 
-		// TODO: split based on UserRole
 		UserRole userRole = Application.getInstance().getCurrentRole();
 		switch (userRole) {
 		case ADMIN:
@@ -118,5 +117,4 @@ public class TaskRestController {
 			return builder.addErrorMessage(e.getMessage(), e.getParams()).build();
 		}
 	}
-
 }

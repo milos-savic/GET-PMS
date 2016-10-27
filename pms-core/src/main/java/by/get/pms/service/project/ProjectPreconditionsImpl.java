@@ -6,6 +6,7 @@ import by.get.pms.dto.UserDTO;
 import by.get.pms.exception.ApplicationException;
 import by.get.pms.service.task.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Milos.Savic on 10/26/2016.
  */
+@Component
 public class ProjectPreconditionsImpl implements ProjectPreconditions {
 
 	@Autowired
@@ -26,6 +28,15 @@ public class ProjectPreconditionsImpl implements ProjectPreconditions {
 		if (projectExistsByCode(projectParams.getCode())) {
 			ApplicationException applicationException = new ApplicationException("projects.createProject.AlreadyExists");
 			applicationException.setParams(new String[] { projectParams.getCode() });
+			throw applicationException;
+		}
+	}
+
+	@Override
+	public void checkCreateProjectByPMPreconditions(UserDTO projectManager, ProjectDTO projectParams) throws ApplicationException{
+		if(!projectManager.equals(projectParams.getProjectManager())){
+			ApplicationException applicationException = new ApplicationException("projects.createProject.pmDiffThanCallerPm");
+			applicationException.setParams(new String[] { projectManager.getUsername(),  projectParams.getProjectManager().getUsername() });
 			throw applicationException;
 		}
 	}

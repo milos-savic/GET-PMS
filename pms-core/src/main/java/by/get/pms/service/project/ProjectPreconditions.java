@@ -1,6 +1,7 @@
 package by.get.pms.service.project;
 
 import by.get.pms.dto.ProjectDTO;
+import by.get.pms.dto.UserDTO;
 import by.get.pms.exception.ApplicationException;
 
 /**
@@ -9,6 +10,8 @@ import by.get.pms.exception.ApplicationException;
 public interface ProjectPreconditions {
 
 	void checkCreateProjectPreconditions(ProjectDTO projectParams) throws ApplicationException;
+
+	void checkCreateProjectByPMPreconditions(UserDTO projectManager, ProjectDTO projectParams) throws ApplicationException;
 
 	void checkUpdateProjectPreconditions(ProjectDTO projectParams) throws ApplicationException;
 

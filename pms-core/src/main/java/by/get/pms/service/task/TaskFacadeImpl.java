@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Milos.Savic on 10/24/2016.
@@ -23,19 +24,8 @@ public class TaskFacadeImpl implements TaskFacade {
 	@Autowired
 	private TaskService taskService;
 
-	@Override
-	public List<TaskDTO> getProjectTasksAvailableForAdmin(ProjectDTO project, @Admin UserDTO admin) {
-		return taskService.getProjectTasksAvailableForAdmin(project);
-	}
-
-	@Override
-	public List<TaskDTO> getProjectTasksAvailableForPM(ProjectDTO project, @ProjectManager UserDTO projectManager) {
-		return taskService.getProjectTasksAvailableForPM(project, projectManager);
-	}
-
-	@Override
-	public List<TaskDTO> getProjectTasksAvailableForDeveloper(ProjectDTO project, @Developer UserDTO developer) {
-		return taskService.getProjectTasksAvailableForDeveloper(project, developer);
+	public List<TaskDTO> getTasksByIds(Set<Long> taskIds){
+		return taskService.getTasksByIds(taskIds);
 	}
 
 	@Override

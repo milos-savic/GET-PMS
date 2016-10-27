@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Milos.Savic on 10/24/2016.
@@ -26,23 +27,19 @@ public class ProjectFacadeImpl implements ProjectFacade {
 	}
 
 	@Override
-	public List<ProjectDTO> getAllProjects() {
-		return projectService.getAllProjects();
-	}
-
-	@Override
-	public List<ProjectDTO> getProjectsAvailableForPM(UserDTO projectManager) {
-		return projectService.getProjectsAvailableForPM(projectManager);
-	}
-
-	@Override
-	public List<ProjectDTO> getProjectsAvailableForDeveloper(UserDTO developer) {
-		return projectService.getProjectsAvailableForDeveloper(developer);
+	public List<ProjectDTO> getProjectByIds(Set<Long> projectIds){
+		return projectService.getProjectsByIds(projectIds);
 	}
 
 	@Override
 	public ProjectDTO createProject(ProjectDTO projectParams) throws ApplicationException {
 		projectPreconditions.checkCreateProjectPreconditions(projectParams);
+		return projectService.createProject(projectParams);
+	}
+
+	@Override
+	public ProjectDTO createProjectByPM(UserDTO projectManager, ProjectDTO projectParams) throws ApplicationException{
+		projectPreconditions.checkCreateProjectByPMPreconditions(projectManager, projectParams);
 		return projectService.createProject(projectParams);
 	}
 
@@ -53,7 +50,7 @@ public class ProjectFacadeImpl implements ProjectFacade {
 	}
 
 	@Override
-	public void deleteProject(Long projectId) throws ApplicationException {
+	public void removeProject(Long projectId) throws ApplicationException {
 		projectPreconditions.checkRemoveProjectPreconditions(projectId);
 		projectService.removeProject(projectId);
 	}

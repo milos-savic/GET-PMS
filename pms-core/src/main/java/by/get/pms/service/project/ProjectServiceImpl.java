@@ -44,15 +44,15 @@ public class ProjectServiceImpl implements ProjectService {
 		return Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(projectRepository.findOne(projectId));
 	}
 
-	@Autowired
+	@Override
 	public ProjectDTO getProjectByCode(String projectCode) {
 		return Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER
 				.apply(projectRepository.findProjectByCode(projectCode));
 	}
 
 	@Override
-	public List<ProjectDTO> getAllProjects() {
-		List<Project> projects = Lists.newArrayList(projectRepository.findAll());
+	public List<ProjectDTO> getProjectsByIds(Set<Long> projectIds){
+		List<Project> projects = projectRepository.findProjectsByIds(projectIds);
 		return projects.parallelStream()
 				.map(project -> Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(project))
 				.collect(Collectors.toList());
@@ -61,35 +61,11 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public List<ProjectDTO> getProjectManagerProjects(UserDTO projectManager) {
 		List<Project> projectManagerProjects = projectRepository
-				.findProjectManagerProjects(userRepository.findOne(projectManager.getId()));
+				.findProjectsByProjectManager(userRepository.findOne(projectManager.getId()));
 
 		return projectManagerProjects.parallelStream()
 				.map(project -> Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(project))
 				.collect(Collectors.toList());
-	}
-
-	@Override
-	public List<ProjectDTO> getProjectsAvailableForPM(UserDTO projectManager) {
-		Set<ProjectDTO> allProjects = Sets.newHashSet(getAllProjects());
-		Set<ProjectDTO> projectManagerProjects = Sets.newHashSet(getProjectManagerProjects(projectManager));
-
-		allProjects.removeAll(projectManagerProjects);
-
-		Set<ProjectDTO> projectsAvailableToPMBasedOnTasks = allProjects.parallelStream()
-				.filter(projectDTO -> !taskService.getProjectTasksAvailableForPM(projectDTO, projectManager).isEmpty())
-				.collect(Collectors.toSet());
-
-		projectManagerProjects.addAll(projectsAvailableToPMBasedOnTasks);
-		return Lists.newArrayList(projectManagerProjects);
-	}
-
-	@Override
-	public List<ProjectDTO> getProjectsAvailableForDeveloper(UserDTO developer) {
-		Set<ProjectDTO> allProjects = Sets.newHashSet(getAllProjects());
-
-		return allProjects.parallelStream()
-				.filter(projectDTO -> !taskService.getProjectTasksAvailableForDeveloper(projectDTO, developer)
-						.isEmpty()).collect(Collectors.toList());
 	}
 
 	@Override
