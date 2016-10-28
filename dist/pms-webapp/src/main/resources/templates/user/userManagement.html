@@ -78,37 +78,38 @@
                 <th th:text="#{user.management.table.header.user.name}">User Name</th>
                 <th th:text="#{user.management.table.header.first.name}">First Name</th>
                 <th th:text="#{user.management.table.header.last.name}">Last Name</th>
+                <th th:text="#{user.management.table.header.email}">Email</th>
                 <th th:text="#{user.management.table.header.role}">Role</th>
-                <th th:text="#{user.management.table.header.roleId}">Role Id</th>
                 <th th:text="#{user.management.table.header.active}">Active</th>
             </tr>
             </thead>
+
+            <tbody>
+            <tr th:attr="data-code=${user.id}, data-name=${user.firstName + ' ' + user.lastName}"
+                th:each="user : ${users}" ondblclick="updateUserAction(this, true);"
+                th:with="activeMsgKey=${'user.active.' + (user.active ? 'Yes' : 'No')}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.userName}"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.role.name}"></td>
+                <td th:text="#{${activeMsgKey}}"></td>
+            </tr>
+            </tbody>
+
             <tfoot>
             <tr role="row">
                 <th th:text="#{user.management.table.header.id}">Id</th>
                 <th th:text="#{user.management.table.header.user.name}">User Name</th>
                 <th th:text="#{user.management.table.header.first.name}">First Name</th>
                 <th th:text="#{user.management.table.header.last.name}">Last Name</th>
+                <th th:text="#{user.management.table.header.email}">Email</th>
                 <th th:text="#{user.management.table.header.role}">Role</th>
-                <th th:text="#{user.management.table.header.roleId}">Role Id</th>
                 <th th:text="#{user.management.table.header.active}">Active</th>
             </tr>
             </tfoot>
-            <tbody>
-            <tr th:attr="data-code=${user.id}, data-name=${user.firstName + ' ' + user.lastName}"
-                th:each="user : ${users}" ondblclick="updateUserAction(this, true);"
-                th:with="roleMsgKey=${'user.role.' + user.role}, activeMsgKey=${'user.active.' + user.active}">
-                <td th:text="${user.id}"></td>
-                <td th:text="${user.userName}"></td>
-                <td th:text="${user.firstName}"></td>
-                <td th:text="${user.lastName}"></td>
-                <td th:text="#{${roleMsgKey}}"></td>
-                <td th:text="${user.roleId}"></td>
-                <td th:text="#{${activeMsgKey}}"></td>
-            </tr>
-            </tbody>
         </table>
-
 
         <!-- dialogs -->
         <div th:replace="fragments/messageDialog :: messageDialog">&nbsp;</div>
