@@ -3,37 +3,22 @@ var Configs = {
 
     /* base url must be set on the main page on server side*/
 
-    createTableUserUrl: baseUrl + "/rest/createTableUser",
-    updateTableUserUrl: baseUrl + "/rest/updateTableUser",
-    findTableUserUrl: baseUrl + "/rest/findTableUser",
-    deleteTableUserUrl: baseUrl + "/rest/deleteTableUser",
+    findUserUrl: baseUrl + "/rest/findUser",
+    createUserUrl: baseUrl + "/rest/createUpdateUser",
+    updateUserUrl: baseUrl + "/rest/createUpdateUser",
+    deleteUserUrl: baseUrl + "/rest/deleteUser",
 
     monthPickerFormat: 'dd/MM/yyyy HH:mm',
     dateTimePickerFormat: 'd/m/Y H:i',
     totalNumberFormat: '0,0[.]00 $',
 
-    userRole: {
-        Administrator: {
-            code: 'Admin',
-            value: 'Administrator'
-        },
-        PROJECT_MANAGER: {
-            code: 'PM',
-            value: 'PROJECT_MANAGER'
-        },
-        DEVELOPER: {
-                    code: 'DEV',
-                    value: 'DEVELOPER'
-        }
-    },
-
     userActive: {
         Yes: {
-            code: 'Yes',
+            code: 'yes',
             value: 'Yes'
         },
         No: {
-            code: 'No',
+            code: 'no',
             value: 'No'
         }
     }

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="createUserForm">
+    <form id="createUserForm" role="form" class="form-horizontal">
+        <input name="createUserFormId" id="createUserFormId" type="hidden"/>
+
+        <div class="form-group">
+            <label for="createUserFormUserName" class="col-sm-5 control-label input-sm required-indicator"
+                   th:text="#{users.createUser.form.label.user.name}">User Name</label>
+
+            <div class="col-sm-7">
+                <input class="form-control input-sm" id="createUserFormUserName" name="createUserFormUserName" type="text" value=""
+                       placeholder="" th:attr="placeholder=#{users.createUser.form.provideValue}" required="required"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="createUserFormFirstName" class="col-sm-5 control-label input-sm required-indicator"
+                   th:text="#{users.createUser.form.label.first.name}">First Name</label>
+
+            <div class="col-sm-7">
+                <input class="form-control input-sm" id="createUserFormFirstName" name="createUserFormFirstName" type="text" value=""
+                       placeholder="" th:attr="placeholder=#{users.createUser.form.provideValue}" required="required"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="createUserFormLastName" class="col-sm-5 control-label input-sm required-indicator"
+                   th:text="#{users.createUser.form.label.last.name}">Last Name</label>
+
+            <div class="col-sm-7">
+                <input class="form-control input-sm" id="createUserFormLastName" name="createUserFormLastName" type="text" value=""
+                       placeholder="" th:attr="placeholder=#{users.createUser.form.provideValue}" required="required"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="createUserFormEmail" class="col-sm-5 control-label input-sm required-indicator"
+                   th:text="#{users.createUser.form.label.email}">Email</label>
+
+            <div class="col-sm-7">
+                <input class="form-control input-sm" id="createUserFormEmail" name="createUserFormEmail" type="text" value=""
+                       placeholder="" th:attr="placeholder=#{users.createUser.form.provideValue}" required="required"/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="createUserFormRole" class="col-sm-5 control-label input-sm required-indicator"
+                   th:text="#{users.createUser.form.label.role}">Role</label>
+
+            <div class="col-sm-7">
+                <select id="createUserFormRole" name="createUserFormRole" class="form-control input-sm" required="required">
+                    <option th:each="role : ${roles}" th:text="${role.name}"
+                            th:value="${role.name}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="createUserFormActive" class="col-sm-5 control-label input-sm required-indicator"
+                   th:text="#{users.createUser.form.label.active}">Active</label>
+
+            <div class="col-sm-7">
+                <input align="left" class="form-control checkbox" id="createUserFormActive" name="createUserFormActive" type="checkbox" value=""
+                       placeholder="" th:attr="placeholder=#{users.createUser.form.provideValue}"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
