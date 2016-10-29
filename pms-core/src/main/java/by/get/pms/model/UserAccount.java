@@ -26,6 +26,7 @@ public class UserAccount extends PersistentEntity {
     private User user;
 
     @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     public UserAccount() {
