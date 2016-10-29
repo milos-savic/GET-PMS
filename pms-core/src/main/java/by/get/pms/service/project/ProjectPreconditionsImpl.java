@@ -36,7 +36,7 @@ public class ProjectPreconditionsImpl implements ProjectPreconditions {
 	public void checkCreateProjectByPMPreconditions(UserDTO projectManager, ProjectDTO projectParams) throws ApplicationException{
 		if(!projectManager.equals(projectParams.getProjectManager())){
 			ApplicationException applicationException = new ApplicationException("projects.createProject.pmDiffThanCallerPm");
-			applicationException.setParams(new String[] { projectManager.getUsername(),  projectParams.getProjectManager().getUsername() });
+			applicationException.setParams(new String[] { projectManager.getUserName(),  projectParams.getProjectManager().getUserName() });
 			throw applicationException;
 		}
 	}

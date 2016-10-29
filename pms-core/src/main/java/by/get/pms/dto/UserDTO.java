@@ -25,7 +25,7 @@ public class UserDTO extends DTO {
 
 	@NotNull
 	@Size(min = 1, max = 30)
-	private String username;
+	private String userName;
 
 	@NotNull
 	private LocalDateTime creationDate;
@@ -38,13 +38,13 @@ public class UserDTO extends DTO {
 	public UserDTO() {
 	}
 
-	public UserDTO(long id, String firstName, String lastName, String email, String username,
+	public UserDTO(long id, String firstName, String lastName, String email, String userName,
 			LocalDateTime creationDate, Boolean active, UserRole role) {
 		super(id);
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.username = username;
+		this.userName = userName;
 		this.creationDate = creationDate;
 		this.active = active;
 		this.role = role;
@@ -52,7 +52,7 @@ public class UserDTO extends DTO {
 
 	@Override
 	public String getBusinessIdentifier() {
-		return username;
+		return userName;
 	}
 
 	public boolean isAdmin() {
@@ -91,12 +91,12 @@ public class UserDTO extends DTO {
 		this.email = email;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public LocalDateTime getCreationDate() {

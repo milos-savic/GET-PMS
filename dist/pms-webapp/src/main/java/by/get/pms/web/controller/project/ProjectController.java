@@ -41,7 +41,7 @@ public class ProjectController {
 
 	private List<ProjectDTO> retrieveProjects(UserDTO user) {
 		List<EntitlementDTO> entitlementsForProjectsPermittedToUser = entitlementService
-				.getEntitlementsForObjectTypePermittedToUser(user.getUsername(), ObjectType.PROJECT);
+				.getEntitlementsForObjectTypePermittedToUser(user.getUserName(), ObjectType.PROJECT);
 		Set<Long> projectIds = entitlementsForProjectsPermittedToUser.parallelStream().map(EntitlementDTO::getObjectid)
 				.collect(Collectors.toSet());
 		return projectFacade.getProjectByIds(projectIds);

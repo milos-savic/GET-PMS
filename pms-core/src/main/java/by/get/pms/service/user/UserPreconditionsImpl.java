@@ -29,9 +29,9 @@ public class UserPreconditionsImpl implements UserPreconditions {
 
 	@Override
 	public void checkCreateUserPreconditions(UserDTO userParams) throws ApplicationException {
-		if (userExistsByUsername(userParams.getUsername())) {
+		if (userExistsByUsername(userParams.getUserName())) {
 			ApplicationException applicationException = new ApplicationException("users.createUser.AlreadyExists");
-			applicationException.setParams(new String[] { userParams.getUsername() });
+			applicationException.setParams(new String[] { userParams.getUserName() });
 			throw applicationException;
 		}
 	}
@@ -46,11 +46,11 @@ public class UserPreconditionsImpl implements UserPreconditions {
 			throw applicationException;
 		}
 
-		if (userExistsByUsername(userParams.getUsername())) {
-			UserDTO user = userService.getUserByUserName(userParams.getUsername());
+		if (userExistsByUsername(userParams.getUserName())) {
+			UserDTO user = userService.getUserByUserName(userParams.getUserName());
 			if (!user.getId().equals(userParams.getId())) {
 				ApplicationException applicationException = new ApplicationException("users.updateUser.AlreadyExists");
-				applicationException.setParams(new String[] { userParams.getUsername() });
+				applicationException.setParams(new String[] { userParams.getUserName() });
 				throw applicationException;
 			}
 		}
