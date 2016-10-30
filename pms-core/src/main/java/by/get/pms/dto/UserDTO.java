@@ -27,7 +27,6 @@ public class UserDTO extends DTO {
 	@Size(min = 1, max = 30)
 	private String userName;
 
-	@NotNull
 	private LocalDateTime creationDate;
 
 	private Boolean active;

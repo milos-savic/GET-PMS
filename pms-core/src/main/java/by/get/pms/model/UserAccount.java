@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class UserAccount extends PersistentEntity {
 
     @Column(name = "username", unique = true, nullable = false, length = 30)
-    private String username;
+    private String userName;
 
     @Column(name = "creationdate", nullable = false)
     private LocalDateTime creationDateTime;
@@ -33,12 +33,12 @@ public class UserAccount extends PersistentEntity {
         super();
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public LocalDateTime getCreationDateTime() {
@@ -75,14 +75,14 @@ public class UserAccount extends PersistentEntity {
 
     @Override
     public Serializable getIdentifier() {
-        return username;
+        return userName;
     }
 
     @Override
     public String toString() {
         return "UserAccount{" +
                 "id= " + getId() + '\'' +
-                "username='" + username + '\'' +
+                "userName='" + userName + '\'' +
                 ", creationDateTime=" + creationDateTime +
                 ", active=" + active +
                 '}';

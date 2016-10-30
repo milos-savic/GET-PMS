@@ -47,7 +47,7 @@ public class TaskController {
 
 	private List<TaskDTO> retrieveProjectTasks(ProjectDTO project, UserDTO user) {
 		List<EntitlementDTO> entitlementsForTasksPermittedToUser = entitlementService
-				.getEntitlementsForObjectTypePermittedToUser(user.getUsername(), ObjectType.TASK);
+				.getEntitlementsForObjectTypePermittedToUser(user.getUserName(), ObjectType.TASK);
 		Set<Long> taskIds = entitlementsForTasksPermittedToUser.parallelStream().map(EntitlementDTO::getObjectid)
 				.collect(Collectors.toSet());
 		List<TaskDTO> tasks = taskFacade.getTasksByIds(taskIds);
