@@ -19,7 +19,7 @@ public final class WebConstants {
 	public final static String LOGOUT_SUCCESS_URL = SIGNIN_PAGE + "?logout";
 
 	public final static String USER_MANAGEMENT_URL = "/userManagement";
-	public final static String USER_MANAGEMENT_INDEX_HTML_PATH = "user/userManagement";
+	public final static String USER_MANAGEMENT_INDEX_HTML_PATH = "users/userManagement";
 	public final static String CREATE_UPDATE_USER_URL = "/createUpdateUser";
 	public final static String DELETE_USER_URL = "/deleteUser";
 
