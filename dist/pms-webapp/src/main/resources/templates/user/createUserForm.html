@@ -53,8 +53,8 @@
 
             <div class="col-sm-7">
                 <select id="createUserFormRole" name="createUserFormRole" class="form-control input-sm" required="required">
-                    <option th:each="role : ${roles}" th:text="${role.name}"
-                            th:value="${role.name}"></option>
+                    <option th:each="role : ${roles}" th:text="${role.name()}"
+                            th:value="${role.name()}"></option>
                 </select>
             </div>
         </div>
