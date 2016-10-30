@@ -16,7 +16,7 @@ function getSelectedTableRow() {
     var sel = $('tr.selected');
     var data = {};
     if (sel && table.row(sel).length > 0) {
-        data['userId'] = table.row(sel).data().id;
+        data['id'] = table.row(sel).data().id;
         data['userName'] = table.row(sel).data().userName;
         data['firstName'] = table.row(sel).data().firstName;
         data['lastName'] = table.row(sel).data().lastName;
@@ -42,8 +42,8 @@ function updateSelectedTableRow(data) {
 
 function removeUserAction() {
     var selectedData = getSelectedTableRow();
-    if (selectedData && selectedData['userId']) {
-        var id = selectedData['userId'];
+    if (selectedData && selectedData['id']) {
+        var id = selectedData['id'];
         deleteRequest(Configs.deleteUserUrl + "/" + id, function (jsonData) {
             removeSelectedTableRow();
             showSuccessDialog(jsonData);
@@ -74,8 +74,13 @@ function initUserDataTablePlugin() {
                 {data: "lastName"},
                 {data: "email"},
                 {data: "role"},
-                {data: "active"}
-            ]
+                {data: "active"},
+            ],
+            "columnDefs" : [{
+                "targets" : [ 0 ],
+                "visible" : false,
+                "searchable": false
+            }]
         }
     );
     //single selection mode for tableUser table

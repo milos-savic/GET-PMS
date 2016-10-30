@@ -1,4 +1,4 @@
-function clearCreateUserForm()(){
+function clearCreateUserForm(){
     $("#createUserFormId").val([]);
     $("#createUserFormUserName").val([]);
     $("#createUserFormFirstName").val([]);
@@ -17,7 +17,7 @@ function addRecordCreateUserFormSaveData() {
 
 function collectCreateFromData() {
     var newRecordData = {};
-    newRecordData.userId = $("#createUserFormId").val();
+    newRecordData.id = $("#createUserFormId").val();
     newRecordData.userName = $("#createUserFormUserName").val();
     newRecordData.firstName = $("#createUserFormFirstName").val();
     newRecordData.lastName = $("#createUserFormLastName").val();
@@ -80,7 +80,7 @@ function addRecordCreateSuccessHandler(json) {
     $("#createUserDialog").modal("hide");
     var selectedData = getSelectedTableRow();
     var serverData = json.model.user;
-    serverData.active = Configs.userActive[serverData.active].value;
+    serverData.active = serverData.active ? 'Yes' : 'No';
 
     if (serverData) {
         addNewTableRow(serverData);
@@ -100,6 +100,4 @@ function initCreateUserForm(){
         $('input[type=submit]', this).attr('disabled', 'disabled');
         addRecordCreateUserFormSaveData();
     });
-
-
 }

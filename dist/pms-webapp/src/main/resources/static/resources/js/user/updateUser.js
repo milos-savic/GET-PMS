@@ -11,7 +11,7 @@ function updateUserAction(row, openDialog) {
 }
 
 function fillUpdateFormWithData(editData) {
-    $("#updateUserFormId").val(editData.userId);
+    $("#updateUserFormId").val(editData.id);
     $("#updateUserFormUserName").val(editData.userName);
     $('#updateUserFormFirstName').val(editData.firstName);
     $('#updateUserFormLastName').val(editData.lastName);
@@ -29,18 +29,18 @@ function updateFormSaveData() {
 
 function collectUpdateFromData() {
     var editData = {};
-    editData.userId = $("#updateUserFormId").val();
+    editData.id = $("#updateUserFormId").val();
     editData.userName = $("#updateUserFormUserName").val();
     editData.firstName = $("#updateUserFormFirstName").val();
     editData.lastName = $("#updateUserFormLastName").val();
-    editData.email = $("#updateUserFormLastEmail").val();
+    editData.email = $("#updateUserFormEmail").val();
     editData.role = $("#updateUserFormRole").val();
     editData.active = $("#updateUserFormActive").is(":checked");
 
     return editData;
 }
 
-var requiredCreateStringProps = {
+var requiredUpdateStringProps = {
     userName: {maxLength: 30},
     firstName: {maxLength: 255},
     lastName: {maxLength: 255},
@@ -91,11 +91,9 @@ function isUpdateDataValid(recordData) {
 function addRecordUpdateSuccessHandler(json) {
     $("#updateUserDialog").modal("hide");
     var selectedData = getSelectedTableRow();
-    var serverData = json.model.tableUser;
-    serverData.active = Configs.userActive[serverData.active].value;
-    if (selectedData && serverData && (selectedData['userId'] == serverData['id'])) {
-        updateSelectedTableRow(serverData);
-    }
+    var serverData = json.model.user;
+    serverData.active = serverData.active ? 'Yes' : 'No';
+    updateSelectedTableRow(serverData);
 
     showSuccessDialog(json);
 }
