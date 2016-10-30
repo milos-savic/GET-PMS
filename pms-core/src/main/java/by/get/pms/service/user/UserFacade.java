@@ -10,8 +10,6 @@ import java.util.List;
  */
 public interface UserFacade {
 
-    UserDTO getUser(Long userId);
-
     List<UserDTO> getAllUsers();
 
     UserDTO createUser(UserDTO userParams) throws ApplicationException;

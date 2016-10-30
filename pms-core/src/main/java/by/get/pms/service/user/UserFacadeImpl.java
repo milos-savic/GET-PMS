@@ -20,11 +20,6 @@ public class UserFacadeImpl implements UserFacade {
 	private UserService userService;
 
 	@Override
-	public UserDTO getUser(Long userId) {
-		return userService.getUser(userId);
-	}
-
-	@Override
 	public List<UserDTO> getAllUsers() {
 		return userService.getAllUsers();
 	}
