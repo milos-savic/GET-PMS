@@ -18,11 +18,11 @@
         </div>
 
         <div class="form-group">
-            <label for="updateUserFirstName" class="col-sm-5 control-label input-sm required-indicator"
+            <label for="updateUserFormFirstName" class="col-sm-5 control-label input-sm required-indicator"
                    th:text="#{users.updateUser.form.label.first.name}">First Name</label>
 
             <div class="col-sm-7">
-                <input class="form-control input-sm" id="updateUserFirstName" name="updateUserFirstName" type="text" value=""
+                <input class="form-control input-sm" id="updateUserFormFirstName" name="updateUserFormFirstName" type="text" value=""
                        placeholder="" th:attr="placeholder=#{users.updateUser.form.provideValue}" required="required"/>
             </div>
         </div>
@@ -54,8 +54,8 @@
             <div class="col-sm-7">
                 <select id="updateUserFormRole" name="updateTableUserFormRole" class="form-control input-sm" required="required">
                     <option th:each="role : ${roles}"
-                            th:text="${role.name}"
-                            th:value="${role.name}">
+                            th:text="${role.name()}"
+                            th:value="${role.name()}">
                     </option>
                 </select>
             </div>
