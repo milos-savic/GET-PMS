@@ -9,6 +9,6 @@ import org.springframework.data.repository.query.Param;
  * Created by Milos.Savic on 10/18/2016.
  */
 public interface UserRepository extends CrudRepository<User, Long> {
-    @Query("select count(*) from UserAccount ua where ua.userName = :userName")
+    @Query("select count(ua) from UserAccount ua where ua.userName = :userName")
     Integer userExistsByUserName(@Param("userName") String userName);
 }
