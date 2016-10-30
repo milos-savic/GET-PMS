@@ -10,24 +10,25 @@ import java.util.Set;
  */
 public interface TaskService {
 
-	boolean taskExists(Long id);
+    boolean taskExists(Long id);
 
-	TaskDTO getTaskByName(String name);
+    boolean taskExistsByName(String name);
 
-	List<TaskDTO> getTasksByIds(Set<Long> taskIds);
+    TaskDTO getTaskByName(String name);
 
-	List<TaskDTO> getProjectTasks(ProjectDTO projectDTO);
+    List<TaskDTO> getTasksByIds(Set<Long> taskIds);
 
-	List<TaskDTO> getTasksAssignedToUser(UserDTO userDTO);
+    List<TaskDTO> getProjectTasks(ProjectDTO projectDTO);
 
-	TaskDTO createTask(TaskDTO taskDTO);
+    List<TaskDTO> getTasksAssignedToUser(UserDTO userDTO);
 
-	void updateTask(TaskDTO taskDTO);
+    TaskDTO createTask(TaskDTO taskDTO);
 
-	void updateTaskByProjectManager(TaskUpdateParamsForPM taskUpdateParamsForPM);
+    void updateTask(TaskDTO taskDTO);
 
-	void updateTaskByDeveloper(TaskUpdateParamsForDev taskUpdateParamsForDev);
+    void updateTaskByProjectManager(TaskUpdateParamsForPM taskUpdateParamsForPM);
 
-	void removeTask(Long taskId);
+    void updateTaskByDeveloper(TaskUpdateParamsForDev taskUpdateParamsForDev);
 
+    void removeTask(Long taskId);
 }

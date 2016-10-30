@@ -33,8 +33,14 @@ public class TaskServiceImpl implements TaskService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Override
 	public boolean taskExists(Long taskId) {
-		return userRepository.exists(taskId);
+		return taskRepository.exists(taskId);
+	}
+
+	@Override
+	public boolean taskExistsByName(String name){
+		return taskRepository.taskExistsByName(name) > 0;
 	}
 
 	@Override

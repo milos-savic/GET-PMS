@@ -40,6 +40,11 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
+	public boolean projectExistsByCode(String projectCode){
+		return projectRepository.projectExistsByCode(projectCode) > 0;
+	}
+
+	@Override
 	public ProjectDTO getProject(Long projectId) {
 		return Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(projectRepository.findOne(projectId));
 	}

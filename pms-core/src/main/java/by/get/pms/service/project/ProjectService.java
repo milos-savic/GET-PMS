@@ -11,22 +11,24 @@ import java.util.Set;
  */
 public interface ProjectService {
 
-	boolean projectExists(Long projectId);
+    boolean projectExists(Long projectId);
 
-	ProjectDTO getProject(Long projectId);
+    boolean projectExistsByCode(String projectCode);
 
-	ProjectDTO getProjectByCode(String projectCode);
+    ProjectDTO getProject(Long projectId);
 
-	List<ProjectDTO> getProjectsByIds(Set<Long> projectIds);
+    ProjectDTO getProjectByCode(String projectCode);
 
-	/**
-	 * List of projects on which @param projectManager is assigned as project manager.
-	 */
-	List<ProjectDTO> getProjectManagerProjects(UserDTO projectManager);
+    List<ProjectDTO> getProjectsByIds(Set<Long> projectIds);
 
-	ProjectDTO createProject(ProjectDTO projectParams);
+    /**
+     * List of projects on which @param projectManager is assigned as project manager.
+     */
+    List<ProjectDTO> getProjectManagerProjects(UserDTO projectManager);
 
-	void updateProject(ProjectDTO projectParams);
+    ProjectDTO createProject(ProjectDTO projectParams);
 
-	void removeProject(Long projectId);
+    void updateProject(ProjectDTO projectParams);
+
+    void removeProject(Long projectId);
 }
