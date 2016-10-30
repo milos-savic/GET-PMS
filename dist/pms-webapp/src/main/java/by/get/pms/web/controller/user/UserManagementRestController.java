@@ -30,7 +30,7 @@ public class UserManagementRestController {
 	private UserFacade userFacade;
 
 	@RequestMapping(value = WebConstants.CREATE_UPDATE_USER_URL, method = RequestMethod.POST)
-	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
+	//@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
 	public Response createUpdateUser(@Validated UserDTO userParams, BindingResult errors) {
 		ResponseBuilder builder = responseBuilder.instance();
 		if (errors.hasErrors()) {
@@ -52,18 +52,18 @@ public class UserManagementRestController {
 			return builder.addErrorMessage(ae.getMessage(), ae.getParams()).build();
 		}
 
-		return builder.indicateSuccess().addSuccessMessage(messageKey, userDtoNew.getId()).addObject("user", userDtoNew)
+		return builder.indicateSuccess().addSuccessMessage(messageKey, userDtoNew.getUserName()).addObject("user", userDtoNew)
 				.build();
 	}
 
 	@RequestMapping(value = WebConstants.DELETE_USER_URL + "/{id}", method = RequestMethod.DELETE)
-	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
+	//@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
 	public Response deleteUser(@PathVariable("id") final Long id) {
 		final ResponseBuilder builder = responseBuilder.instance();
 
 		try {
 			userFacade.removeUser(id);
-			return builder.indicateSuccess().addSuccessMessage("users.removeUser.successfully.removed", id)
+			return builder.indicateSuccess().addSuccessMessage("users.removeUser.successfully.removed")
 					.build();
 		} catch (ApplicationException e) {
 			return builder.addErrorMessage(e.getMessage(), e.getParams()).build();

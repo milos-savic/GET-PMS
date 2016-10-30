@@ -53,18 +53,21 @@
 
         <h2 th:text="#{user.management.table.title}">User Management</h2>
 
-        <div style="padding-bottom: 5px">
-            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">
+        <div style="padding-bottom: 25px" >
+            <!--<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">-->
+            <div>
                 <button id="createUserButton" data-toggle="modal" data-target="#createUserDialog"
                         class="btn btn-default" th:text="#{user.management.button.add}">Add User
                 </button>
             </div>
-            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">
+            <!--<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">-->
+            <div style="margin-left: 95px; margin-top: -34px;">
                 <button id="updateUserButton" data-toggle="modal" data-target="#updateUserDialog"
                         class="btn btn-default" th:text="#{user.management.button.update}">Update User
                 </button>
             </div>
-            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">
+            <!--<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">-->
+            <div style="margin-left: 210px; margin-top: -34px;">
                 <button id="removeUserButton" data-toggle="modal" data-target="#removeUserDialog"
                         class="btn btn-default" th:text="#{user.management.button.remove}">Remove User
                 </button>
@@ -93,7 +96,7 @@
                 <td th:text="${user.firstName}"></td>
                 <td th:text="${user.lastName}"></td>
                 <td th:text="${user.email}"></td>
-                <td th:text="${user.role.name}"></td>
+                <td th:text="${user.role.name()}"></td>
                 <td th:text="#{${activeMsgKey}}"></td>
             </tr>
             </tbody>
