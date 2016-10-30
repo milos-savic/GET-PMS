@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <object th:include="fragments/meta :: meta" th:remove="tag"/>
+    <title th:text="#{projects.table.title}">Projects</title>
+
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/buttons/1.2.0/css/buttons.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../../resources/css/bootstrap-3.1.1.min.css" media="screen" th:href="@{/resources/css/bootstrap-3.1.1.min.css}"/>
+    <link rel="stylesheet" href="../../../resources/css/bootstrap-select-1.5.2.min.css" media="screen" th:href="@{/resources/css/bootstrap-select-1.5.2.min.css}"/>
+    <link rel="stylesheet" href="../../../resources/css/select2.css" media="screen" th:href="@{/resources/css/select2.css}"/>
+    <link rel="stylesheet" href="../../../resources/css/select2-bootstrap.css" media="screen" th:href="@{/resources/css/select2-bootstrap.css}"/>
+    <link rel="stylesheet" href="../../../resources/css/jquery-ui-1.10.4.css" media="screen" th:href="@{/resources/css/jquery-ui-1.10.4.css}"/>
+
+    <!-- our custom css -->
+    <link rel="stylesheet" href="../../../resources/css/core.css" media="screen" th:href="@{/resources/css/core.css}"/>
+    <link rel="stylesheet" href="../../../resources/css/projects/projects.css" media="screen" th:href="@{/resources/css/projects/projects.css}"/>
+
+
+
+    <script src="../../../resources/js/jquery.dataTables-1.10.11.min.js" th:src="@{/resources/js/jquery.dataTables-1.10.11.min.js}"></script>
+    <script src="//cdn.datatables.net/buttons/1.2.0/js/dataTables.buttons.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.2.0/js/buttons.html5.min.js"></script>
+    <script src="../../../resources/js/bootstrap-select-1.5.2.min.js" th:src="@{/resources/js/bootstrap-select-1.5.2.min.js}"></script>
+    <script src="../../../resources/js/numeral-1.4.5.min.js" th:src="@{/resources/js/numeral-1.4.5.min.js}"></script>
+    <script src="../../../resources/js/select2.js" th:src="@{/resources/js/select2.js}"></script>
+
+    <!-- our custom js -->
+    <script src="../../../resources/js/custom/Config.js" th:src="@{/resources/js/custom/Config.js}"></script>
+    <script src="../../../resources/js/custom/Utils.js" th:src="@{/resources/js/custom/Utils.js}"></script>
+    <script src="../../../resources/js/projects/projects.js" th:src="@{/resources/js/projects/projects.js}"></script>
+</head>
+<body>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var propsNames = {
+        code: "Project Code",
+        name: "Project Name",
+        description: "Project Desctiption",
+        projectManager: "Project Manager",
+    };
+    /*]]>*/
+</script>
+
+<div id="wrap">
+    <div th:replace="fragments/header :: header">&nbsp;</div>
+
+    <div class="container">
+
+        <h2 th:text="#{projects.table.title}">Projects</h2>
+
+        <div style="padding-bottom: 25px" >
+            <!--<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') || #authorization.expression('hasRole(''ROLE_PROJECT_MANAGER_USER'')') }" th:remove="tag">-->
+            <div>
+                <button id="createProjectButton" data-toggle="modal" data-target="#createProjectDialog"
+                        class="btn btn-default" th:text="#{project.button.add}">Add project
+                </button>
+            </div>
+            <!--<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">-->
+            <div style="margin-left: 95px; margin-top: -34px;">
+                <button id="updateProjectButton" data-toggle="modal" data-target="#updateProjectDialog"
+                        class="btn btn-default" th:text="#{project.button.update}">Update project
+                </button>
+            </div>
+            <!--<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">-->
+            <div style="margin-left: 210px; margin-top: -34px;">
+                <button id="removeProjectButton" data-toggle="modal" data-target="#removeProjectDialog"
+                        class="btn btn-default" th:text="#{project.button.remove}">Remove project
+                </button>
+            </div>
+        </div>
+
+        <table id="tableProject" class="table table-striped">
+            <thead>
+            <tr role="row">
+                <th th:text="#{project.table.header.id}">Id</th>
+                <th th:text="#{project.table.header.code}">Project code</th>
+                <th th:text="#{project.table.header.name}">Project name</th>
+                <th th:text="#{project.table.header.description}">Description</th>
+                <th th:text="#{project.table.header.project.manager}">Project manager</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="project : ${projects}" ondblclick="updateProjectAction(this, true);">
+                <td th:text="${project.id}"></td>
+                <td th:text="${project.code}"></td>
+                <td th:text="${project.name}"></td>
+                <td th:text="${project.description}"></td>
+                <td th:text="${project.projectManager.userName}"></td>
+            </tr>
+            </tbody>
+
+            <tfoot>
+            <tr role="row">
+                <th th:text="#{project.table.header.id}">Id</th>
+                <th th:text="#{project.table.header.code}">Project code</th>
+                <th th:text="#{project.table.header.project.name}">Project name</th>
+                <th th:text="#{project.table.header.description}">Description</th>
+                <th th:text="#{project.table.header.project.manager}">Project manager</th>
+            </tr>
+            </tfoot>
+        </table>
+
+        <!-- dialogs -->
+        <div th:replace="fragments/messageDialog :: messageDialog">&nbsp;</div>
+        <div th:replace="fragments/loadingDialog :: loadingDialog">&nbsp;</div>
+
+        <div th:replace="projects/createProjectDialog :: createProjectDialog">&nbsp;</div>
+        <div th:replace="projects/updateProjectDialog :: updateProjectDialog">&nbsp;</div>
+        <div th:replace="projects/removeProjectDialog :: removeProjectDialog">&nbsp;</div>
+    </div>
+</div>
+<!-- dialogs -->
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
+</body>
+</html>
