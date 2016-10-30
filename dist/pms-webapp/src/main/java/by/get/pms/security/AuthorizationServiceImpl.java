@@ -63,7 +63,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 		final Set<GrantedAuthority> granted = grantAuthorities(userAccount);
 		boolean isActive = userAccount.isActive();
 
-		final User user = new User(userAccount.getUsername(), null, isActive, accountNonExpired,
+		final User user = new User(userAccount.getUserName(), null, isActive, accountNonExpired,
 				isCredentialsNotExpired, isActive, granted);
 		user.setDisplayName(userAccount.getUser().getFirstName() + " " + userAccount.getUser().getLastName());
 		return user;
