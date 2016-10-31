@@ -43,7 +43,7 @@
 
             <div class="col-sm-7">
                 <select id="createProjectFormPM" name="createProjectFormPM" class="form-control input-sm" required="required">
-                    <option th:each="projectManager : ${projectManager}"
+                    <option th:each="projectManager : ${projectManagers}"
                             th:text="${projectManager.firstName + ' ' + projectManager.lastName}"
                             th:value="${projectManager.userName}">
                     </option>

@@ -57,13 +57,13 @@
                 </button>
             </div>
             <!--<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">-->
-            <div style="margin-left: 95px; margin-top: -34px;">
+            <div style="margin-left: 110px; margin-top: -34px;">
                 <button id="updateProjectButton" data-toggle="modal" data-target="#updateProjectDialog"
                         class="btn btn-default" th:text="#{project.button.update}">Update project
                 </button>
             </div>
             <!--<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">-->
-            <div style="margin-left: 210px; margin-top: -34px;">
+            <div style="margin-left: 242px; margin-top: -34px;">
                 <button id="removeProjectButton" data-toggle="modal" data-target="#removeProjectDialog"
                         class="btn btn-default" th:text="#{project.button.remove}">Remove project
                 </button>
@@ -95,7 +95,7 @@
             <tr role="row">
                 <th th:text="#{project.table.header.id}">Id</th>
                 <th th:text="#{project.table.header.code}">Project code</th>
-                <th th:text="#{project.table.header.project.name}">Project name</th>
+                <th th:text="#{project.table.header.name}">Project name</th>
                 <th th:text="#{project.table.header.description}">Description</th>
                 <th th:text="#{project.table.header.project.manager}">Project manager</th>
             </tr>

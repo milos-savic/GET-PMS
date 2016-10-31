@@ -24,13 +24,13 @@ public final class WebConstants {
 	public final static String DELETE_USER_URL = "/deleteUser";
 
 	public final static String PROJECTS_URL = "/projects";
-	public final static String PROJECTS_HTML_PATH = "/project/projects";
+	public final static String PROJECTS_HTML_PATH = "/projects/projects";
 	public final static String CREATE_PROJECT_URL = "/createProject";
 	public final static String UPDATE_PROJECT_URL = "/updateProject";
 	public final static String DELETE_PROJECT_URL = "/removeProject";
 
 	public final static String TASKS_URL = "/tasks";
-	public final static String TASKS_HTML_PATH = "/task/tasks";
+	public final static String TASKS_HTML_PATH = "/tasks/tasks";
 	public final static String CREATE_TASK_URL = "/createTask";
 	public final static String UPDATE_TASK_URL = "/updateTask";
 	public final static String DELETE_TASK_URL = "/deleteTask";
