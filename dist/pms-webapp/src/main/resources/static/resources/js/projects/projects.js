@@ -19,6 +19,7 @@ function getSelectedTableRow() {
         data['id'] = table.row(sel).data().id;
         data['code'] = table.row(sel).data().code;
         data['name'] = table.row(sel).data().name;
+        data['description'] = table.row(sel).data().description;
         data['projectManager'] = table.row(sel).data().projectManager;
         return data;
     } else {

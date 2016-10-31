@@ -4,10 +4,13 @@ import by.get.pms.dto.EntitlementDTO;
 import by.get.pms.dto.ObjectType;
 import by.get.pms.dto.ProjectDTO;
 import by.get.pms.dto.UserDTO;
+import by.get.pms.model.UserRole;
 import by.get.pms.service.entitlement.EntitlementService;
 import by.get.pms.service.project.ProjectFacade;
+import by.get.pms.service.user.UserFacade;
 import by.get.pms.service.user.UserService;
 import by.get.pms.web.controller.WebConstants;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +34,9 @@ public class ProjectController {
     private EntitlementService entitlementService;
 
     @Autowired
+    private UserFacade userFacade;
+
+    @Autowired
     private UserService userService;
 
     @RequestMapping(value = WebConstants.PROJECTS_URL, method = RequestMethod.GET)
@@ -38,12 +44,12 @@ public class ProjectController {
         ModelAndView modelAndView = new ModelAndView(WebConstants.PROJECTS_HTML_PATH);
 
         //List<ProjectDTO> projects = retrieveProjects(Application.getInstance().getUser());
-        List<ProjectDTO> projects = retrieveProjects(userService.getUser(10L));
+        UserDTO loggedInUser = userService.getUser(10L);
 
+        List<ProjectDTO> projects = retrieveProjects(loggedInUser);
         modelAndView.getModel().put("projects", projects);
 
-        // TODO: add projectManagers to model
-
+        modelAndView.getModel().put("projectManagers", retrieveProjectManagers(loggedInUser));
         return modelAndView;
     }
 
@@ -53,5 +59,20 @@ public class ProjectController {
         Set<Long> projectIds = entitlementsForProjectsPermittedToUser.parallelStream().map(EntitlementDTO::getObjectid)
                 .collect(Collectors.toSet());
         return projectFacade.getProjectByIds(projectIds);
+    }
+
+    private List<UserDTO> retrieveProjectManagers(UserDTO loggedInUser) {
+        switch (loggedInUser.getRole()) {
+            case ADMIN:
+                return userFacade.getAllUsers().parallelStream()
+                        .filter(userDTO -> userDTO.getRole().equals(UserRole.PROJECT_MANAGER))
+                        .collect(Collectors.toList());
+            case PROJECT_MANAGER:
+                return Lists.newArrayList(loggedInUser);
+            case DEV:
+                return Lists.newArrayList();
+            default:
+                throw new RuntimeException("Unsupported role: " + loggedInUser.getRole());
+        }
     }
 }
