@@ -1,0 +1,3 @@
+INSERT INTO project (id, code, name, description, project_manager, version) VALUES (1, 'x2020', 'Treadstone', 'Treadstone71 top-secret black-ops', 11, 0);
+INSERT INTO project (id, code, name, description, project_manager, version) VALUES (2, 'y2020', 'Wayne Biotech', 'Gotham healthcare system', 13, 0);
+INSERT INTO project (id, code, name, description, project_manager, version) VALUES (3, 'z2020', 'The Lizard', 'Dr. Connors alter-ego', 14, 0);

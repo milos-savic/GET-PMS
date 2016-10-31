@@ -65,7 +65,7 @@
                                  referencedColumnNames="ID" referencedTableName="USER"/>
     </changeSet>
 
-    <changeSet author="milos.savic" id="1476657878126-111" dbms="h2">
+    <changeSet author="milos.savic" id="1476437131769-109" dbms="h2">
         <sqlFile encoding="UTF-8" path="users.sql" relativeToChangelogFile="true"/>
     </changeSet>
 
@@ -168,6 +168,11 @@
             <column name="PROJECT"/>
         </createIndex>
     </changeSet>
+
+    <changeSet author="milos.savic" id="1476437131769-210" dbms="h2">
+        <sqlFile encoding="UTF-8" path="projects_and_tasks.sql" relativeToChangelogFile="true"/>
+    </changeSet>
+
 
     <!-- PROJECT AND TASKS -->
 
