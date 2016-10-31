@@ -74,7 +74,7 @@ function initUserDataTablePlugin() {
                 {data: "lastName"},
                 {data: "email"},
                 {data: "role"},
-                {data: "active"},
+                {data: "active"}
             ],
             "columnDefs" : [{
                 "targets" : [ 0 ],
