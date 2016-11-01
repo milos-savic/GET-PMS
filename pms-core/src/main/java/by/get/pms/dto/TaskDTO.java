@@ -31,24 +31,24 @@ public class TaskDTO extends DTO {
     @Size(min = 1, max = 255)
     private String description;
 
-    private UserDTO assigneeDTO;
+    private UserDTO assignee;
 
     @NotNull
-    private ProjectDTO projectDTO;
+    private ProjectDTO project;
 
     public TaskDTO() {
     }
 
     public TaskDTO(long id, String name, TaskStatus taskStatus, int progress, LocalDate deadline, String description,
-                   UserDTO assigneeDTO, ProjectDTO projectDTO) {
+                   UserDTO assignee, ProjectDTO project) {
         super(id);
         this.name = name;
         this.taskStatus = taskStatus;
         this.progress = progress;
         this.deadline = deadline;
         this.description = description;
-        this.assigneeDTO = assigneeDTO;
-        this.projectDTO = projectDTO;
+        this.assignee = assignee;
+        this.project = project;
     }
 
     public String getName() {
@@ -91,20 +91,20 @@ public class TaskDTO extends DTO {
         this.description = description;
     }
 
-    public UserDTO getAssigneeDTO() {
-        return assigneeDTO;
+    public UserDTO getAssignee() {
+        return assignee;
     }
 
-    public void setAssigneeDTO(UserDTO assigneeDTO) {
-        this.assigneeDTO = assigneeDTO;
+    public void setAssignee(UserDTO assignee) {
+        this.assignee = assignee;
     }
 
-    public ProjectDTO getProjectDTO() {
-        return projectDTO;
+    public ProjectDTO getProject() {
+        return project;
     }
 
-    public void setProjectDTO(ProjectDTO projectDTO) {
-        this.projectDTO = projectDTO;
+    public void setProject(ProjectDTO project) {
+        this.project = project;
     }
 
     @Override
@@ -116,8 +116,8 @@ public class TaskDTO extends DTO {
                 ", progress=" + progress +
                 ", deadline=" + deadline +
                 ", description='" + description + '\'' +
-                ", assigneeDTO=" + assigneeDTO +
-                ", projectDTO=" + projectDTO +
+                ", assignee=" + assignee +
+                ", project=" + project +
                 '}';
     }
 }

@@ -32,7 +32,7 @@ public class TaskRestController {
 	private TaskFacade taskFacade;
 
 	@RequestMapping(value = WebConstants.CREATE_TASK_URL, method = RequestMethod.POST)
-	@PreAuthorize("hasRole('ROLE_ADMIN_USER') or (hasRole('ROLE_PROJECT_MANAGER_USER') and #taskParams.getProjectDTO().getProjectManager().equals(T(by.get.pms.security.Application).getInstance().getUser()))")
+	@PreAuthorize("hasRole('ROLE_ADMIN_USER') or (hasRole('ROLE_PROJECT_MANAGER_USER') and #taskParams.getProject().getProjectManager().equals(T(by.get.pms.security.Application).getInstance().getUser()))")
 	public Response createTask(@Validated TaskDTO taskParams, BindingResult errors) {
 		ResponseBuilder builder = responseBuilder.instance();
 		if (errors.hasErrors()) {
