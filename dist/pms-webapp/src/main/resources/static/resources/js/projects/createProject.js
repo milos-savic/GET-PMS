@@ -75,10 +75,9 @@ function addRecordCreateSuccessHandler(json) {
     $("#createProjectDialog").modal("hide");
     var selectedData = getSelectedTableRow();
     var serverData = json.model.project;
+    serverData.projectManager = serverData.projectManager.userName;
 
-    if (serverData) {
-        addNewTableRow(serverData);
-    }
+    addNewTableRow(serverData);
 
     showSuccessDialog(json);
 }

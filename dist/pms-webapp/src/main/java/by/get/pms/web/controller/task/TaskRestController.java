@@ -49,7 +49,7 @@ public class TaskRestController {
 		}
 	}
 
-	@RequestMapping(value = WebConstants.UPDATE_TASK_URL, method = RequestMethod.PUT)
+	@RequestMapping(value = WebConstants.UPDATE_TASK_URL, method = RequestMethod.POST)
 	public Response updateTask(@Validated TaskDTO taskParams, BindingResult errors) {
 		ResponseBuilder builder = responseBuilder.instance();
 		if (errors.hasErrors()) {

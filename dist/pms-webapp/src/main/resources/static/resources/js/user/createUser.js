@@ -82,9 +82,7 @@ function addRecordCreateSuccessHandler(json) {
     var serverData = json.model.user;
     serverData.active = serverData.active ? 'Yes' : 'No';
 
-    if (serverData) {
-        addNewTableRow(serverData);
-    }
+    addNewTableRow(serverData);
 
     showSuccessDialog(json);
 }

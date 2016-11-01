@@ -87,6 +87,7 @@ function addRecordUpdateSuccessHandler(json) {
     $("#updateProjectDialog").modal("hide");
     var selectedData = getSelectedTableRow();
     var serverData = json.model.project;
+    serverData.projectManager = serverData.projectManager.userName;
 
     updateSelectedTableRow(serverData);
 

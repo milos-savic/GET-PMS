@@ -78,6 +78,8 @@ public class ProjectServiceImpl implements ProjectService {
 	public ProjectDTO createProject(ProjectDTO projectParams) {
 		Project newProject = new Project();
 		BeanUtils.copyProperties(projectParams, newProject);
+		newProject.setProjectManager(userRepository.findOne(projectParams.getProjectManager().getId()));
+
 		newProject = projectRepository.save(newProject);
 
 		return Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(newProject);
