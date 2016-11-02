@@ -43,7 +43,7 @@ public class ProjectController {
     public ModelAndView getProjects() {
         ModelAndView modelAndView = new ModelAndView(WebConstants.PROJECTS_HTML_PATH);
 
-        //List<ProjectDTO> projects = retrieveProjects(Application.getInstance().getUser());
+        //UserDTO loggedInUser = Application.getInstance().getUser();
         UserDTO loggedInUser = userService.getUser(10L);
 
         List<ProjectDTO> projects = retrieveProjects(loggedInUser);

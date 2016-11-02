@@ -65,27 +65,27 @@
                 </button>
             </div>
             <!--<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">-->
-            <div style="margin-left: 110px; margin-top: -34px;">
+            <div style="margin-left: 90px; margin-top: -34px;">
                 <button id="updateTaskButton" data-toggle="modal" data-target="#updateTaskDialog"
                         class="btn btn-default" th:text="#{task.button.update}">Update task
                 </button>
             </div>
             <!--<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">-->
-            <div style="margin-left: 242px; margin-top: -34px;">
+            <div style="margin-left: 200px; margin-top: -34px;">
                 <button id="removeTaskButton" data-toggle="modal" data-target="#removeTaskDialog"
                         class="btn btn-default" th:text="#{task.button.remove}">Remove task
                 </button>
             </div>
         </div>
 
-        <table id="tableTasks" class="table table-striped">
+        <table id="tableProjectTasks" class="table table-striped">
             <thead>
             <tr role="row">
                 <th th:text="#{task.table.header.id}">Id</th>
                 <th th:text="#{task.table.header.project}">Project</th>
                 <th th:text="#{task.table.header.name}">Name</th>
                 <th th:text="#{task.table.header.status}">Status</th>
-                <th th:text="#{task.table.header.progress}">Progress</th>
+                <th th:text="#{task.table.header.progress} + ' [%]'">Progress</th>
                 <th th:text="#{task.table.header.deadline}">Deadline</th>
                 <th th:text="#{task.table.header.description}">Description</th>
                 <th th:text="#{task.table.header.assignee}">Assignee</th>
@@ -93,11 +93,11 @@
             </thead>
 
             <tbody>
-            <tr th:each="task : ${tasks}">
+            <tr th:each="task : ${projectTasks}" ondblclick="updateTaskAction(this, true);">
                 <td th:text="${task.id}"></td>
                 <td th:text="${task.project.id}"></td>
                 <td th:text="${task.name}"></td>
-                <td th:text="${task.status}"></td>
+                <td th:text="${task.taskStatus}"></td>
                 <td th:text="${task.progress}"></td>
                 <td th:text="${task.deadline}"></td>
                 <td th:text="${task.description}"></td>
@@ -111,11 +111,10 @@
                 <th th:text="#{task.table.header.project}">Project</th>
                 <th th:text="#{task.table.header.name}">Name</th>
                 <th th:text="#{task.table.header.status}">Status</th>
-                <th th:text="#{task.table.header.progress} + '%'">Progress</th>
+                <th th:text="#{task.table.header.progress} + ' [%]'">Progress</th>
                 <th th:text="#{task.table.header.deadline}">Deadline</th>
                 <th th:text="#{task.table.header.description}">Description</th>
                 <th th:text="#{task.table.header.assignee}">Assignee</th>
-                <th th:text="#{task.table.header.project}">Project</th>
             </tr>
             </tfoot>
         </table>

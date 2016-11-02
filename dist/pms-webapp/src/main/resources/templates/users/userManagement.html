@@ -87,7 +87,7 @@
 
             <tbody>
             <tr th:attr="data-code=${user.id}, data-name=${user.firstName + ' ' + user.lastName}"
-                th:each="user : ${users}"
+                th:each="user : ${users}" ondblclick="updateUserAction(this, true);"
                 th:with="activeMsgKey=${'user.active.' + (user.active ? 'Yes' : 'No')}">
                 <td th:text="${user.id}"></td>
                 <td th:text="${user.userName}"></td>

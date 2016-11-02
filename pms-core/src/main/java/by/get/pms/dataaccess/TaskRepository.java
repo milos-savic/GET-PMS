@@ -15,17 +15,17 @@ import java.util.Set;
  */
 public interface TaskRepository extends CrudRepository<Task, Long> {
 
-	Task findTaskByName(@Param("name") String name);
+    Task findTaskByProjectAndName(@Param("project") Project project, @Param("name") String name);
 
-	// @Query("select t from Task t where t.assignee = :assignee")
-	List<Task> findTasksByAssignee(@Param("assignee") User assignee);
+    // @Query("select t from Task t where t.assignee = :assignee")
+    List<Task> findTasksByAssignee(@Param("assignee") User assignee);
 
-	// @Query("select t from Task t where t.project = :project")
-	List<Task> findTasksByProject(@Param("project") Project project);
+    // @Query("select t from Task t where t.project = :project")
+    List<Task> findTasksByProject(@Param("project") Project project);
 
-	@Query("select t from Task t where t.id in (:tids)")
-	List<Task> findTasksByIds(@Param("tids") Set<Long> tids);
+    @Query("select t from Task t where t.id in (:tids)")
+    List<Task> findTasksByIds(@Param("tids") Set<Long> tids);
 
-	@Query("select count(t) from Task t where t.name = :name")
-	Integer taskExistsByName(@Param("name") String name);
+    @Query("select count(t) from Task t where t.project = :project and t.name = :name")
+    Integer taskExistsByProjectAndName(@Param("project") Project project, @Param("name") String name);
 }

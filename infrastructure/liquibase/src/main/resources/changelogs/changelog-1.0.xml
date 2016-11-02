@@ -154,7 +154,7 @@
     </changeSet>
 
     <changeSet author="Milos.Savic (generated)" id="1476437131769-207">
-        <addUniqueConstraint columnNames="NAME" constraintName="TASK_NAME_UQ" tableName="TASK"/>
+        <addUniqueConstraint columnNames="PROJECT, NAME" constraintName="AK_PROJECT_NAME" tableName="TASK"/>
     </changeSet>
 
     <changeSet author="milos (generated)" id="1476437131769-208">

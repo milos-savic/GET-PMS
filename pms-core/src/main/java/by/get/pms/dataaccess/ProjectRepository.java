@@ -14,11 +14,9 @@ import java.util.Set;
  */
 public interface ProjectRepository extends CrudRepository<Project, Long> {
 
-    //@Query("select p from Project p where p.code = :projectCode")
-    public Project findProjectByCode(@Param("projectCode") String projectCode);
+    Project findProjectByCode(@Param("projectCode") String projectCode);
 
-    //@Query("select p from Project p where p.projectManager = :projectManager")
-    public List<Project> findProjectsByProjectManager(@Param("projectManager") User projectManager);
+    List<Project> findProjectsByProjectManager(@Param("projectManager") User projectManager);
 
     @Query("select p from Project p where p.id in (:projectIds)")
     List<Project> findProjectsByIds(@Param("projectIds") Set<Long> projectIds);

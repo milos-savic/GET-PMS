@@ -23,7 +23,7 @@ function collectCreateFromData() {
     newRecordData.id = $("#createTaskFormId").val();
     newRecordData.project = $("#createTaskFormProject").val();
     newRecordData.name = $("#createTaskFormName").val();
-    newRecordData.status = $("#createTaskFormStatus").val();
+    newRecordData.taskStatus = $("#createTaskFormStatus").val();
     newRecordData.progress = $("#createTaskFormProgress").val();
     newRecordData.deadline = $("#createTaskFormDeadline").val();
     newRecordData.description = $("#createTaskFormDescription").val();

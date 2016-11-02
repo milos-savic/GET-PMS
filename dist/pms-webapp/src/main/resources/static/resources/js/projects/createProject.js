@@ -82,7 +82,6 @@ function addRecordCreateSuccessHandler(json) {
     showSuccessDialog(json);
 }
 
-
 function initCreateProjectForm(){
 
     $("#createProjectButton").click(function () {

@@ -30,7 +30,7 @@ public final class WebConstants {
 	public final static String DELETE_PROJECT_URL = "/removeProject";
 
 	public final static String TASKS_URL = "/tasks";
-	public final static String TASKS_HTML_PATH = "/tasks/tasks";
+	public final static String TASKS_HTML_PATH = "/tasks/projectTasks";
 	public final static String CREATE_TASK_URL = "/createTask";
 	public final static String UPDATE_TASK_URL = "/updateTask";
 	public final static String DELETE_TASK_URL = "/deleteTask";

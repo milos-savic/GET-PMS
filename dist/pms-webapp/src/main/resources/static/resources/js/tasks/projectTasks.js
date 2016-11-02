@@ -19,7 +19,7 @@ function getSelectedTableRow() {
         data['id'] = table.row(sel).data().id;
         data['project'] = table.row(sel).data().project;
         data['name'] = table.row(sel).data().name;
-        data['status'] = table.row(sel).data().status;
+        data['taskStatus'] = table.row(sel).data().taskStatus;
         data['progress'] = table.row(sel).data().progress;
         data['deadline'] = table.row(sel).data().deadline;
         data['description'] = table.row(sel).data().description;
@@ -59,7 +59,7 @@ function removeSelectedTableRow() {
     }
 }
 
-function initProjectTaksDataTablePlugin() {
+function initProjectTasksDataTablePlugin() {
     table = $('#tableProjectTasks').DataTable({
             "paging": true,
             "ordering": true,
@@ -72,7 +72,7 @@ function initProjectTaksDataTablePlugin() {
                 {data: "id"},
                 {data: "project"},
                 {data: "name"},
-                {data: "status"},
+                {data: "taskStatus"},
                 {data: "progress"},
                 {data: "deadline"},
                 {data: "description"},
@@ -125,7 +125,7 @@ $(document).ajaxComplete(function () {
 
 $(document).ready(function () {
 
-    initProjectTaksDataTablePlugin();
+    initProjectTasksDataTablePlugin();
     initCreateTaskForm();
     initUpdateTaskForm();
 

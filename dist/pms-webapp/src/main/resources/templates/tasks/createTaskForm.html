@@ -6,11 +6,11 @@
 <div th:fragment="createTaskForm">
     <form id="createTaskForm" role="form" class="form-horizontal">
         <input name="createTaskFormId" id="createTaskFormId" type="hidden"/>
-        <input name="createTaskFormProject" id="createTaskFormProject" th:value="${session.project.id}}" type="hidden"/>
+        <input name="createTaskFormProject" id="createTaskFormProject" th:value="${session.project.id}" type="hidden"/>
 
         <div class="form-group">
             <label for="createTaskFormName" class="col-sm-5 control-label input-sm required-indicator"
-                   th:text="#{tasks.createTask.form.label.code}">Code</label>
+                   th:text="#{tasks.createTask.form.label.name}">Name</label>
 
             <div class="col-sm-7">
                 <input class="form-control input-sm" id="createTaskFormName" name="createTaskFormName" type="text" value=""
@@ -37,7 +37,8 @@
                    th:text="#{tasks.createTask.form.label.progress}">Progress</label>
 
             <div class="col-sm-7">
-                <input class="form-control input-sm" id="createTaskFormProgress" name="createTaskFormProgress" type="number" min="0" max="100" value=""
+                <input class="form-control" id="createTaskFormProgress" name="createTaskFormProgress"
+                       type="number" min="0" max="100" value="" onkeyup="this.value=this.value.replace(/[^\d]/,'')"
                        placeholder="" th:attr="placeholder=#{tasks.createTask.form.provideValue}"/>
             </div>
         </div>

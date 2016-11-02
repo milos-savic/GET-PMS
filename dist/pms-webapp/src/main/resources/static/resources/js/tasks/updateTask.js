@@ -11,34 +11,34 @@ function updateTaskAction(row, openDialog) {
 }
 
 function fillUpdateFormWithData(editData) {
-    $("#createTaskFormId").val(editData.id);
-    $("#createTaskFormProject").val(editData.project);
-    $('#updateProjectFormName').val(editData.name);
-    $("#createTaskFormStatus").val(editData.status);
-    $("#createTaskFormProgress").val(editData.progress);
-    $("#createTaskFormDeadline").val(editData.deadline);
-    $('#updateProjectFormDescription').val(editData.description);
-    $('#createTaskFormAssignee').val(editData.assignee);
+    $("#updateTaskFormId").val(editData.id);
+    $("#updateTaskFormProject").val(editData.project);
+    $('#updateTaskFormName').val(editData.name);
+    $("#updateTaskFormStatus").val(editData.taskStatus);
+    $("#updateTaskFormProgress").val(editData.progress);
+    $("#updateTaskFormDeadline").val(editData.deadline);
+    $('#updateTaskFormDescription').val(editData.description);
+    $('#updateTaskFormAssignee').val(editData.assignee);
 }
 
 function updateFormSaveData() {
     var recordData = collectUpdateFromData();
     if (isUpdateDataValid(recordData)) {
-        sendPostRequest(Configs.updateProjectUrl, recordData, addRecordUpdateSuccessHandler, null);
+        sendPostRequest(Configs.updateTaskUrl, recordData, addRecordUpdateSuccessHandler, null);
     }
 }
 
 function collectUpdateFromData() {
     var editData = {};
 
-    editData.id = $("#createTaskFormId").val();
-    editData.project = $("#createTaskFormProject").val();
-    editData.name = $("#createTaskFormName").val();
-    editData.status = $("#createTaskFormStatus").val();
-    editData.progress = $("#createTaskFormProgress").val();
-    editData.deadline = $("#createTaskFormDeadline").val();
-    editData.description = $("#createTaskFormDescription").val();
-    editData.assignee = $("#createTaskFormAssignee").val();
+    editData.id = $("#updateTaskFormId").val();
+    editData.project = $("#updateTaskFormProject").val();
+    editData.name = $("#updateTaskFormName").val();
+    editData.taskStatus = $("#updateTaskFormStatus").val();
+    editData.progress = $("#updateTaskFormProgress").val();
+    editData.deadline = $("#updateTaskFormDeadline").val();
+    editData.description = $("#updateTaskFormDescription").val();
+    editData.assignee = $("#updateTaskFormAssignee").val();
 
     return editData;
 }
@@ -104,6 +104,19 @@ function addRecordUpdateSuccessHandler(json) {
 
 
 function initUpdateTaskForm(){
+
+    /*
+    Check https://github.com/xdan/datetimepicker/blob/master/build/jquery.datetimepicker.full.js for more options
+    var default_options = {...} object contains default datetimepicker options that can be overridden
+    */
+    $.datetimepicker.setLocale('en');
+    $('#updateTaskFormDeadline').datetimepicker({
+        yearStart: 1999,
+        yearEnd: 2050,
+        format: Configs.datePickerFormat,
+        dayOfWeekStart: 1,
+        lang: 'en'
+    });
 
     $("#updateTaskButton").click(function () {
             return updateTaskAction();

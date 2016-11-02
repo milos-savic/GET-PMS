@@ -10,7 +10,7 @@
 
         <div class="form-group">
             <label for="updateTaskFormName" class="col-sm-5 control-label input-sm required-indicator"
-                   th:text="#{tasks.updateTask.form.label.code}">Code</label>
+                   th:text="#{tasks.updateTask.form.label.name}">Name</label>
 
             <div class="col-sm-7">
                 <input class="form-control input-sm" id="updateTaskFormName" name="updateTaskFormName" type="text" value=""
@@ -37,7 +37,8 @@
                    th:text="#{tasks.updateTask.form.label.progress}">Progress</label>
 
             <div class="col-sm-7">
-                <input class="form-control input-sm" id="updateTaskFormProgress" name="updateTaskFormProgress" type="text" value=""
+                <input class="form-control numbersOnly" id="updateTaskFormProgress" name="updateTaskFormProgress"
+                       type="number" min="0" max="100" value="" onkeyup="this.value=this.value.replace(/[^\d]/,'')"
                        placeholder="" th:attr="placeholder=#{tasks.updateTask.form.provideValue}"/>
             </div>
         </div>
