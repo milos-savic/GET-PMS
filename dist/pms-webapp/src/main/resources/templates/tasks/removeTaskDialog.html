@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
 </head>
 <body>
+<div th:fragment="removeTaskDialog">
+    <!-- Modal -->
+    <div class="modal fade" id="removeTaskDialog" tabindex="-1" role="dialog" aria-labelledby="removeRecordTitle"
+         aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 id="removeRecordTitle" class="modal-title" th:text="#{tasks.removeTask.dialog.title}">Remove task</h4>
+                </div>
+                <div class="modal-body">
+                    <div th:text="#{tasks.removeTask.dialog.confirmation}">Are you sure?</div>
+                </div>
+                <div class="modal-footer centered">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{button.cancel}">Cancel</button>
+                    <button type="button" id="removeRecordOkButton" class="btn btn-large btn-primary" data-dismiss="modal" align="center" th:text="#{button.yes}">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
 
+</div>
 </body>
 </html>

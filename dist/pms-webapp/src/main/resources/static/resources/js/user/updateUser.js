@@ -105,7 +105,7 @@ function initUpdateUserForm(){
             return updateUserAction();
       });
 
-     $("#addRecordUpdateOkButton").click(function () {
+     $("#updateRecordUpdateOkButton").click(function () {
             $('input[type=submit]', this).attr('disabled', 'disabled');
             updateFormSaveData();
       });

@@ -119,7 +119,7 @@
             <column name="NAME" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="TASK_STATUS" type="INT(10)">
+            <column name="TASK_STATUS" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="PROGRESS" type="INT(10)">

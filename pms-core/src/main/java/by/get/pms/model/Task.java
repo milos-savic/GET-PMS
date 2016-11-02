@@ -17,6 +17,7 @@ public class Task extends PersistentEntity {
 	private String name;
 
 	@Column(name = "task_status", nullable = false)
+	@Enumerated(EnumType.STRING)
 	private TaskStatus taskStatus = TaskStatus.NEW;
 
 	@Min(0)

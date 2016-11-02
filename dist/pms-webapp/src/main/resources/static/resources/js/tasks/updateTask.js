@@ -1,9 +1,9 @@
-function updateProjectAction(row, openDialog) {
+function updateTaskAction(row, openDialog) {
 	var data = row ? table.row(row).data() : getSelectedTableRow();
 	if (data) {
 		fillUpdateFormWithData(data);
 		if (openDialog) {
-			$('#updateProjectDialog').modal('show');
+			$('#updateTaskDialog').modal('show');
 		}
 	} else {
 		return false;
@@ -11,11 +11,14 @@ function updateProjectAction(row, openDialog) {
 }
 
 function fillUpdateFormWithData(editData) {
-    $("#updateProjectFormId").val(editData.id);
-    $("#updateProjectFormCode").val(editData.code);
+    $("#createTaskFormId").val(editData.id);
+    $("#createTaskFormProject").val(editData.project);
     $('#updateProjectFormName').val(editData.name);
+    $("#createTaskFormStatus").val(editData.status);
+    $("#createTaskFormProgress").val(editData.progress);
+    $("#createTaskFormDeadline").val(editData.deadline);
     $('#updateProjectFormDescription').val(editData.description);
-    $('#updateProjectFormPM').val(editData.projectManager);
+    $('#createTaskFormAssignee').val(editData.assignee);
 }
 
 function updateFormSaveData() {
@@ -27,20 +30,24 @@ function updateFormSaveData() {
 
 function collectUpdateFromData() {
     var editData = {};
-    editData.id = $("#updateProjectFormId").val();
-    editData.code = $("#updateProjectFormCode").val();
-    editData.name = $("#updateProjectFormName").val();
-    editData.description = $("#updateProjectFormDescription").val();
-    editData.projectManager = $("#updateProjectFormPM").val();
+
+    editData.id = $("#createTaskFormId").val();
+    editData.project = $("#createTaskFormProject").val();
+    editData.name = $("#createTaskFormName").val();
+    editData.status = $("#createTaskFormStatus").val();
+    editData.progress = $("#createTaskFormProgress").val();
+    editData.deadline = $("#createTaskFormDeadline").val();
+    editData.description = $("#createTaskFormDescription").val();
+    editData.assignee = $("#createTaskFormAssignee").val();
 
     return editData;
 }
 
 var requiredUpdateStringProps = {
-   code: {maxLength: 30},
    name: {maxLength: 50},
-   description: {maxLength: 255},
-   projectManager: {maxLength: 30}
+   taskStatus: {maxLength: 30},
+   deadline: {maxLength: 30},
+   description: {maxLength: 255}
 };
 
 var nonRequiredStringProps = {};
@@ -84,10 +91,11 @@ function isUpdateDataValid(recordData) {
 
 
 function addRecordUpdateSuccessHandler(json) {
-    $("#updateProjectDialog").modal("hide");
+    $("#updateTaskDialog").modal("hide");
     var selectedData = getSelectedTableRow();
-    var serverData = json.model.project;
-    serverData.projectManager = serverData.projectManager.userName;
+    var serverData = json.model.task;
+    serverData.assignee = serverData.assignee.userName;
+    serverData.project = serverData.project.id;
 
     updateSelectedTableRow(serverData);
 
@@ -95,10 +103,10 @@ function addRecordUpdateSuccessHandler(json) {
 }
 
 
-function initUpdateProjectForm(){
+function initUpdateTaskForm(){
 
-    $("#updateProjectButton").click(function () {
-            return updateProjectAction();
+    $("#updateTaskButton").click(function () {
+            return updateTaskAction();
       });
 
      $("#updateRecordOkButton").click(function () {

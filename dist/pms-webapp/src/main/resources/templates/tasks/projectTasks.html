@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="../../../resources/css/select2.css" media="screen" th:href="@{/resources/css/select2.css}"/>
     <link rel="stylesheet" href="../../../resources/css/select2-bootstrap.css" media="screen" th:href="@{/resources/css/select2-bootstrap.css}"/>
     <link rel="stylesheet" href="../../../resources/css/jquery-ui-1.10.4.css" media="screen" th:href="@{/resources/css/jquery-ui-1.10.4.css}"/>
+    <link rel="stylesheet" href="../../../resources/css/jquery.datetimepicker.min.css" media="screen" th:href="@{/resources/css/jquery.datetimepicker.min.css}" />
+
 
     <!-- our custom css -->
     <link rel="stylesheet" href="../../../resources/css/core.css" media="screen" th:href="@{/resources/css/core.css}"/>
@@ -24,6 +26,9 @@
     <script src="../../../resources/js/bootstrap-select-1.5.2.min.js" th:src="@{/resources/js/bootstrap-select-1.5.2.min.js}"></script>
     <script src="../../../resources/js/numeral-1.4.5.min.js" th:src="@{/resources/js/numeral-1.4.5.min.js}"></script>
     <script src="../../../resources/js/select2.js" th:src="@{/resources/js/select2.js}"></script>
+    <script src="../../../resources/js/jquery.datetimepicker.full.min.js" th:src="@{/resources/js/jquery.datetimepicker.full.min.js}"></script>
+    <script src="../../../resources/js/dateFormat.min.js" th:src="@{/resources/js/dateFormat.min.js}"></script>
+
 
     <!-- our custom js -->
     <script src="../../../resources/js/custom/Config.js" th:src="@{/resources/js/custom/Config.js}"></script>
@@ -77,32 +82,33 @@
             <thead>
             <tr role="row">
                 <th th:text="#{task.table.header.id}">Id</th>
+                <th th:text="#{task.table.header.project}">Project</th>
                 <th th:text="#{task.table.header.name}">Name</th>
                 <th th:text="#{task.table.header.status}">Status</th>
                 <th th:text="#{task.table.header.progress}">Progress</th>
                 <th th:text="#{task.table.header.deadline}">Deadline</th>
                 <th th:text="#{task.table.header.description}">Description</th>
                 <th th:text="#{task.table.header.assignee}">Assignee</th>
-                <th th:text="#{task.table.header.project}">Project</th>
             </tr>
             </thead>
 
             <tbody>
             <tr th:each="task : ${tasks}">
                 <td th:text="${task.id}"></td>
+                <td th:text="${task.project.id}"></td>
                 <td th:text="${task.name}"></td>
                 <td th:text="${task.status}"></td>
                 <td th:text="${task.progress}"></td>
                 <td th:text="${task.deadline}"></td>
                 <td th:text="${task.description}"></td>
                 <td th:text="${task.assignee.userName}"></td>
-                <td th:text="${task.project.code}"></td>
             </tr>
             </tbody>
 
             <tfoot>
             <tr role="row">
                 <th th:text="#{task.table.header.id}">Id</th>
+                <th th:text="#{task.table.header.project}">Project</th>
                 <th th:text="#{task.table.header.name}">Name</th>
                 <th th:text="#{task.table.header.status}">Status</th>
                 <th th:text="#{task.table.header.progress} + '%'">Progress</th>

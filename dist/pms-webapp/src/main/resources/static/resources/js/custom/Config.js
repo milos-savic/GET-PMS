@@ -10,7 +10,11 @@ var Configs = {
     updateProjectUrl: baseUrl + "/rest/updateProject",
     removeProjectUrl: baseUrl + "/rest/removeProject",
 
-    monthPickerFormat: 'dd/MM/yyyy HH:mm',
-    dateTimePickerFormat: 'd/m/Y H:i',
-    totalNumberFormat: '0,0[.]00 $',
+    createTaskUrl: baseUrl + "/rest/createTask",
+    updateTaskUrl: baseUrl + "/rest/updateTask",
+    removeTaskUrl: baseUrl + "/rest/deleteTask",
+
+
+    inputFieldDatePickerFormat: 'dd/MM/yyyy',
+    datePickerFormat: 'd/m/Y'
 }
