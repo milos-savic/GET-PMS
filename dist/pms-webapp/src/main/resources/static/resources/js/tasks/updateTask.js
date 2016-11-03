@@ -16,7 +16,7 @@ function fillUpdateFormWithData(editData) {
     $('#updateTaskFormName').val(editData.name);
     $("#updateTaskFormStatus").val(editData.taskStatus);
     $("#updateTaskFormProgress").val(editData.progress);
-    $("#updateTaskFormDeadline").val(editData.deadline);
+    $("#updateTaskFormDeadline").val(DateFormat.format.date(new Date(editData.deadline), Configs.inputFieldDatePickerFormat));
     $('#updateTaskFormDescription').val(editData.description);
     $('#updateTaskFormAssignee').val(editData.assignee);
 }

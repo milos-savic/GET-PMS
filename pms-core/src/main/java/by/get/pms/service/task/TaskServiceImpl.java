@@ -79,6 +79,12 @@ public class TaskServiceImpl implements TaskService {
     public TaskDTO createTask(TaskDTO taskDTO) {
         Task newTask = new Task();
         BeanUtils.copyProperties(taskDTO, newTask);
+
+        if(taskDTO.getAssignee() != null){
+            newTask.setAssignee(userRepository.findOne(taskDTO.getAssignee().getId()));
+        }
+        newTask.setProject(projectRepository.findOne(taskDTO.getProject().getId()));
+
         newTask = taskRepository.save(newTask);
 
         return Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(newTask);
