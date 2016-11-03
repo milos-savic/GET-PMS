@@ -53,8 +53,9 @@ function isCreateDataValid(recordData) {
     for (var prop in recordData) {
         if (!recordData.hasOwnProperty(prop)) continue;
 
-        if(prop == 'progress' && recordData[prop] != Math.floor(recordData[prop])){
-            addError(prop, "must be integer");
+        if(prop == 'progress'){
+            if(recordData[prop] < 0) addError(prop, "must be positive");
+            if (recordData[prop] != Math.floor(recordData[prop])) addError(prop, "must be integer");
             continue;
         }
 
