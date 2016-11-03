@@ -40,7 +40,7 @@ public class JacksonConfig {
     public Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder() {
         JavaTimeModule javaTimeModule = createJavaTimeModule();
 
-        String mvcDateFormat = env.getProperty("spring.mvc.date-format", "dd/MM/yyyy HH:mm");
+        String mvcDateFormat = env.getProperty("spring.mvc.date-format", "dd/MM/yyyy");
         SimpleDateFormat dateFormatter = new SimpleDateFormat(mvcDateFormat);
 
         return new Jackson2ObjectMapperBuilder() {
