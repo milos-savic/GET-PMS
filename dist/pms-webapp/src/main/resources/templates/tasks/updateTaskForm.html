@@ -37,8 +37,8 @@
                    th:text="#{tasks.updateTask.form.label.progress}">Progress</label>
 
             <div class="col-sm-7">
-                <input class="form-control numbersOnly" id="updateTaskFormProgress" name="updateTaskFormProgress"
-                       type="number" min="0" max="100" value="" onkeyup="this.value=this.value.replace(/[^\d]/,'')"
+                <input class="form-control" id="updateTaskFormProgress" name="updateTaskFormProgress"
+                       type="number" min="0" max="100" value=""
                        placeholder="" th:attr="placeholder=#{tasks.updateTask.form.provideValue}"/>
             </div>
         </div>

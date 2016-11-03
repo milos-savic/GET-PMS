@@ -62,6 +62,12 @@ function isUpdateDataValid(recordData) {
 
     for (var prop in recordData) {
         if (!recordData.hasOwnProperty(prop)) continue;
+
+        if(prop == 'progress' && recordData[prop] != Math.floor(recordData[prop])){
+            addError(prop, "must be integer");
+            continue;
+        }
+
         var stringValue = recordData[prop];
         var errorFound = false;
         var length = stringValue ? ("" + stringValue).trim().length : 0;
