@@ -17,7 +17,7 @@ function getSelectedTableRow() {
     var data = {};
     if (sel && table.row(sel).length > 0) {
         data['id'] = table.row(sel).data().id;
-        data['code'] = table.row(sel).data().code;
+        data['code'] = $(table.row(sel).data().code).text();
         data['name'] = table.row(sel).data().name;
         data['description'] = table.row(sel).data().description;
         data['projectManager'] = table.row(sel).data().projectManager;
@@ -28,12 +28,19 @@ function getSelectedTableRow() {
 }
 
 function addNewTableRow(serverData) {
-    table.row.add(serverData).draw(false);
+    serverData.code = '<a href="' + '/tasks/' + serverData.id + '"><span>' + serverData.code + '</span></a>';
+
+    if (!table.data().count()) {
+         table.row.add(serverData).draw();
+    } else{
+         table.row.add(serverData).draw(false);
+    }
 }
 
 function updateSelectedTableRow(data) {
     var sel = $('tr.selected');
     if (sel) {
+        data.code = '<a href="' + '/tasks/' + data.id + '"><span>' + data.code + '</span></a>';
         table.row(sel).data(data).draw(false);
     }
 }

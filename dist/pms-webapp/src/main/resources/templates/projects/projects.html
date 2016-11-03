@@ -84,7 +84,7 @@
             <tbody>
             <tr th:each="project : ${projects}" ondblclick="updateProjectAction(this, true);">
                 <td th:text="${project.id}"></td>
-                <td><a href="projectTasks.html" th:href="@{/tasks/{project}(project=${project.id})}"><span th:text="${project.code}"/></a></td>
+                <td data-project-code="${project.code}"><a href="projectTasks.html" th:href="@{/tasks/{project}(project=${project.id})}"><span th:text="${project.code}"/></a></td>
                 <td th:text="${project.name}"></td>
                 <td th:text="${project.description}"></td>
                 <td th:text="${project.projectManager.userName}"></td>
