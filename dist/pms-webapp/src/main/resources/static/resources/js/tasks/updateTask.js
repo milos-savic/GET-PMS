@@ -100,7 +100,7 @@ function addRecordUpdateSuccessHandler(json) {
     $("#updateTaskDialog").modal("hide");
     var selectedData = getSelectedTableRow();
     var serverData = json.model.task;
-    serverData.assignee = serverData.assignee.userName;
+    serverData.assignee = serverData.assignee != null ? serverData.assignee.userName : '';
     serverData.project = serverData.project.id;
 
     updateSelectedTableRow(serverData);

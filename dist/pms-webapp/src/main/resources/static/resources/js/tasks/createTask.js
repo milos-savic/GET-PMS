@@ -89,7 +89,7 @@ function addRecordCreateSuccessHandler(json) {
     $("#createTaskDialog").modal("hide");
     var selectedData = getSelectedTableRow();
     var serverData = json.model.task;
-    serverData.assignee = serverData.assignee.userName;
+    serverData.assignee = serverData.assignee != null ? serverData.assignee.userName : '';
     serverData.project = serverData.project.id;
 
     addNewTableRow(serverData);

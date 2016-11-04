@@ -15,9 +15,9 @@ import java.util.function.Function;
 public final class Transformers {
 
 	public static final Function<User, UserDTO> USER_ENTITY_2_USER_DTO_TRANSFORMER = user -> new UserDTO(user.getId(),
-			user.getFirstName(), user.getLastName(), user.getEmail(),
-			user.getUserAccount().getUserName(), user.getUserAccount().getCreationDateTime(),
-			user.getUserAccount().isActive(), user.getUserAccount().getRole());
+			user.getFirstName(), user.getLastName(), user.getEmail(), user.getUserAccount().getUserName(),
+			user.getUserAccount().getCreationDateTime(), user.getUserAccount().isActive(),
+			user.getUserAccount().getRole());
 
 	public static final Function<Project, ProjectDTO> PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER = project -> new ProjectDTO(
 			project.getId(), project.getCode(), project.getName(), project.getDescription(),
@@ -25,6 +25,6 @@ public final class Transformers {
 
 	public static final Function<Task, TaskDTO> TASK_ENTITY_2_TASK_DTO_FUNCTION = task -> new TaskDTO(task.getId(),
 			task.getName(), task.getTaskStatus(), task.getProgress(), task.getDeadline(), task.getDescription(),
-			USER_ENTITY_2_USER_DTO_TRANSFORMER.apply(task.getAssignee()),
+			task.getAssignee() != null ? USER_ENTITY_2_USER_DTO_TRANSFORMER.apply(task.getAssignee()) : null,
 			PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(task.getProject()));
 }

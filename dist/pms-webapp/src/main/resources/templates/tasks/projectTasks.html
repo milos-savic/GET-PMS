@@ -101,7 +101,7 @@
                 <td th:text="${task.progress}"></td>
                 <td th:text="${task.deadline}"></td>
                 <td th:text="${task.description}"></td>
-                <td th:text="${task.assignee.userName}"></td>
+                <td th:text="${task.assignee} != null ? ${task.assignee.userName} : ''"></td>
             </tr>
             </tbody>
 
