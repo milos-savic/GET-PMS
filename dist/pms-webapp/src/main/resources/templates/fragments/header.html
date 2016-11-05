@@ -11,11 +11,10 @@
             </button>
             <nav>
                 <div class="navbar-header">
-                    <a class="navbar-brand" th:href="@{/}"> <img alt="Brand" th:src="@{/resources/images/pms_logo_upd.gif}" /></a>
-                    <span class="project-name project-name-get navbar-brand" th:text="#{project.name.get}"></span>
+                    <a class="navbar-brand" th:href="@{/}"> <img alt="Brand" th:src="@{/resources/images/pms_logo.png}" /></a>
+                    <span class="project-name navbar-brand" th:text="#{project.name.oob} + ' ' + #{project.name.pms}"></span>
                 </div>
                 <div class="clear"></div>
-                <div class="project-name project-name-pms" th:text="#{project.name.pms}"></div>
             </nav>
         </div>
 
