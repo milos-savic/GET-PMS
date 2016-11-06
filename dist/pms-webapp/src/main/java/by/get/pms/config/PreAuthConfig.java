@@ -1,7 +1,7 @@
 package by.get.pms.config;
 
 import by.get.pms.security.ApplicationAuthenticationProvider;
-import by.get.pms.security.AuthorizationService;
+import by.get.pms.security.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 public class PreAuthConfig {
 
 	@Autowired
-	private AuthorizationService authorizationService;
+	private AuthenticationService authenticationService;
 
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
@@ -33,7 +33,7 @@ public class PreAuthConfig {
 	@Bean
 	public UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken> userDetailsServiceWrapper() {
 		UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken> wrapper = new UserDetailsByNameServiceWrapper<>();
-		wrapper.setUserDetailsService(authorizationService);
+		wrapper.setUserDetailsService(authenticationService);
 		return wrapper;
 	}
 }

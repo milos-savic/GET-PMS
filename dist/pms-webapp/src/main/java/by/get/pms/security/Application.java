@@ -13,7 +13,6 @@ public class Application {
 	private ApplicationAttributes attributes;
 
 	private LocalDateTime created;
-	//private UserAccount userAccount;
 	private UserRole currentRole;
 	private UserDTO user;
 

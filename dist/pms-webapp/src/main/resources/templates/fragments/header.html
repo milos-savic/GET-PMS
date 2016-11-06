@@ -26,10 +26,10 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <!--<div th:if="${#authentication != null and #authentication.principal != null}" th:remove="tag">-->
-                    <!--<li><p class="navbar-text" th:text="${#authentication.principal.displayName}" style="margin-bottom: 0"></p></li>-->
-                    <!--<br />-->
-                <!--</div>-->
+                <div th:if="${#authentication != null and #authentication.principal != null}" th:remove="tag">
+                    <li><p class="navbar-text" th:text="${#authentication.principal.displayName}" style="margin-bottom: 0"></p></li>
+                    <br />
+                </div>
                 <li><a th:href="@{/logout}" onclick="$('#form').submit();" th:text="#{button.logout}"></a>
                     <form style="visibility: hidden" id="form" method="post" th:action="@{/logout}"></form></li>
             </ul>

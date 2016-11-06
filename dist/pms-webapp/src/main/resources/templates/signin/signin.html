@@ -18,6 +18,12 @@
 
         <div style="padding-bottom: 5px">
 
+            <div th:if="${param.logout != null}" th:remove="tag">
+                <div class="alert alert-success">
+                    <div id="logout_message" th:text="#{logout.successful}"></div>
+                </div>
+            </div>
+
             <form class="form-narrow form-horizontal login-form" action="/login/facebook" method="post" th:action="@{/login/facebook}">
                 <fieldset>
                     <th:block th:if="${param.error != null}">
