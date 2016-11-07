@@ -11,6 +11,7 @@ import by.get.pms.web.response.Response;
 import by.get.pms.web.response.ResponseBuilder;
 import by.get.pms.web.response.ResponseBuilderFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,8 +39,7 @@ public class ProjectRestController {
 			return builder.addErrors(errors).build();
 		}
 
-		//UserRole userRole = Application.getInstance().getCurrentRole();
-		UserRole userRole = UserRole.ADMIN;
+		UserRole userRole = Application.getInstance().getCurrentRole();
 
 		switch (userRole) {
 		case ADMIN:
@@ -51,7 +51,7 @@ public class ProjectRestController {
 		}
 	}
 
-	//@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
 	private Response createProjectByAdmin(ProjectDTO projectParams, ResponseBuilder builder) {
 		try {
 			ProjectDTO projectDtoNew = projectFacade.createProject(projectParams);
@@ -63,7 +63,7 @@ public class ProjectRestController {
 		}
 	}
 
-	//	@PreAuthorize("hasRole('ROLE_PROJECT_MANAGER_USER')")
+	@PreAuthorize("hasRole('ROLE_PROJECT_MANAGER_USER')")
 	private Response createProjectByPM(ProjectDTO projectParams, UserDTO projectManager, ResponseBuilder builder) {
 		try {
 			ProjectDTO projectDtoNew = projectFacade.createProjectByPM(projectManager, projectParams);
@@ -75,7 +75,7 @@ public class ProjectRestController {
 		}
 	}
 
-	//	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
 	@RequestMapping(value = WebConstants.UPDATE_PROJECT_URL, method = RequestMethod.POST)
 	private Response updateProject(ProjectDTO projectParams, BindingResult errors) {
 		ResponseBuilder builder = responseBuilder.instance();
@@ -94,7 +94,7 @@ public class ProjectRestController {
 	}
 
 	@RequestMapping(value = WebConstants.DELETE_PROJECT_URL + "/{id}", method = RequestMethod.DELETE)
-	//	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
 	public Response removeProject(@PathVariable("id") Long id) {
 		final ResponseBuilder builder = responseBuilder.instance();
 

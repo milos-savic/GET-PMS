@@ -58,21 +58,18 @@
         <h2 th:text="#{tasks.table.title}">Tasks</h2>
 
         <div style="padding-bottom: 25px" >
-            <!--<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') || #authorization.expression('hasRole(''ROLE_PROJECT_MANAGER_USER'')') }" th:remove="tag">-->
-            <div>
+            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') || #authorization.expression('hasRole(''ROLE_PROJECT_MANAGER_USER'')') }" th:remove="tag">
                 <button id="createTaskButton" data-toggle="modal" data-target="#createTaskDialog"
                         class="btn btn-default" th:text="#{task.button.add}">Add task
                 </button>
             </div>
-            <!--<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">-->
-            <div style="margin-left: 90px; margin-top: -34px;">
-                <button id="updateTaskButton" data-toggle="modal" data-target="#updateTaskDialog"
+            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">
+                <button style="margin-left: 210px; margin-top: -34px;" id="updateTaskButton" data-toggle="modal" data-target="#updateTaskDialog"
                         class="btn btn-default" th:text="#{task.button.update}">Update task
                 </button>
             </div>
-            <!--<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">-->
-            <div style="margin-left: 200px; margin-top: -34px;">
-                <button id="removeTaskButton" data-toggle="modal" data-target="#removeTaskDialog"
+            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">
+                <button style="margin-left: 200px; margin-top: -34px;" id="removeTaskButton" data-toggle="modal" data-target="#removeTaskDialog"
                         class="btn btn-default" th:text="#{task.button.remove}">Remove task
                 </button>
             </div>

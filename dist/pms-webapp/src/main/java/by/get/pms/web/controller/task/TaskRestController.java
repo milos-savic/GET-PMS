@@ -3,12 +3,14 @@ package by.get.pms.web.controller.task;
 import by.get.pms.dto.TaskDTO;
 import by.get.pms.exception.ApplicationException;
 import by.get.pms.model.UserRole;
+import by.get.pms.security.Application;
 import by.get.pms.service.task.TaskFacade;
 import by.get.pms.web.controller.WebConstants;
 import by.get.pms.web.response.Response;
 import by.get.pms.web.response.ResponseBuilder;
 import by.get.pms.web.response.ResponseBuilderFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +32,7 @@ public class TaskRestController {
 	private TaskFacade taskFacade;
 
 	@RequestMapping(value = WebConstants.CREATE_TASK_URL, method = RequestMethod.POST)
-	//@PreAuthorize("hasRole('ROLE_ADMIN_USER') or (hasRole('ROLE_PROJECT_MANAGER_USER') and #taskParams.getProject().getProjectManager().equals(T(by.get.pms.security.Application).getInstance().getUser()))")
+	@PreAuthorize("hasRole('ROLE_ADMIN_USER') or (hasRole('ROLE_PROJECT_MANAGER_USER') and #taskParams.getProject().getProjectManager().equals(T(by.get.pms.security.Application).getInstance().getUser()))")
 	public Response createTask(@Validated TaskDTO taskParams, BindingResult errors) {
 		ResponseBuilder builder = responseBuilder.instance();
 		if (errors.hasErrors()) {
@@ -54,8 +56,7 @@ public class TaskRestController {
 			return builder.addErrors(errors).build();
 		}
 
-		//UserRole userRole = Application.getInstance().getCurrentRole();
-		UserRole userRole = UserRole.ADMIN;
+		UserRole userRole = Application.getInstance().getCurrentRole();
 
 		switch (userRole) {
 		case ADMIN:
@@ -69,7 +70,7 @@ public class TaskRestController {
 		}
 	}
 
-	// @PreAuthorize("hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
 	private Response updateTaskByAdmin(TaskDTO taskParams, ResponseBuilder builder) {
 		try {
 			taskFacade.updateTask(taskParams);
@@ -81,7 +82,7 @@ public class TaskRestController {
 		}
 	}
 
-	// @PreAuthorize("hasRole('ROLE_PROJECT_MANAGER_USER')")
+	@PreAuthorize("hasRole('ROLE_PROJECT_MANAGER_USER')")
 	private Response updateTaskByProjectManager(TaskDTO taskParams, ResponseBuilder builder) {
 		try {
 			taskFacade.updateTaskByProjectManager(taskParams);
@@ -93,7 +94,7 @@ public class TaskRestController {
 		}
 	}
 
-	// @PreAuthorize("hasRole('ROLE_DEV_USER')")
+	@PreAuthorize("hasRole('ROLE_DEV_USER')")
 	private Response updateTaskByDev(TaskDTO taskParams, ResponseBuilder builder) {
 		try {
 			taskFacade.updateTaskByDeveloper(taskParams);
@@ -106,7 +107,7 @@ public class TaskRestController {
 	}
 
 	@RequestMapping(value = WebConstants.DELETE_TASK_URL + "/{id}", method = RequestMethod.DELETE)
-	// @PreAuthorize("hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
 	public Response removeTask(@PathVariable("id") Long id) {
 		final ResponseBuilder builder = responseBuilder.instance();
 

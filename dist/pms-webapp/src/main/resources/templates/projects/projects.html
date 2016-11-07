@@ -50,21 +50,18 @@
         <h2 th:text="#{projects.table.title}">Projects</h2>
 
         <div style="padding-bottom: 25px" >
-            <!--<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') || #authorization.expression('hasRole(''ROLE_PROJECT_MANAGER_USER'')') }" th:remove="tag">-->
-            <div>
+            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') || #authorization.expression('hasRole(''ROLE_PROJECT_MANAGER_USER'')') }" th:remove="tag">
                 <button id="createProjectButton" data-toggle="modal" data-target="#createProjectDialog"
                         class="btn btn-default" th:text="#{project.button.add}">Add project
                 </button>
             </div>
-            <!--<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">-->
-            <div style="margin-left: 110px; margin-top: -34px;">
-                <button id="updateProjectButton" data-toggle="modal" data-target="#updateProjectDialog"
+            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">
+                <button style="margin-left: 110px; margin-top: -34px;" id="updateProjectButton" data-toggle="modal" data-target="#updateProjectDialog"
                         class="btn btn-default" th:text="#{project.button.update}">Update project
                 </button>
             </div>
-            <!--<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">-->
-            <div style="margin-left: 242px; margin-top: -34px;">
-                <button id="removeProjectButton" data-toggle="modal" data-target="#removeProjectDialog"
+            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN_USER'')') }" th:remove="tag">
+                <button style="margin-left: 242px; margin-top: -34px;" id="removeProjectButton" data-toggle="modal" data-target="#removeProjectDialog"
                         class="btn btn-default" th:text="#{project.button.remove}">Remove project
                 </button>
             </div>
