@@ -9,22 +9,22 @@
 <div id="wrap">
     <div class="container">
 
+        <div th:if="${param.logout != null}" th:remove="tag">
+            <div class="alert alert-success">
+                <div id="logout_message" th:text="#{logout.successful}"></div>
+            </div>
+        </div>
+
         <div>
             <legend class="col-lg-6" th:text="#{signin.form.title}">Please Sign In</legend>
-            <div class="col-lg-4 col-lg-offset-2">
-                <img alt="Brand Image" th:src="@{/resources/images/pms_logo.gif}" />
+            <div class="col-lg-4 col-lg-offset-2" style="margin-left: -102px; margin-top: -10px;">
+                <img alt="Brand Image" th:src="@{/resources/images/pms_logo.png}" />
             </div>
         </div>
 
         <div style="padding-bottom: 5px">
 
-            <div th:if="${param.logout != null}" th:remove="tag">
-                <div class="alert alert-success">
-                    <div id="logout_message" th:text="#{logout.successful}"></div>
-                </div>
-            </div>
-
-            <form class="form-narrow form-horizontal login-form" action="/login/facebook" method="post" th:action="@{/login/facebook}">
+            <form class="form-narrow form-horizontal login-form" style="margin-top: 40px; margin-left: 150px; border: none;" action="/login/facebook" method="post" th:action="@{/login/facebook}">
                 <fieldset>
                     <th:block th:if="${param.error != null}">
                         <div class="form-group">
@@ -33,14 +33,14 @@
                         </div>
                     </th:block>
                     <div>
-                        <button type="submit" id="loginWithFB" class="btn btn-default" th:text="#{signin.form.loginWithFB}">
+                        <button type="submit" id="loginWithFB" class="btn btn-default" style="width: 160px;" th:text="#{signin.form.loginWithFB}">
                             Login with Facebook
                         </button>
                     </div>
                 </fieldset>
             </form>
 
-            <form class="form-narrow form-horizontal login-form" action="/login/facebook" method="post" th:action="@{/login/facebook}">
+            <form class="form-narrow form-horizontal login-form" style="margin-left: 150px; margin-top: -56px; border: none;" action="/login/github" method="post" th:action="@{/login/github}">
             <fieldset>
                 <th:block th:if="${param.error != null}">
                     <div class="form-group">
@@ -49,7 +49,7 @@
                     </div>
                 </th:block>
                 <div>
-                    <button type="submit" id="loginWithGitHub" class="btn btn-default" th:text="#{signin.form.loginWithGitHub}">
+                    <button type="submit" id="loginWithGitHub" class="btn btn-default" style="width: 160px;" th:text="#{signin.form.loginWithGitHub}">
                         Login with GitHub
                     </button>
                 </div>

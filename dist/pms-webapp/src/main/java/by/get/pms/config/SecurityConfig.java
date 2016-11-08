@@ -11,6 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -40,6 +41,7 @@ import java.util.List;
  * Created by milos.savic on 10/5/2016.
  */
 @Configuration
+@PropertySource("classpath:/config/security.properties")
 @EnableWebSecurity
 @EnableOAuth2Client
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -62,17 +64,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable()
                 .headers().frameOptions().disable()
                 .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
-				.addFilterAfter(preAuthFilter(), RequestHeaderAuthenticationFilter.class)
+//				.addFilterAfter(preAuthFilter(), RequestHeaderAuthenticationFilter.class)
                 .addFilterAfter(ajaxAuthExceptionTranslationFilter(), ExceptionTranslationFilter.class);
     }
 
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+//    @Override
+//    @Bean
+//    public AuthenticationManager authenticationManagerBean() throws Exception {
+//        return super.authenticationManagerBean();
+//    }
 
     @Override
+    @Autowired
     protected void configure(AuthenticationManagerBuilder authenticationMenagerBuilder) throws Exception {
         authenticationMenagerBuilder.authenticationProvider(authenticationProvider);
     }
@@ -126,12 +129,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new AjaxAuthExceptionTranslationFilter(ajaxAuthEntryPoint());
     }
 
-	@Bean
-	public PreAuthRequestHeaderAuthenticationFilter preAuthFilter() throws Exception {
-		PreAuthRequestHeaderAuthenticationFilter filter = new PreAuthRequestHeaderAuthenticationFilter();
-		filter.setAuthenticationManager(authenticationManager());
-		return filter;
-	}
+//	@Bean
+//	public PreAuthRequestHeaderAuthenticationFilter preAuthFilter() throws Exception {
+//		PreAuthRequestHeaderAuthenticationFilter filter = new PreAuthRequestHeaderAuthenticationFilter();
+//		filter.setAuthenticationManager(authenticationManager());
+//		return filter;
+//	}
 
     // storing the Security Context between requests into HTTP Session
     @Bean
