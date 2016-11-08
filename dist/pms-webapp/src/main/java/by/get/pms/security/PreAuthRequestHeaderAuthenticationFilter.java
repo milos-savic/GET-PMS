@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class PreAuthRequestHeaderAuthenticationFilter extends RequestHeaderAuthenticationFilter {
 
-	public PreAuthRequestHeaderAuthenticationFilter() {
-		super();
-		this.setPrincipalRequestHeader("SM_USER");
-	}
+//	public PreAuthRequestHeaderAuthenticationFilter() {
+//		super();
+//		this.setPrincipalRequestHeader("SM_USER");
+//	}
 
 	/**
 	 * This is called when a request is made, the returned object identifies the

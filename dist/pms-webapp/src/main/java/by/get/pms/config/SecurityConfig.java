@@ -16,6 +16,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
@@ -47,10 +48,15 @@ import java.util.List;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    OAuth2ClientContext oauth2ClientContext;
+    private OAuth2ClientContext oauth2ClientContext;
 
     @Autowired
     private AuthenticationProvider authenticationProvider;
+
+//    @Override
+//    public void configure(WebSecurity web){
+//        web.ignoring().antMatchers("/signin", "/h2-console/**", "/favicon.ico", "/resources/**");
+//    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -64,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable()
                 .headers().frameOptions().disable()
                 .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
-//				.addFilterAfter(preAuthFilter(), RequestHeaderAuthenticationFilter.class)
+				.addFilterBefore(preAuthFilter(), RequestHeaderAuthenticationFilter.class)
                 .addFilterAfter(ajaxAuthExceptionTranslationFilter(), ExceptionTranslationFilter.class);
     }
 
@@ -129,12 +135,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new AjaxAuthExceptionTranslationFilter(ajaxAuthEntryPoint());
     }
 
-//	@Bean
-//	public PreAuthRequestHeaderAuthenticationFilter preAuthFilter() throws Exception {
-//		PreAuthRequestHeaderAuthenticationFilter filter = new PreAuthRequestHeaderAuthenticationFilter();
-//		filter.setAuthenticationManager(authenticationManager());
-//		return filter;
-//	}
+	@Bean
+	public PreAuthRequestHeaderAuthenticationFilter preAuthFilter() throws Exception {
+		PreAuthRequestHeaderAuthenticationFilter filter = new PreAuthRequestHeaderAuthenticationFilter();
+		filter.setAuthenticationManager(authenticationManager());
+        filter.setExceptionIfHeaderMissing(false);
+		return filter;
+	}
 
     // storing the Security Context between requests into HTTP Session
     @Bean
