@@ -7,14 +7,14 @@
 <body>
 
 <div id="wrap">
-    <div class="container">
 
-        <div th:if="${param.logout != null}" th:remove="tag">
-            <div class="alert alert-success">
-                <div id="logout_message" th:text="#{logout.successful}"></div>
-            </div>
+    <div th:if="${param.logout != null}" th:remove="tag">
+        <div class="alert alert-success">
+            <div id="logout_message" th:text="#{logout.successful}"></div>
         </div>
+    </div>
 
+    <div class="container">
         <div>
             <legend class="col-lg-6" th:text="#{signin.form.title}">Please Sign In</legend>
             <div class="col-lg-4 col-lg-offset-2" style="margin-left: -102px; margin-top: -10px;">
