@@ -32,7 +32,6 @@ import java.util.Set;
  */
 
 @Service
-@Transactional
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     protected static final Log LOGGER = LogFactory.getLog(AuthenticationServiceImpl.class);
@@ -71,7 +70,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         final Set<GrantedAuthority> granted = grantAuthorities(userAccount);
         boolean isActive = userAccount.isActive();
 
-        final User user = new User(userAccount.getUserName(), null, isActive, accountNonExpired,
+        final User user = new User(userAccount.getUserName(), "", isActive, accountNonExpired,
                 isCredentialsNotExpired, isActive, granted);
         user.setDisplayName(userAccount.getUser().getFirstName() + " " + userAccount.getUser().getLastName());
         return user;

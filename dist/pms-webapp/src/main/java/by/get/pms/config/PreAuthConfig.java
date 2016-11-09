@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
-import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
 /**
  * Created by Milos.Savic on 10/12/2016.
@@ -22,17 +22,18 @@ public class PreAuthConfig {
 
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
-		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY, "by.get.pms.security.ApplicationSecurityContextHolderStrategy");
+		System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY,
+				"by.get.pms.security.ApplicationSecurityContextHolderStrategy");
 
-		final ApplicationAuthenticationProvider preAuthenticationProvider = new ApplicationAuthenticationProvider();
-		preAuthenticationProvider.setPreAuthenticatedUserDetailsService(userDetailsServiceWrapper());
+		final ApplicationAuthenticationProvider applicationAuthenticationProvider = new ApplicationAuthenticationProvider();
+		applicationAuthenticationProvider.setOauth2AuthenticatedUserDetailsService(userDetailsServiceWrapper());
 
-		return preAuthenticationProvider;
+		return applicationAuthenticationProvider;
 	}
 
 	@Bean
-	public UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken> userDetailsServiceWrapper() {
-		UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken> wrapper = new UserDetailsByNameServiceWrapper<>();
+	public UserDetailsByNameServiceWrapper<OAuth2Authentication> userDetailsServiceWrapper() {
+		UserDetailsByNameServiceWrapper<OAuth2Authentication> wrapper = new UserDetailsByNameServiceWrapper<>();
 		wrapper.setUserDetailsService(authenticationService);
 		return wrapper;
 	}

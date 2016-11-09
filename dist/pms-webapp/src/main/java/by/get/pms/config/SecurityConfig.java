@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable()
                 .headers().frameOptions().disable()
                 .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
-//				.addFilterAfter(preAuthFilter(), RequestHeaderAuthenticationFilter.class)
+				.addFilterAfter(preAuthFilter(), RequestHeaderAuthenticationFilter.class)
                 .addFilterAfter(ajaxAuthExceptionTranslationFilter(), ExceptionTranslationFilter.class);
     }
 
@@ -129,12 +129,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new AjaxAuthExceptionTranslationFilter(ajaxAuthEntryPoint());
     }
 
-//	@Bean
-//	public PreAuthRequestHeaderAuthenticationFilter preAuthFilter() throws Exception {
-//		PreAuthRequestHeaderAuthenticationFilter filter = new PreAuthRequestHeaderAuthenticationFilter();
-//		filter.setAuthenticationManager(authenticationManager());
-//		return filter;
-//	}
+	@Bean
+	public PreAuthRequestHeaderAuthenticationFilter preAuthFilter() throws Exception {
+		PreAuthRequestHeaderAuthenticationFilter filter = new PreAuthRequestHeaderAuthenticationFilter();
+		filter.setAuthenticationManager(authenticationManager());
+
+        filter.setExceptionIfHeaderMissing(false);
+		return filter;
+	}
 
     // storing the Security Context between requests into HTTP Session
     @Bean
