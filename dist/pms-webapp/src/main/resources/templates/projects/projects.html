@@ -56,12 +56,12 @@
                 </button>
             </div>
             <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') }" th:remove="tag">
-                <button style="margin-left: 110px; margin-top: -34px;" id="updateProjectButton" data-toggle="modal" data-target="#updateProjectDialog"
+                <button style="margin-left: 10px;" id="updateProjectButton" data-toggle="modal" data-target="#updateProjectDialog"
                         class="btn btn-default" th:text="#{project.button.update}">Update project
                 </button>
             </div>
             <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') }" th:remove="tag">
-                <button style="margin-left: 242px; margin-top: -34px;" id="removeProjectButton" data-toggle="modal" data-target="#removeProjectDialog"
+                <button style="margin-left: 10px;" id="removeProjectButton" data-toggle="modal" data-target="#removeProjectDialog"
                         class="btn btn-default" th:text="#{project.button.remove}">Remove project
                 </button>
             </div>

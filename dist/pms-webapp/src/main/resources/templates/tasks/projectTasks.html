@@ -64,12 +64,12 @@
                 </button>
             </div>
             <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') }" th:remove="tag">
-                <button style="margin-left: 210px; margin-top: -34px;" id="updateTaskButton" data-toggle="modal" data-target="#updateTaskDialog"
+                <button style="margin-left: 10px;" id="updateTaskButton" data-toggle="modal" data-target="#updateTaskDialog"
                         class="btn btn-default" th:text="#{task.button.update}">Update task
                 </button>
             </div>
             <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') }" th:remove="tag">
-                <button style="margin-left: 200px; margin-top: -34px;" id="removeTaskButton" data-toggle="modal" data-target="#removeTaskDialog"
+                <button style="margin-left: 10px;" id="removeTaskButton" data-toggle="modal" data-target="#removeTaskDialog"
                         class="btn btn-default" th:text="#{task.button.remove}">Remove task
                 </button>
             </div>
