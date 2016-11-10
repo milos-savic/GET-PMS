@@ -23,7 +23,7 @@ public class UserManagementController {
 	private UserFacade userFacade;
 
 	@RequestMapping(value = WebConstants.USER_MANAGEMENT_URL, method = RequestMethod.GET)
-	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ModelAndView getUsers() {
 		final ModelAndView modelAndView = new ModelAndView(WebConstants.USER_MANAGEMENT_INDEX_HTML_PATH);
 		final List<UserDTO> allUsers = userFacade.getAllUsers();

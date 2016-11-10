@@ -7,8 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
 /**
  * Created by Milos.Savic on 10/12/2016.
@@ -26,15 +24,7 @@ public class PreAuthConfig {
 				"by.get.pms.security.ApplicationSecurityContextHolderStrategy");
 
 		final ApplicationAuthenticationProvider applicationAuthenticationProvider = new ApplicationAuthenticationProvider();
-		applicationAuthenticationProvider.setOauth2AuthenticatedUserDetailsService(userDetailsServiceWrapper());
 
 		return applicationAuthenticationProvider;
-	}
-
-	@Bean
-	public UserDetailsByNameServiceWrapper<OAuth2Authentication> userDetailsServiceWrapper() {
-		UserDetailsByNameServiceWrapper<OAuth2Authentication> wrapper = new UserDetailsByNameServiceWrapper<>();
-		wrapper.setUserDetailsService(authenticationService);
-		return wrapper;
 	}
 }

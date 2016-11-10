@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -64,14 +63,14 @@ public class ProjectController {
 
 	private List<UserDTO> retrieveProjectManagers(UserDTO loggedInUser) {
 		switch (loggedInUser.getRole()) {
-		case ADMIN:
+		case ROLE_ADMIN:
 			return userFacade.getAllUsers().parallelStream()
-					.filter(userDTO -> userDTO.getRole().equals(UserRole.PROJECT_MANAGER)).collect(Collectors.toList());
-		case PROJECT_MANAGER:
+					.filter(userDTO -> userDTO.getRole().equals(UserRole.ROLE_PROJECT_MANAGER)).collect(Collectors.toList());
+		case ROLE_PROJECT_MANAGER:
 			return Lists.newArrayList(loggedInUser);
-		case DEV:
+		case ROLE_DEV:
 			return Lists.newArrayList();
-		case GUEST:
+		case ROLE_GUEST:
 			return Lists.newArrayList();
 		default:
 			throw new RuntimeException("Unsupported role: " + loggedInUser.getRole());

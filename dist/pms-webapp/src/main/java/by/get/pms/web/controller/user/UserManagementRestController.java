@@ -30,7 +30,7 @@ public class UserManagementRestController {
 	private UserFacade userFacade;
 
 	@RequestMapping(value = WebConstants.CREATE_UPDATE_USER_URL, method = RequestMethod.POST)
-	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public Response createUpdateUser(@Validated UserDTO userParams, BindingResult errors) {
 		ResponseBuilder builder = responseBuilder.instance();
 		if (errors.hasErrors()) {
@@ -57,7 +57,7 @@ public class UserManagementRestController {
 	}
 
 	@RequestMapping(value = WebConstants.DELETE_USER_URL + "/{id}", method = RequestMethod.DELETE)
-	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public Response removeUser(@PathVariable("id") final Long id) {
 		final ResponseBuilder builder = responseBuilder.instance();
 

@@ -42,16 +42,16 @@ public class ProjectRestController {
 		UserRole userRole = Application.getInstance().getCurrentRole();
 
 		switch (userRole) {
-		case ADMIN:
+		case ROLE_ADMIN:
 			return createProjectByAdmin(projectParams, builder);
-		case PROJECT_MANAGER:
+		case ROLE_PROJECT_MANAGER:
 			return createProjectByPM(projectParams, Application.getInstance().getUser(), builder);
 		default:
 			throw new RuntimeException(String.format("Not supported role: %s for project update!", userRole.name()));
 		}
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	private Response createProjectByAdmin(ProjectDTO projectParams, ResponseBuilder builder) {
 		try {
 			ProjectDTO projectDtoNew = projectFacade.createProject(projectParams);
@@ -63,7 +63,7 @@ public class ProjectRestController {
 		}
 	}
 
-	@PreAuthorize("hasRole('ROLE_PROJECT_MANAGER_USER')")
+	@PreAuthorize("hasRole('ROLE_PROJECT_MANAGER')")
 	private Response createProjectByPM(ProjectDTO projectParams, UserDTO projectManager, ResponseBuilder builder) {
 		try {
 			ProjectDTO projectDtoNew = projectFacade.createProjectByPM(projectManager, projectParams);
@@ -75,7 +75,7 @@ public class ProjectRestController {
 		}
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = WebConstants.UPDATE_PROJECT_URL, method = RequestMethod.POST)
 	private Response updateProject(ProjectDTO projectParams, BindingResult errors) {
 		ResponseBuilder builder = responseBuilder.instance();
@@ -94,7 +94,7 @@ public class ProjectRestController {
 	}
 
 	@RequestMapping(value = WebConstants.DELETE_PROJECT_URL + "/{id}", method = RequestMethod.DELETE)
-	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public Response removeProject(@PathVariable("id") Long id) {
 		final ResponseBuilder builder = responseBuilder.instance();
 

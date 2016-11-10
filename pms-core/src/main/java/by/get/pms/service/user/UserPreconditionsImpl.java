@@ -57,7 +57,7 @@ public class UserPreconditionsImpl implements UserPreconditions {
         }
 
         // precondition for role update;
-        // situation: PM -> DEV, ADMIN and PM is assigned to project
+        // situation: PM -> ROLE_DEV, ROLE_ADMIN and PM is assigned to project
         if (userParams.isProjectManager())
             return;
 

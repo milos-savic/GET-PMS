@@ -57,8 +57,8 @@ public class TaskController {
 		modelAndView.getModel().put("taskStatuses", TaskStatus.values());
 
 		List<UserDTO> assignees = userFacade.getAllUsers().parallelStream()
-				.filter(userDTO -> userDTO.getRole().equals(UserRole.DEV) || userDTO.getRole()
-						.equals(UserRole.PROJECT_MANAGER)).collect(Collectors.toList());
+				.filter(userDTO -> userDTO.getRole().equals(UserRole.ROLE_DEV) || userDTO.getRole()
+						.equals(UserRole.ROLE_PROJECT_MANAGER)).collect(Collectors.toList());
 		modelAndView.getModel().put("assignees", assignees);
 
 		session.setAttribute("project", projectDTO);

@@ -64,15 +64,15 @@ public class User extends PersistentEntity {
 	}
 
 	public boolean isAdmin() {
-		return UserRole.ADMIN.equals(userAccount.getRole());
+		return UserRole.ROLE_ADMIN.equals(userAccount.getRole());
 	}
 
 	public boolean isProjectManager() {
-		return UserRole.PROJECT_MANAGER.equals(userAccount.getRole());
+		return UserRole.ROLE_PROJECT_MANAGER.equals(userAccount.getRole());
 	}
 
 	public boolean isDelveloper() {
-		return UserRole.DEV.equals(userAccount.getRole());
+		return UserRole.ROLE_DEV.equals(userAccount.getRole());
 	}
 
 	@Override

@@ -32,7 +32,7 @@ public class TaskRestController {
 	private TaskFacade taskFacade;
 
 	@RequestMapping(value = WebConstants.CREATE_TASK_URL, method = RequestMethod.POST)
-	@PreAuthorize("hasRole('ROLE_ADMIN_USER') or (hasRole('ROLE_PROJECT_MANAGER_USER') and #taskParams.getProject().getProjectManager().equals(T(by.get.pms.security.Application).getInstance().getUser()))")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or (hasRole('ROLE_PROJECT_MANAGER') and #taskParams.getProject().getProjectManager().equals(T(by.get.pms.security.Application).getInstance().getUser()))")
 	public Response createTask(@Validated TaskDTO taskParams, BindingResult errors) {
 		ResponseBuilder builder = responseBuilder.instance();
 		if (errors.hasErrors()) {
@@ -59,18 +59,18 @@ public class TaskRestController {
 		UserRole userRole = Application.getInstance().getCurrentRole();
 
 		switch (userRole) {
-		case ADMIN:
+		case ROLE_ADMIN:
 			return updateTaskByAdmin(taskParams, builder);
-		case PROJECT_MANAGER:
+		case ROLE_PROJECT_MANAGER:
 			return updateTaskByProjectManager(taskParams, builder);
-		case DEV:
+		case ROLE_DEV:
 			return updateTaskByDev(taskParams, builder);
 		default:
 			throw new RuntimeException(String.format("Not supported role: %s for task update!", userRole.name()));
 		}
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	private Response updateTaskByAdmin(TaskDTO taskParams, ResponseBuilder builder) {
 		try {
 			taskFacade.updateTask(taskParams);
@@ -82,7 +82,7 @@ public class TaskRestController {
 		}
 	}
 
-	@PreAuthorize("hasRole('ROLE_PROJECT_MANAGER_USER')")
+	@PreAuthorize("hasRole('ROLE_PROJECT_MANAGER')")
 	private Response updateTaskByProjectManager(TaskDTO taskParams, ResponseBuilder builder) {
 		try {
 			taskFacade.updateTaskByProjectManager(taskParams);
@@ -94,7 +94,7 @@ public class TaskRestController {
 		}
 	}
 
-	@PreAuthorize("hasRole('ROLE_DEV_USER')")
+	@PreAuthorize("hasRole('ROLE_DEV')")
 	private Response updateTaskByDev(TaskDTO taskParams, ResponseBuilder builder) {
 		try {
 			taskFacade.updateTaskByDeveloper(taskParams);
@@ -107,7 +107,7 @@ public class TaskRestController {
 	}
 
 	@RequestMapping(value = WebConstants.DELETE_TASK_URL + "/{id}", method = RequestMethod.DELETE)
-	@PreAuthorize("hasRole('ROLE_ADMIN_USER')")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public Response removeTask(@PathVariable("id") Long id) {
 		final ResponseBuilder builder = responseBuilder.instance();
 

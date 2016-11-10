@@ -55,15 +55,15 @@ public class UserDTO extends DTO {
 	}
 
 	public boolean isAdmin() {
-		return UserRole.ADMIN.equals(role);
+		return UserRole.ROLE_ADMIN.equals(role);
 	}
 
 	public boolean isProjectManager() {
-		return UserRole.PROJECT_MANAGER.equals(role);
+		return UserRole.ROLE_PROJECT_MANAGER.equals(role);
 	}
 
 	public boolean isDeveloper() {
-		return UserRole.DEV.equals(role);
+		return UserRole.ROLE_DEV.equals(role);
 	}
 
 	public String getFirstName() {

@@ -27,21 +27,6 @@ public class PreAuthRequestHeaderAuthenticationFilter extends RequestHeaderAuthe
 	@Autowired
 	private AuthenticationProvider authenticationProvider;
 
-	@Override
-	protected Object getPreAuthenticatedPrincipal(HttpServletRequest request) {
-		String userName = null;
-
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if(authentication != null){
-
-			if(authentication instanceof AnonymousAuthenticationToken) return null;
-
-			OAuth2Authentication oauth = (OAuth2Authentication) authentication;
-			userName = (String) oauth.getPrincipal();
-		}
-
-		return userName;
-	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
@@ -50,10 +35,15 @@ public class PreAuthRequestHeaderAuthenticationFilter extends RequestHeaderAuthe
 			this.logger.debug("Checking secure context token: " + SecurityContextHolder.getContext().getAuthentication());
 		}
 
-		if(getPreAuthenticatedPrincipal((HttpServletRequest)request) != null) {
+		if(requiresAuthentication()) {
 			authenticationProvider.authenticate(SecurityContextHolder.getContext().getAuthentication());
 		}
 
 		chain.doFilter(request, response);
+	}
+
+	private boolean requiresAuthentication() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return authentication instanceof OAuth2Authentication;
 	}
 }

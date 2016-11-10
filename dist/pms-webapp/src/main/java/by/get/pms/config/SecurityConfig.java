@@ -60,19 +60,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").authenticated()
                 .and().exceptionHandling()
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(WebConstants.SIGNIN_PAGE))
-                .and().logout().logoutUrl(WebConstants.LOGOUT_URL).logoutSuccessUrl(WebConstants.LOGOUT_SUCCESS_URL).invalidateHttpSession(true).deleteCookies("JSESSIONID").permitAll()
+                .and().logout().logoutUrl(WebConstants.LOGOUT_URL).logoutSuccessUrl(WebConstants.LOGOUT_SUCCESS_URL).clearAuthentication(true).invalidateHttpSession(true).deleteCookies("JSESSIONID").permitAll()
                 .and().csrf().disable()
                 .headers().frameOptions().disable()
                 .and().addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
 				.addFilterAfter(preAuthFilter(), RequestHeaderAuthenticationFilter.class)
                 .addFilterAfter(ajaxAuthExceptionTranslationFilter(), ExceptionTranslationFilter.class);
     }
-
-//    @Override
-//    @Bean
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return super.authenticationManagerBean();
-//    }
 
     @Override
     @Autowired

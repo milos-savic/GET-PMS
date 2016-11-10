@@ -22,7 +22,10 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a th:href="@{/projects}" th:text="#{menu.item.projects}"></a></li>
-                <li><a th:href="@{/userManagement}" th:text="#{menu.item.usermanagement}"></a></li>
+
+                <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') }" th:remove="tag">
+                    <li><a th:href="@{/userManagement}" th:text="#{menu.item.usermanagement}"></a></li>
+                </div>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

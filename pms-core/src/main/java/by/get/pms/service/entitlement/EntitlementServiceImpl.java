@@ -48,13 +48,13 @@ public class EntitlementServiceImpl implements EntitlementService {
     private List<EntitlementDTO> getEntitlementsForTasksPermittedToUser(UserAccount userAccount) {
         UserRole userRole = userAccount.getRole();
         switch (userRole) {
-            case ADMIN:
+            case ROLE_ADMIN:
                 return getEntitlementsForTasksPermittedToAdmin(userAccount);
-            case PROJECT_MANAGER:
+            case ROLE_PROJECT_MANAGER:
                 return getEntitlementsForTasksPermittedToPM(userAccount);
-            case DEV:
+            case ROLE_DEV:
                 return getEntitlementsForTasksPermittedToDev(userAccount);
-            case GUEST:
+            case ROLE_GUEST:
                 return new ArrayList<>();
             default:
                 throw new RuntimeException("Unsupported user role: " + userRole.name());
@@ -64,13 +64,13 @@ public class EntitlementServiceImpl implements EntitlementService {
     private List<EntitlementDTO> getEntitlementsForProjectsPermittedToUser(UserAccount userAccount) {
         UserRole userRole = userAccount.getRole();
         switch (userRole) {
-            case ADMIN:
+            case ROLE_ADMIN:
                 return getEntitlementsForProjectsPermittedToAdmin(userAccount);
-            case PROJECT_MANAGER:
+            case ROLE_PROJECT_MANAGER:
                 return getEntitlementsForProjectsPermittedToPM(userAccount);
-            case DEV:
+            case ROLE_DEV:
                 return getEntitlementsForProjectsPermittedToDev(userAccount);
-            case GUEST:
+            case ROLE_GUEST:
                 return new ArrayList<>();
             default:
                 throw new RuntimeException("Unsupported user role: " + userRole.name());
