@@ -31,6 +31,9 @@ public class PreAuthRequestHeaderAuthenticationFilter extends RequestHeaderAuthe
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
 			ServletException {
+
+		// SecurityContext is set into SecurityContextHolder by SecurityContextPersistenceFilter
+
 		if(this.logger.isDebugEnabled()) {
 			this.logger.debug("Checking secure context token: " + SecurityContextHolder.getContext().getAuthentication());
 		}
