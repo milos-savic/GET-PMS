@@ -64,8 +64,7 @@ public class OAuth2AuthenticationServiceImpl implements AuthenticationService {
 		}
 		UserDetails userDetails = createUserDetails(userAccount);
 
-		final List<GrantedAuthority> authorities = new ArrayList<>(userDetails.getAuthorities());
-		if (authorities.size() == 0) {
+		if (userDetails.getAuthorities().size() == 0) {
 			throw new CredentialsExpiredException("No active role available");
 		}
 		return userDetails;
