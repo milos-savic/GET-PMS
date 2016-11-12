@@ -70,7 +70,6 @@ public class TaskRestController {
 		}
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	private Response updateTaskByAdmin(TaskDTO taskParams, ResponseBuilder builder) {
 		try {
 			taskFacade.updateTask(taskParams);
@@ -82,7 +81,6 @@ public class TaskRestController {
 		}
 	}
 
-	@PreAuthorize("hasRole('ROLE_PROJECT_MANAGER')")
 	private Response updateTaskByProjectManager(TaskDTO taskParams, ResponseBuilder builder) {
 		try {
 			taskFacade.updateTaskByProjectManager(taskParams);
@@ -94,7 +92,6 @@ public class TaskRestController {
 		}
 	}
 
-	@PreAuthorize("hasRole('ROLE_DEV')")
 	private Response updateTaskByDev(TaskDTO taskParams, ResponseBuilder builder) {
 		try {
 			taskFacade.updateTaskByDeveloper(taskParams);
