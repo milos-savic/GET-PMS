@@ -49,3 +49,38 @@ body { padding: 2em; }
   background-color: #5B7BD5;
   background-image: linear-gradient(#5B7BD5, #4864B1);
 }
+
+/* Github */
+
+.btn-github {
+  color: #000000;
+  text-shadow: 0 0.7px 0 rgba(0, 0, 0, 0.1);
+  background-color: #f2f2f2;
+  *background-color: #e6e6e6;
+  background-image: -moz-linear-gradient(top, #fafafa, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fafafa), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #fafafa, #e6e6e6);
+  background-image: -o-linear-gradient(top, #fafafa, #e6e6e6);
+  background-image: linear-gradient(to bottom, #fafafa, #e6e6e6);
+  background-repeat: repeat-x;
+  border-color: #e6e6e6 #e6e6e6 #c0c0c0;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffafafa', endColorstr='#ffe6e6e6', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.btn-github:hover,
+.btn-github:focus,
+.btn-github:active,
+.btn-github.active,
+.btn-github.disabled,
+.btn-github[disabled] {
+  color: #000000;
+  background-color: #e6e6e6;
+  *background-color: #d9d9d9;
+}
+
+.btn-github:active,
+.btn-github.active {
+  background-color: #cdcdcd \9;
+}

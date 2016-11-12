@@ -5,6 +5,7 @@
     <title th:text="#{view.signin.title}">Sign in</title>
 
     <link rel="stylesheet" href="../../../resources/css/signin/signin.css" media="screen" th:href="@{/resources/css/signin/signin.css}"/>
+    <link rel="stylesheet" href="../../../resources/css/signin/font-awesome.css" media="screen" th:href="@{/resources/css/signin/font-awesome.css}"/>
 </head>
 <body>
 
@@ -33,7 +34,7 @@
                         </div>
                     </th:block>
 
-                    <button class="loginBtn loginBtn--facebook" style="margin-top: 50px; margin-left: -1075px" onclick="location.href='/login/facebook';">
+                    <button class="loginBtn loginBtn--facebook" style="margin-top: 50px; margin-left: -1075px; height: 34px; width: 205px;" onclick="location.href='/login/facebook';">
                         <span th:text="#{signin.form.signinWithFB}"></span>
                     </button>
 
@@ -44,9 +45,9 @@
                     </div>
                 </th:block>
                 <div>
-                    <a class="btn btn-default" style="margin-left: 350px; margin-top: -56px; width: 160px;" th:href="@{/login/github}">
-                        <span th:text="#{signin.form.signinWithGitHub}"></span>
-                    </a>
+                    <button class="btn btn-github" style="margin-left: 306px; margin-top: -62px; width: 170px; height: 34px;" onclick="location.href='/login/github';">
+                        <i class="fa fa-github"></i> | <span th:text="#{signin.form.signinWithGitHub}"></span>
+                    </button>
                 </div>
         </div>
     </div>
