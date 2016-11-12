@@ -4,8 +4,7 @@
     <object th:include="fragments/meta :: meta" th:remove="tag" />
     <title th:text="#{view.signin.title}">Sign in</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.0.0/bootstrap-social.css"/>
-    <link rel="stylesheet" href="../../../resources/css/font-awesome.css" media="screen" th:href="@{/resources/css/font-awesome.css}"/>
+    <link rel="stylesheet" href="../../../resources/css/signin/signin.css" media="screen" th:href="@{/resources/css/signin/signin.css}"/>
 </head>
 <body>
 
@@ -27,27 +26,17 @@
 
         <div style="padding-bottom: 5px">
 
-            <!--<form class="form-narrow form-horizontal login-form" style="margin-top: 40px; margin-left: 150px; border: none;" action="/login/facebook" method="post" th:action="@{/login/facebook}">-->
-                <!--<fieldset>-->
                     <th:block th:if="${param.error != null}">
                         <div class="form-group">
                             <div th:replace="fragments/alert :: alert (type='danger', message='Sign in error. Please try again.')">Alert
                             </div>
                         </div>
                     </th:block>
-                    <div>
-                        <!--<button type="submit" id="loginWithFB" class="btn btn-default" style="width: 160px;" th:text="#{signin.form.loginWithFB}">-->
-                        <a class="btn btn-block btn-social btn-facebook" style="margin-top: 40px; margin-left: -1178px;" th:href="@{/login/facebook}">
-                            <span class="fa fa-facebook" th:text="#{signin.form.signinWithFB}"></span> Sign in with Facebook
-                        </a>
-                        <!--</button>-->
 
-                    </div>
-                <!--</fieldset>-->
-            <!--</form>-->
+                    <button class="loginBtn loginBtn--facebook" style="margin-top: 50px; margin-left: -1075px" onclick="location.href='/login/facebook';">
+                        <span th:text="#{signin.form.signinWithFB}"></span>
+                    </button>
 
-            <form class="form-narrow form-horizontal login-form" style="margin-left: 150px; margin-top: -56px; border: none;" action="/login/github" method="post" th:action="@{/login/github}">
-            <fieldset>
                 <th:block th:if="${param.error != null}">
                     <div class="form-group">
                         <div th:replace="fragments/alert :: alert (type='danger', message='Sign in error. Please try again.')">Alert
@@ -55,12 +44,10 @@
                     </div>
                 </th:block>
                 <div>
-                    <button type="submit" id="loginWithGitHub" class="btn btn-default" style="width: 160px;" th:text="#{signin.form.loginWithGitHub}">
-                        Login with GitHub
-                    </button>
+                    <a class="btn btn-default" style="margin-left: 350px; margin-top: -56px; width: 160px;" th:href="@{/login/github}">
+                        <span th:text="#{signin.form.signinWithGitHub}"></span>
+                    </a>
                 </div>
-            </fieldset>
-            </form>
         </div>
     </div>
 </div>
