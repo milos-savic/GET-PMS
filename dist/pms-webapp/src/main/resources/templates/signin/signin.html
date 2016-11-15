@@ -27,28 +27,29 @@
 
         <div style="padding-bottom: 5px">
 
-                    <th:block th:if="${param.error != null}">
-                        <div class="form-group">
-                            <div th:replace="fragments/alert :: alert (type='danger', message='Sign in error. Please try again.')">Alert
-                            </div>
-                        </div>
-                    </th:block>
-
-                    <button class="loginBtn loginBtn--facebook" style="margin-top: 50px; margin-left: -1350px; height: 34px; width: 205px;" onclick="location.href='/login/facebook';">
-                        <span th:text="#{signin.form.signinWithFB}"></span>
-                    </button>
-
-                <th:block th:if="${param.error != null}">
-                    <div class="form-group">
-                        <div th:replace="fragments/alert :: alert (type='danger', message='Sign in error. Please try again.')">Alert
-                        </div>
+            <th:block th:if="${param.error != null}">
+                <div class="form-group">
+                    <div th:replace="fragments/alert :: alert (type='danger', message='Sign in error. Please try again.')">Alert
                     </div>
-                </th:block>
-                <div>
-                    <button class="btn btn-github" style="margin-left: 306px; margin-top: -62px; width: 170px; height: 34px;" onclick="location.href='/login/github';">
-                        <i class="fa fa-github"></i> | <span th:text="#{signin.form.signinWithGitHub}"></span>
-                    </button>
                 </div>
+            </th:block>
+            <div style="height: 34px; width: 205px;">
+                <button class="loginBtn loginBtn--facebook" onclick="window.location.href= baseUrl + '/signin/facebook';">
+                    <span th:text="#{signin.form.signinWithFB}"></span>
+                </button>
+            </div>
+
+            <th:block th:if="${param.error != null}">
+                <div class="form-group">
+                    <div th:replace="fragments/alert :: alert (type='danger', message='Sign in error. Please try again.')">Alert
+                    </div>
+                </div>
+            </th:block>
+            <div style="margin-left: 250px; margin-top: 12px; width: 170px; height: 34px;">
+                <button class="btn btn-github" onclick="window.location.href= baseUrl + '/signin/github';">
+                    <i class="fa fa-github"></i> | <span th:text="#{signin.form.signinWithGitHub}"></span>
+                </button>
+            </div>
         </div>
     </div>
 </div>

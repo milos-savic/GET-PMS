@@ -12,7 +12,6 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -77,8 +76,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private Filter ssoFilter() {
         CompositeFilter filter = new CompositeFilter();
         List<Filter> filters = new ArrayList<>();
-        filters.add(ssoFilter(facebook(), WebConstants.LOGIN_TO_FB_URL));
-        filters.add(ssoFilter(github(), WebConstants.LOGIN_TO_GITHUB_URL));
+        filters.add(ssoFilter(facebook(), WebConstants.SIGNIN_TO_FB_URL));
+        filters.add(ssoFilter(github(), WebConstants.SIGNIN_TO_GITHUB_URL));
         filter.setFilters(filters);
         return filter;
     }
