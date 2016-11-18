@@ -86,6 +86,31 @@
                 <version>${jackson.version}</version>
             </dependency>
 
+            <!-- Spring Social Integrations  -->
+            <dependency>
+                <groupId>org.springframework.social</groupId>
+                <artifactId>spring-social-security</artifactId>
+                <version>1.1.4.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.social</groupId>
+                <artifactId>spring-social-config</artifactId>
+                <version>1.1.4.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.social</groupId>
+                <artifactId>spring-social-facebook</artifactId>
+                <version>2.0.3.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.social</groupId>
+                <artifactId>spring-social-github</artifactId>
+                <version>1.0.0.M4</version>
+            </dependency>
+
             <!-- Utilities -->
             <dependency>
                 <groupId>com.google.guava</groupId>
