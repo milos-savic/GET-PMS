@@ -89,13 +89,19 @@
             <!-- Spring Social Integrations  -->
             <dependency>
                 <groupId>org.springframework.social</groupId>
-                <artifactId>spring-social-security</artifactId>
+                <artifactId>spring-social-core</artifactId>
                 <version>1.1.4.RELEASE</version>
             </dependency>
 
             <dependency>
                 <groupId>org.springframework.social</groupId>
                 <artifactId>spring-social-config</artifactId>
+                <version>1.1.4.RELEASE</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.social</groupId>
+                <artifactId>spring-social-security</artifactId>
                 <version>1.1.4.RELEASE</version>
             </dependency>
 

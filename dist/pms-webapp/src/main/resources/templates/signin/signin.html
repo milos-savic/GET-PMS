@@ -34,9 +34,13 @@
                 </div>
             </th:block>
             <div style="height: 34px; width: 205px;">
-                <button class="loginBtn loginBtn--facebook" onclick="window.location.href= baseUrl + '/signin/facebook';">
+                <button class="loginBtn loginBtn--facebook" onclick="window.location.href= baseUrl + '/auth/facebook';">
                     <span th:text="#{signin.form.signinWithFB}"></span>
                 </button>
+
+                <!--<button class="loginBtn loginBtn&#45;&#45;facebook" onclick="window.location.href= baseUrl + '/signin/facebook';">-->
+                    <!--<span th:text="#{signin.form.signinWithFB}"></span>-->
+                <!--</button>-->
             </div>
 
             <th:block th:if="${param.error != null}">

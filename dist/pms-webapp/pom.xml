@@ -101,6 +101,23 @@
             <artifactId>spring-security-oauth2</artifactId>
         </dependency>
 
+        <!-- Spring Social -->
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-config</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-facebook</artifactId>
+        </dependency>
+
+
         <!-- View -->
         <dependency>
             <groupId>org.thymeleaf</groupId>
