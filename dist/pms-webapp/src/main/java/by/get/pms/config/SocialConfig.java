@@ -9,11 +9,14 @@ import org.springframework.social.UserIdSource;
 import org.springframework.social.config.annotation.ConnectionFactoryConfigurer;
 import org.springframework.social.config.annotation.EnableSocial;
 import org.springframework.social.config.annotation.SocialConfigurer;
+import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
+import org.springframework.social.oauth2.OAuth2Operations;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
 
 import javax.sql.DataSource;
@@ -23,8 +26,8 @@ import javax.sql.DataSource;
  */
 @Configuration
 @PropertySource("classpath:/config/security.properties")
-@EnableSocial
-public class SocialConfig implements SocialConfigurer {
+//@EnableSocial
+public class SocialConfig extends SocialConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
@@ -35,9 +38,15 @@ public class SocialConfig implements SocialConfigurer {
 
     @Override
     public void addConnectionFactories(ConnectionFactoryConfigurer connectionFactoryConfigurer, Environment environment) {
-        connectionFactoryConfigurer.addConnectionFactory(new FacebookConnectionFactory(
-                environment.getProperty("spring.social.facebook.appId"),
-                environment.getProperty("spring.social.facebook.appSecret")));
+        FacebookConnectionFactory facebookConnectionFactory = new FacebookConnectionFactory(environment.getProperty("spring.social.facebook.appId"),
+                environment.getProperty("spring.social.facebook.appSecret"));
+        OAuth2Operations oAuth2Operations = facebookConnectionFactory.getOAuthOperations();
+        OAuth2Parameters params = new OAuth2Parameters();
+        params.setRedirectUri(environment.getProperty("spring.social.facebook.redirectUri"));
+        oAuth2Operations.buildAuthorizeUrl(params);
+
+
+        connectionFactoryConfigurer.addConnectionFactory(facebookConnectionFactory);
     }
 
     // way to identify current user - from Spring Security Context

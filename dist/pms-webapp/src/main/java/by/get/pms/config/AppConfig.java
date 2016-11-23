@@ -14,6 +14,6 @@ import org.springframework.context.annotation.Import;
  * dispatcher servlet should go into WebMvcConfig.
  */
 @Configuration
-@Import({ SpringJpaConfig.class, SecurityConfig.class, CoreConfig.class, LiquibaseConfiguration.class})
+@Import({ SpringJpaConfig.class, SecurityConfiguration.class, CoreConfig.class, LiquibaseConfiguration.class})
 public class AppConfig {
 }
