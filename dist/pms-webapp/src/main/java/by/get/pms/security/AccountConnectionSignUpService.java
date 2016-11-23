@@ -24,21 +24,22 @@ public class AccountConnectionSignUpService implements ConnectionSignUp {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UsersDao usersDao;
+//    @Autowired
+//    private UsersDao usersDao;
 
     @Override
     public String execute(Connection<?> connection) {
         org.springframework.social.connect.UserProfile profile = connection.fetchUserProfile();
-        Random r = new Random();
-        Long userId = r.nextLong();
-        LOG.debug("Created user-id: " + userId);
-        usersDao.createUser("" + userId, new by.get.pms.security.UserProfile("" + userId, profile));
 
-        UserDTO userParams = new UserDTO(userId, profile.getFirstName(), profile.getLastName(), profile.getEmail(), profile.getUsername(),
+//        Random r = new Random();
+//        Long userId = r.nextLong();
+//        LOG.debug("Created user-id: " + userId);
+//        usersDao.createUser("" + userId, new by.get.pms.security.UserProfile("" + userId, profile));
+
+        UserDTO userParams = new UserDTO(-1L, profile.getFirstName(), profile.getLastName(), profile.getEmail(), profile.getUsername(),
                 LocalDateTime.now(), true, UserRole.ROLE_GUEST);
-        userService.createUser(userParams);
+        UserDTO newUser = userService.createUser(userParams);
 
-        return "" + userId;
+        return "" + newUser.getId();
     }
 }
