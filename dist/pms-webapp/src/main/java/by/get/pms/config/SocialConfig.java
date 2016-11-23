@@ -26,7 +26,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @PropertySource("classpath:/config/security.properties")
-//@EnableSocial
+@EnableSocial
 public class SocialConfig extends SocialConfigurerAdapter {
 
     @Autowired
@@ -38,13 +38,8 @@ public class SocialConfig extends SocialConfigurerAdapter {
 
     @Override
     public void addConnectionFactories(ConnectionFactoryConfigurer connectionFactoryConfigurer, Environment environment) {
-        FacebookConnectionFactory facebookConnectionFactory = new FacebookConnectionFactory(environment.getProperty("spring.social.facebook.appId"),
-                environment.getProperty("spring.social.facebook.appSecret"));
-        OAuth2Operations oAuth2Operations = facebookConnectionFactory.getOAuthOperations();
-        OAuth2Parameters params = new OAuth2Parameters();
-        params.setRedirectUri(environment.getProperty("spring.social.facebook.redirectUri"));
-        oAuth2Operations.buildAuthorizeUrl(params);
-
+        FacebookConnectionFactory facebookConnectionFactory = new FacebookConnectionFactory(environment.getProperty("facebook.appId"),
+                environment.getProperty("facebook.appSecret"));
 
         connectionFactoryConfigurer.addConnectionFactory(facebookConnectionFactory);
     }
