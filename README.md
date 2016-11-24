@@ -17,10 +17,6 @@
 
 PMS Web App is available at http://127.0.0.1:8182
 
-Login -> password:
-densk -> Denisik123
-artzo -> Denisik123 (admin)
-alekh -> Denisik123 (admin)
 
 ############################################################
 ## Instruction for development processes

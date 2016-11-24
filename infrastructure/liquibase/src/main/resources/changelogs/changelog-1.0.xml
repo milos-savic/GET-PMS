@@ -172,8 +172,43 @@
     <changeSet author="milos.savic" id="1476437131769-210" dbms="h2">
         <sqlFile encoding="UTF-8" path="projects_and_tasks.sql" relativeToChangelogFile="true"/>
     </changeSet>
-
-
     <!-- PROJECT AND TASKS -->
+
+
+    <!-- SPRING SOCIAL TABLES  -->
+
+    <changeSet author="milos.savic" id="1476437131769-211">
+        <createTable tableName="USERCONNECTION">
+            <column name="PROVIDERID" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PROVIDERUSERID" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USERID" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ACCESSTOKEN" type="VARCHAR(1024)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DISPLAYNAME" type="VARCHAR(255)"/>
+            <column name="EXPIRETIME" type="DECIMAL(19, 2)"/>
+            <column name="IMAGEURL" type="VARCHAR(512)"/>
+            <column name="PROFILEURL" type="VARCHAR(512)"/>
+            <column name="RANK" type="INT(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REFRESHTOKEN" type="VARCHAR(255)"/>
+            <column name="SECRET" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="milos.savic" id="1476437131769-212">
+        <addPrimaryKey columnNames="PROVIDERID, PROVIDERUSERID, USERID" constraintName="USERCONNECTION_PK" tableName="USERCONNECTION"/>
+    </changeSet>
+
+    <changeSet author="milos.savic" id="1476437131769-213">
+        <addUniqueConstraint columnNames="USERID, PROVIDERID, RANK" constraintName="USERCONNECTIONRANK" tableName="USERCONNECTION"/>
+    </changeSet>
 
 </databaseChangeLog>
