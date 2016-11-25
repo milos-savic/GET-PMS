@@ -35,15 +35,6 @@ public class SocialConfig extends SocialConfigurerAdapter {
     @Autowired
     public ConnectionSignUp accountConnectionSignUpService;
 
-
-    @Override
-    public void addConnectionFactories(ConnectionFactoryConfigurer connectionFactoryConfigurer, Environment environment) {
-        FacebookConnectionFactory facebookConnectionFactory = new FacebookConnectionFactory(environment.getProperty("facebook.appId"),
-                environment.getProperty("facebook.appSecret"));
-
-        connectionFactoryConfigurer.addConnectionFactory(facebookConnectionFactory);
-    }
-
     // way to identify current user - from Spring Security Context
     @Override
     public UserIdSource getUserIdSource() {
