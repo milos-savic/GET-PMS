@@ -8,15 +8,12 @@ import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.social.UserIdSource;
 import org.springframework.social.config.annotation.ConnectionFactoryConfigurer;
 import org.springframework.social.config.annotation.EnableSocial;
-import org.springframework.social.config.annotation.SocialConfigurer;
 import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
-import org.springframework.social.oauth2.OAuth2Operations;
-import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
 
 import javax.sql.DataSource;
@@ -34,6 +31,15 @@ public class SocialConfig extends SocialConfigurerAdapter {
 
     @Autowired
     public ConnectionSignUp accountConnectionSignUpService;
+
+    @Override
+    public void addConnectionFactories(ConnectionFactoryConfigurer connectionFactoryConfigurer, Environment environment) {
+        FacebookConnectionFactory facebookConnectionFactory = new FacebookConnectionFactory(environment.getProperty("facebook.appId"),
+                environment.getProperty("facebook.appSecret"));
+        facebookConnectionFactory.setScope("public_profile, email");
+
+        connectionFactoryConfigurer.addConnectionFactory(facebookConnectionFactory);
+    }
 
     // way to identify current user - from Spring Security Context
     @Override

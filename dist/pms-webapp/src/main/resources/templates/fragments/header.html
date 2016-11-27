@@ -30,7 +30,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <div th:if="${#authentication != null and #authentication.principal != null}" th:remove="tag">
-                    <li><p class="navbar-text" th:text="${#authentication.principal.displayName}" style="margin-bottom: 0"></p></li>
+                    <li><p class="navbar-text" th:text="${#authentication.principal.username}" style="margin-bottom: 0"></p></li>
                     <br />
                 </div>
                 <li><a th:href="@{/logout}" onclick="$('#form').submit();" th:text="#{button.logout}"></a>

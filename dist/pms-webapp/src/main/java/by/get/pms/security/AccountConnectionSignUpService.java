@@ -3,8 +3,6 @@ package by.get.pms.security;
 import by.get.pms.dto.UserDTO;
 import by.get.pms.model.UserRole;
 import by.get.pms.service.user.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
@@ -18,8 +16,6 @@ import java.time.LocalDateTime;
  */
 @Service
 public class AccountConnectionSignUpService implements ConnectionSignUp {
-
-    private static final Logger LOG = LoggerFactory.getLogger(AccountConnectionSignUpService.class);
 
     @Autowired
     private UserService userService;
@@ -46,14 +42,8 @@ public class AccountConnectionSignUpService implements ConnectionSignUp {
                     LocalDateTime.now(), true, UserRole.ROLE_GUEST);
         }
 
-//        Random r = new Random();
-//        Long userId = r.nextLong();
-//        LOG.debug("Created user-id: " + userId);
-//        usersDao.createUser("" + userId, new by.get.pms.security.UserProfile("" + userId, profile));
-
-
         UserDTO newUser = userService.createUser(userParams);
 
-        return "" + newUser.getId();
+        return "" + newUser.getUserName();
     }
 }

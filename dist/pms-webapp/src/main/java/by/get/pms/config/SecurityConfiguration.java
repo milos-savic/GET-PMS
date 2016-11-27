@@ -10,13 +10,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.social.security.SpringSocialConfigurer;
-
-import javax.sql.DataSource;
 
 /**
  * Created by milos on 20-Nov-16.
@@ -27,15 +28,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private SocialAuthenticationService socialAuthenticationService;
-
-    @Autowired
-    private DataSource dataSource;
-
-//	@Autowired
-//	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.
-//				jdbcAuthentication().dataSource(dataSource).withDefaultSchema();
-//	}
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -56,6 +48,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public SocialUserDetailsService socialUsersDetailService() {
         return new SimpleSocialUsersDetailService(socialAuthenticationService);
     }
+
+    // storing the Security Context between requests into HTTP Session
+    @Bean
+    SecurityContextPersistenceFilter securityContextPersistenceFilter() {
+        System.setProperty(SecurityContextHolder.SYSTEM_PROPERTY,
+                "by.get.pms.security.ApplicationSecurityContextHolderStrategy");
+
+        HttpSessionSecurityContextRepository repo = new HttpSessionSecurityContextRepository();
+        repo.setAllowSessionCreation(true);
+        return new SecurityContextPersistenceFilter(repo);
+    }
+
 
     @Bean
     public ExceptionTranslationFilter ajaxAuthExceptionTranslationFilter() {
