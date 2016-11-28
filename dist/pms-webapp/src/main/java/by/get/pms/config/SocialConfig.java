@@ -14,6 +14,7 @@ import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
+import org.springframework.social.github.connect.GitHubConnectionFactory;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
 
 import javax.sql.DataSource;
@@ -26,33 +27,39 @@ import javax.sql.DataSource;
 @EnableSocial
 public class SocialConfig extends SocialConfigurerAdapter {
 
-    @Autowired
-    private DataSource dataSource;
+	@Autowired
+	private DataSource dataSource;
 
-    @Autowired
-    public ConnectionSignUp accountConnectionSignUpService;
+	@Autowired
+	public ConnectionSignUp accountConnectionSignUpService;
 
-    @Override
-    public void addConnectionFactories(ConnectionFactoryConfigurer connectionFactoryConfigurer, Environment environment) {
-        FacebookConnectionFactory facebookConnectionFactory = new FacebookConnectionFactory(environment.getProperty("facebook.appId"),
-                environment.getProperty("facebook.appSecret"));
-        facebookConnectionFactory.setScope("public_profile, email");
+	@Override
+	public void addConnectionFactories(ConnectionFactoryConfigurer connectionFactoryConfigurer,
+			Environment environment) {
+		FacebookConnectionFactory facebookConnectionFactory = new FacebookConnectionFactory(
+				environment.getProperty("facebook.appId"), environment.getProperty("facebook.appSecret"));
+		facebookConnectionFactory.setScope("public_profile, email");
 
-        connectionFactoryConfigurer.addConnectionFactory(facebookConnectionFactory);
-    }
+		GitHubConnectionFactory gitHubConnectionFactory = new GitHubConnectionFactory(
+				(environment.getProperty("github.appId")), environment.getProperty("github.appSecret"));
 
-    // way to identify current user - from Spring Security Context
-    @Override
-    public UserIdSource getUserIdSource() {
-        return new AuthenticationNameUserIdSource();
-    }
+		connectionFactoryConfigurer.addConnectionFactory(facebookConnectionFactory);
+		connectionFactoryConfigurer.addConnectionFactory(gitHubConnectionFactory);
+	}
 
-    // UsersConnectionRepository - factory to create request-scoped (per-user) ConnectionRepository bean
-    @Override
-    public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
-        // stores connections to UserConnection table
-        JdbcUsersConnectionRepository repository = new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
-        repository.setConnectionSignUp(accountConnectionSignUpService);
-        return repository;
-    }
+	// way to identify current user - from Spring Security Context
+	@Override
+	public UserIdSource getUserIdSource() {
+		return new AuthenticationNameUserIdSource();
+	}
+
+	// UsersConnectionRepository - factory to create request-scoped (per-user) ConnectionRepository bean
+	@Override
+	public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
+		// stores connections to UserConnection table
+		JdbcUsersConnectionRepository repository = new JdbcUsersConnectionRepository(dataSource,
+				connectionFactoryLocator, Encryptors.noOpText());
+		repository.setConnectionSignUp(accountConnectionSignUpService);
+		return repository;
+	}
 }
