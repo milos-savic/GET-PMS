@@ -15,7 +15,7 @@
 
 	mvn -f dist\pms-webapp
 
-PMS Web App is available at http://127.0.0.1:8182
+PMS Web App is available at http://127.0.0.1:8080
 
 
 ############################################################
