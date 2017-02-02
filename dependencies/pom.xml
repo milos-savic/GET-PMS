@@ -39,6 +39,8 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- Liquibase -->
             <dependency>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-core</artifactId>
@@ -115,6 +117,14 @@
                 <groupId>org.springframework.social</groupId>
                 <artifactId>spring-social-github</artifactId>
                 <version>1.0.0.M4</version>
+            </dependency>
+
+            <!-- Spring ACL -->
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-acl</artifactId>
+                <version>4.2.1.RELEASE</version>
+                <scope>compile</scope>
             </dependency>
 
             <!-- Utilities -->
