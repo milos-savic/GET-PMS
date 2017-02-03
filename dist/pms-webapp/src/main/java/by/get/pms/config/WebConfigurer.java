@@ -3,10 +3,8 @@ package by.get.pms.config;
 import by.get.pms.listener.SessionListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.ServletContextInitializer;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -19,9 +17,6 @@ import javax.servlet.ServletRegistration;
 public class WebConfigurer implements ServletContextInitializer {
 
 	private final Logger logger = LoggerFactory.getLogger(WebConfigurer.class);
-
-	@Autowired
-	private Environment env;
 
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
