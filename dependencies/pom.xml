@@ -127,6 +127,14 @@
                 <scope>compile</scope>
             </dependency>
 
+            <!-- Ehcache -->
+            <dependency>
+                <groupId>net.sf.ehcache</groupId>
+                <artifactId>ehcache</artifactId>
+                <version>2.10.3</version>
+            </dependency>
+
+
             <!-- Utilities -->
             <dependency>
                 <groupId>com.google.guava</groupId>
