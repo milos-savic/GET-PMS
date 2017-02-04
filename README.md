@@ -11,7 +11,7 @@
 
 	mvn clean install
 
-3) Run application Designer Web Application
+3) Run application Web Application
 
 	mvn -f dist\pms-webapp
 

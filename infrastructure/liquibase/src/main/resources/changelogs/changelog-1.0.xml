@@ -177,7 +177,7 @@
 
     <!-- SPRING SOCIAL TABLES  -->
 
-    <changeSet author="milos.savic" id="1476437131769-211">
+    <changeSet author="milos.savic" id="1476437131769-300">
         <createTable tableName="USERCONNECTION">
             <column name="PROVIDERID" type="VARCHAR(255)">
                 <constraints nullable="false"/>
@@ -203,12 +203,87 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="milos.savic" id="1476437131769-212">
+    <changeSet author="milos.savic" id="1476437131769-301">
         <addPrimaryKey columnNames="PROVIDERID, PROVIDERUSERID, USERID" constraintName="USERCONNECTION_PK" tableName="USERCONNECTION"/>
     </changeSet>
 
-    <changeSet author="milos.savic" id="1476437131769-213">
+    <changeSet author="milos.savic" id="1476437131769-302">
         <addUniqueConstraint columnNames="USERID, PROVIDERID, RANK" constraintName="USERCONNECTIONRANK" tableName="USERCONNECTION"/>
+    </changeSet>
+
+    <!-- SPRING ACL TABLES -->
+
+    <changeSet author="milos (generated)" id="1476437131769-400">
+        <createTable tableName="ACL_SID">
+            <column autoIncrement="true" name="ID" type="BIGINT(19)">
+                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_E"/>
+            </column>
+            <column name="PRINCIPAL" type="BOOLEAN(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SID" type="VARCHAR_IGNORECASE(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="milos (generated)" id="1476437131769-401">
+        <createTable tableName="ACL_CLASS">
+            <column autoIncrement="true" name="ID" type="BIGINT(19)">
+                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_2"/>
+            </column>
+            <column name="CLASS" type="VARCHAR_IGNORECASE(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="milos (generated)" id="1476437131769-402">
+        <createTable tableName="ACL_ENTRY">
+            <column autoIncrement="true" name="ID" type="BIGINT(19)">
+                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_2F"/>
+            </column>
+            <column name="ACL_OBJECT_IDENTITY" type="BIGINT(19)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ACE_ORDER" type="INT(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SID" type="BIGINT(19)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MASK" type="INT(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GRANTING" type="BOOLEAN(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AUDIT_SUCCESS" type="BOOLEAN(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AUDIT_FAILURE" type="BOOLEAN(1)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="milos (generated)" id="1476437131769-403">
+        <createTable tableName="ACL_OBJECT_IDENTITY">
+            <column autoIncrement="true" name="ID" type="BIGINT(19)">
+                <constraints primaryKey="true" primaryKeyName="CONSTRAINT_9"/>
+            </column>
+            <column name="OBJECT_ID_CLASS" type="BIGINT(19)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="OBJECT_ID_IDENTITY" type="BIGINT(19)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PARENT_OBJECT" type="BIGINT(19)"/>
+            <column name="OWNER_SID" type="BIGINT(19)"/>
+            <column name="ENTRIES_INHERITING" type="BOOLEAN(1)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
     </changeSet>
 
 </databaseChangeLog>

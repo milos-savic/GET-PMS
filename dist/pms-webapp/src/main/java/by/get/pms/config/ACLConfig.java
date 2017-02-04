@@ -26,47 +26,55 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class ACLConfig extends GlobalMethodSecurityConfiguration {
 
-	@Autowired
-	private DataSource dataSource;
+    @Autowired
+    private DataSource dataSource;
 
-	@Bean
-	EhCacheBasedAclCache aclCache() {
-		EhCacheFactoryBean factoryBean = new EhCacheFactoryBean();
-		EhCacheManagerFactoryBean cacheManager = new EhCacheManagerFactoryBean();
+    @Bean
+    EhCacheFactoryBean aclEhCacheFactoryBean() {
+        EhCacheFactoryBean ehCacheFactoryBean = new EhCacheFactoryBean();
+        EhCacheManagerFactoryBean cacheManager = new EhCacheManagerFactoryBean();
+        ehCacheFactoryBean.setCacheManager(cacheManager.getObject());
+        ehCacheFactoryBean.setCacheName("aclCache");
+        return ehCacheFactoryBean;
+    }
 
-		factoryBean.setName("aclCache");
-		factoryBean.setCacheManager(cacheManager.getObject());
+    @Bean
+    DefaultPermissionGrantingStrategy permissionGrantingStrategy() {
+        return new DefaultPermissionGrantingStrategy(new ConsoleAuditLogger());
+    }
 
-		return new EhCacheBasedAclCache(factoryBean.getObject(),
-				new DefaultPermissionGrantingStrategy(new ConsoleAuditLogger()), aclAuthorizationStrategy());
-	}
+    @Bean
+    AclAuthorizationStrategy aclAuthorizationStrategy() {
+        return new AclAuthorizationStrategyImpl(new SimpleGrantedAuthority("ROLE_ADMINISTRATOR"));
+    }
 
-	AclAuthorizationStrategy aclAuthorizationStrategy() {
-		return new AclAuthorizationStrategyImpl(new SimpleGrantedAuthority("ROLE_ACL_ADMIN"));
-	}
+    @Bean
+    EhCacheBasedAclCache aclCache() {
+        return new EhCacheBasedAclCache(aclEhCacheFactoryBean().getObject(),
+                permissionGrantingStrategy(), aclAuthorizationStrategy());
+    }
 
-	@Bean
-	LookupStrategy lookupStrategy() {
-		return new BasicLookupStrategy(dataSource, aclCache(), aclAuthorizationStrategy(), new ConsoleAuditLogger());
-	}
+    @Bean
+    LookupStrategy lookupStrategy() {
+        return new BasicLookupStrategy(dataSource, aclCache(), aclAuthorizationStrategy(), new ConsoleAuditLogger());
+    }
 
-	@Bean
-	JdbcMutableAclService aclService() {
-		JdbcMutableAclService service = new JdbcMutableAclService(dataSource, lookupStrategy(), aclCache());
-		return service;
-	}
+    @Bean
+    JdbcMutableAclService aclService() {
+        JdbcMutableAclService service = new JdbcMutableAclService(dataSource, lookupStrategy(), aclCache());
+        return service;
+    }
 
-	@Override
-	protected MethodSecurityExpressionHandler createExpressionHandler() {
-		DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
-		expressionHandler.setPermissionEvaluator(permissionEvaluator());
-		expressionHandler.setPermissionCacheOptimizer(new AclPermissionCacheOptimizer(aclService()));
-		return expressionHandler;
-	}
+    @Override
+    protected MethodSecurityExpressionHandler createExpressionHandler() {
+        DefaultMethodSecurityExpressionHandler expressionHandler = new DefaultMethodSecurityExpressionHandler();
+        expressionHandler.setPermissionEvaluator(permissionEvaluator());
+        expressionHandler.setPermissionCacheOptimizer(new AclPermissionCacheOptimizer(aclService()));
+        return expressionHandler;
+    }
 
-	@Bean
-	AclPermissionEvaluator permissionEvaluator() {
-		return new AclPermissionEvaluator(aclService());
-	}
+    private AclPermissionEvaluator permissionEvaluator() {
+        return new AclPermissionEvaluator(aclService());
+    }
 
 }
