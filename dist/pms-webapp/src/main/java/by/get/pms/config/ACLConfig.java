@@ -1,5 +1,6 @@
 package by.get.pms.config;
 
+import by.get.pms.security.AclInitializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.ehcache.EhCacheFactoryBean;
 import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
@@ -16,6 +17,7 @@ import org.springframework.security.acls.jdbc.LookupStrategy;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
 
@@ -28,6 +30,9 @@ public class ACLConfig extends GlobalMethodSecurityConfiguration {
 
     @Autowired
     private DataSource dataSource;
+
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
     @Bean
     EhCacheFactoryBean aclEhCacheFactoryBean() {
@@ -77,4 +82,8 @@ public class ACLConfig extends GlobalMethodSecurityConfiguration {
         return new AclPermissionEvaluator(aclService());
     }
 
+    @Bean
+    AclInitializer aclInitializer() {
+        return new AclInitializer(dataSource, transactionManager, aclService());
+    }
 }
