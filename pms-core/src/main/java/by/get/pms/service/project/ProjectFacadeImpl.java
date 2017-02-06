@@ -21,6 +21,12 @@ public class ProjectFacadeImpl implements ProjectFacade {
 	@Autowired
 	private ProjectPreconditions projectPreconditions;
 
+
+	@Override
+	public List<ProjectDTO> getAll() {
+		return projectService.getAll();
+	}
+
 	@Override
 	public ProjectDTO getProject(Long projectId) {
 		return projectService.getProject(projectId);

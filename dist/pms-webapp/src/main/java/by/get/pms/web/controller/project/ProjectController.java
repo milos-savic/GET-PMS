@@ -13,11 +13,14 @@ import by.get.pms.service.user.UserService;
 import by.get.pms.web.controller.WebConstants;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -40,32 +43,49 @@ public class ProjectController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private ApplicationContext applicationContext;
+	private ProjectController self;
+
+	@PostConstruct
+	private void init() {
+		self = applicationContext.getBean(ProjectController.class);
+	}
+
 	@RequestMapping(value = WebConstants.PROJECTS_URL, method = RequestMethod.GET)
 	public ModelAndView getProjects() {
 		ModelAndView modelAndView = new ModelAndView(WebConstants.PROJECTS_HTML_PATH);
 
 		UserDTO loggedInUser = Application.getInstance().getUser();
 
-		List<ProjectDTO> projects = retrieveProjects(loggedInUser);
+		//List<ProjectDTO> projects = retrieveProjects(loggedInUser);
+		List<ProjectDTO> projects = self.retriveProjectsBasedOnACL();
+
 		modelAndView.getModel().put("projects", projects);
 
 		modelAndView.getModel().put("projectManagers", retrieveProjectManagers(loggedInUser));
 		return modelAndView;
 	}
 
-	private List<ProjectDTO> retrieveProjects(UserDTO user) {
-		List<EntitlementDTO> entitlementsForProjectsPermittedToUser = entitlementService
-				.getEntitlementsForObjectTypePermittedToUser(user.getUserName(), ObjectType.PROJECT);
-		Set<Long> projectIds = entitlementsForProjectsPermittedToUser.parallelStream().map(EntitlementDTO::getObjectid)
-				.collect(Collectors.toSet());
-		return projectFacade.getProjectByIds(projectIds);
+	@PostFilter("hasPermission(filterObject, 'read') or hasPermission(filterObject, 'administration')")
+	public List<ProjectDTO> retriveProjectsBasedOnACL() {
+		return projectFacade.getAll();
 	}
+
+//	private List<ProjectDTO> retrieveProjects(UserDTO user) {
+//		List<EntitlementDTO> entitlementsForProjectsPermittedToUser = entitlementService
+//				.getEntitlementsForObjectTypePermittedToUser(user.getUserName(), ObjectType.PROJECT);
+//		Set<Long> projectIds = entitlementsForProjectsPermittedToUser.parallelStream().map(EntitlementDTO::getObjectid)
+//				.collect(Collectors.toSet());
+//		return projectFacade.getProjectByIds(projectIds);
+//	}
 
 	private List<UserDTO> retrieveProjectManagers(UserDTO loggedInUser) {
 		switch (loggedInUser.getRole()) {
 		case ROLE_ADMIN:
 			return userFacade.getAllUsers().parallelStream()
-					.filter(userDTO -> userDTO.getRole().equals(UserRole.ROLE_PROJECT_MANAGER)).collect(Collectors.toList());
+					.filter(userDTO -> userDTO.getRole().equals(UserRole.ROLE_PROJECT_MANAGER))
+					.collect(Collectors.toList());
 		case ROLE_PROJECT_MANAGER:
 			return Lists.newArrayList(loggedInUser);
 		case ROLE_DEV:

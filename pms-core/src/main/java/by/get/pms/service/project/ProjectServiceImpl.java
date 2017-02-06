@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -35,12 +37,20 @@ public class ProjectServiceImpl implements ProjectService {
 	private TaskService taskService;
 
 	@Override
+	public List<ProjectDTO> getAll() {
+		Set<Project> projects = Sets.newHashSet(projectRepository.findAll());
+		return projects.parallelStream()
+				.map(project -> Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(project))
+				.collect(Collectors.toList());
+	}
+
+	@Override
 	public boolean projectExists(Long projectId) {
 		return projectRepository.exists(projectId);
 	}
 
 	@Override
-	public boolean projectExistsByCode(String projectCode){
+	public boolean projectExistsByCode(String projectCode) {
 		return projectRepository.projectExistsByCode(projectCode) > 0;
 	}
 
@@ -56,7 +66,7 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public List<ProjectDTO> getProjectsByIds(Set<Long> projectIds){
+	public List<ProjectDTO> getProjectsByIds(Set<Long> projectIds) {
 		List<Project> projects = projectRepository.findProjectsByIds(projectIds);
 		return projects.parallelStream()
 				.map(project -> Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(project))

@@ -11,6 +11,9 @@ import java.util.Set;
  */
 public interface ProjectService {
 
+
+    List<ProjectDTO> getAll();
+
     boolean projectExists(Long projectId);
 
     boolean projectExistsByCode(String projectCode);

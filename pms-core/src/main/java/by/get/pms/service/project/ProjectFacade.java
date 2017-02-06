@@ -12,6 +12,8 @@ import java.util.Set;
  */
 public interface ProjectFacade {
 
+	List<ProjectDTO> getAll();
+
 	ProjectDTO getProject(Long projectId);
 
 	List<ProjectDTO> getProjectByIds(Set<Long> projectIds);

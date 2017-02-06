@@ -1,7 +1,8 @@
 package by.get.pms.security;
 
-import by.get.pms.model.Project;
-import by.get.pms.model.Task;
+import by.get.pms.dto.ProjectDTO;
+
+import by.get.pms.dto.TaskDTO;
 import by.get.pms.model.UserRole;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.acls.domain.*;
@@ -82,7 +83,7 @@ public class AclInitializer implements InitializingBean {
 
 	private void createProjectACLs(long[] projectIds) {
 		for (long projectId : projectIds) {
-			final ObjectIdentity projectObjectIdentity = new ObjectIdentityImpl(Project.class, new Long(projectId));
+			final ObjectIdentity projectObjectIdentity = new ObjectIdentityImpl(ProjectDTO.class, new Long(projectId));
 
 			tt.execute((TransactionStatus arg0) -> {
 				mutableAclService.createAcl(projectObjectIdentity);
@@ -100,7 +101,7 @@ public class AclInitializer implements InitializingBean {
 
 	private void populateProjectACLsForAdmin(Set<Long> projectIds) {
 		projectIds.forEach(projectId -> {
-			final ObjectIdentity projectObjectIdentity = new ObjectIdentityImpl(Project.class, new Long(projectId));
+			final ObjectIdentity projectObjectIdentity = new ObjectIdentityImpl(ProjectDTO.class, new Long(projectId));
 			grantPermissionToObjectIdentityForRole(projectObjectIdentity, UserRole.ROLE_ADMIN,
 					BasePermission.ADMINISTRATION);
 		});
@@ -122,7 +123,7 @@ public class AclInitializer implements InitializingBean {
 
 	private void populateProjectACLsForPMs(Map<Long, String> projectIdsToAssignedPMUsernames) {
 		for (Map.Entry<Long, String> entry : projectIdsToAssignedPMUsernames.entrySet()) {
-			final ObjectIdentity projectObjectIdentity = new ObjectIdentityImpl(Project.class, entry.getKey());
+			final ObjectIdentity projectObjectIdentity = new ObjectIdentityImpl(ProjectDTO.class, entry.getKey());
 			grantPermissionToObjectIdentityForPrincipal(projectObjectIdentity, entry.getValue(),
 					BasePermission.ADMINISTRATION);
 		}
@@ -137,7 +138,8 @@ public class AclInitializer implements InitializingBean {
 
 	private void populateProjectACLsForUsers(Map<Long, List<String>> projectIdsToAllocatedUsers) {
 		for (Map.Entry<Long, List<String>> longListEntry : projectIdsToAllocatedUsers.entrySet()) {
-			final ObjectIdentity projectObjectIdentity = new ObjectIdentityImpl(Project.class, longListEntry.getKey());
+			final ObjectIdentity projectObjectIdentity = new ObjectIdentityImpl(ProjectDTO.class,
+					longListEntry.getKey());
 			for (String recipientUsername : longListEntry.getValue()) {
 				grantPermissionToObjectIdentityForPrincipal(projectObjectIdentity, recipientUsername,
 						BasePermission.READ);
@@ -147,7 +149,7 @@ public class AclInitializer implements InitializingBean {
 
 	private void createTaskACLs(long[] taskIds) {
 		for (long taskId : taskIds) {
-			final ObjectIdentity taskObjectIdentity = new ObjectIdentityImpl(Task.class, new Long(taskId));
+			final ObjectIdentity taskObjectIdentity = new ObjectIdentityImpl(TaskDTO.class, new Long(taskId));
 
 			tt.execute((TransactionStatus arg0) -> {
 				mutableAclService.createAcl(taskObjectIdentity);
@@ -163,7 +165,7 @@ public class AclInitializer implements InitializingBean {
 
 	private void populateTaskACLsForAdmin(Set<Long> taskIds) {
 		taskIds.forEach(taskId -> {
-			final ObjectIdentity taskObjectIdentity = new ObjectIdentityImpl(Task.class, new Long(taskId));
+			final ObjectIdentity taskObjectIdentity = new ObjectIdentityImpl(TaskDTO.class, new Long(taskId));
 			grantPermissionToObjectIdentityForRole(taskObjectIdentity, UserRole.ROLE_ADMIN,
 					BasePermission.ADMINISTRATION);
 		});
@@ -171,7 +173,7 @@ public class AclInitializer implements InitializingBean {
 
 	private void populateTaskACLsForUsers(Map<Long, String> taskIdsToAssignedUsernames) {
 		for (Map.Entry<Long, String> longStringEntry : taskIdsToAssignedUsernames.entrySet()) {
-			final ObjectIdentity taskObjectIdentity = new ObjectIdentityImpl(Task.class, longStringEntry.getKey());
+			final ObjectIdentity taskObjectIdentity = new ObjectIdentityImpl(TaskDTO.class, longStringEntry.getKey());
 			grantPermissionToObjectIdentityForPrincipal(taskObjectIdentity, longStringEntry.getValue(),
 					BasePermission.ADMINISTRATION);
 		}

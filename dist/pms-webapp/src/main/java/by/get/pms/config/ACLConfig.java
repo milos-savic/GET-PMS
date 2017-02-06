@@ -2,6 +2,7 @@ package by.get.pms.config;
 
 import by.get.pms.security.AclInitializer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.ehcache.EhCacheFactoryBean;
 import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
@@ -83,6 +84,7 @@ public class ACLConfig extends GlobalMethodSecurityConfiguration {
     }
 
     @Bean
+    @ConditionalOnProperty("liquibase.dropFirst")
     AclInitializer aclInitializer() {
         return new AclInitializer(transactionManager, aclService());
     }
