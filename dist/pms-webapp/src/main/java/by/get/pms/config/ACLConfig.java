@@ -84,6 +84,6 @@ public class ACLConfig extends GlobalMethodSecurityConfiguration {
 
     @Bean
     AclInitializer aclInitializer() {
-        return new AclInitializer(dataSource, transactionManager, aclService());
+        return new AclInitializer(transactionManager, aclService());
     }
 }
