@@ -10,6 +10,8 @@ import java.util.Set;
  */
 public interface TaskService {
 
+    List<TaskDTO> getAll();
+
     boolean taskExists(Long id);
 
     boolean taskExistsByProjectAndName(ProjectDTO project, String name);

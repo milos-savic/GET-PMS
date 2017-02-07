@@ -26,6 +26,11 @@ public class TaskFacadeImpl implements TaskFacade {
 	}
 
 	@Override
+	public List<TaskDTO> getAll() {
+		return taskService.getAll();
+	}
+
+	@Override
 	public TaskDTO createTask(TaskDTO taskParams) throws ApplicationException {
 		taskPreconditions.checkCreateTaskPreconditions(taskParams);
 		return taskService.createTask(taskParams);

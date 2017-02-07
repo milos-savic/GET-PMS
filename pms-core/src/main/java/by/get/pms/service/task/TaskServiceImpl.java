@@ -8,6 +8,7 @@ import by.get.pms.model.Project;
 import by.get.pms.model.Task;
 import by.get.pms.model.User;
 import by.get.pms.utility.Transformers;
+import com.google.common.collect.Sets;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,96 +25,103 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class TaskServiceImpl implements TaskService {
 
-    @Autowired
-    private TaskRepository taskRepository;
+	@Autowired
+	private TaskRepository taskRepository;
 
-    @Autowired
-    private ProjectRepository projectRepository;
+	@Autowired
+	private ProjectRepository projectRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Override
-    public boolean taskExists(Long taskId) {
-        return taskRepository.exists(taskId);
-    }
+	@Override
+	public List<TaskDTO> getAll() {
+		Set<Task> tasks = Sets.newHashSet(taskRepository.findAll());
+		return tasks.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION::apply)
+				.collect(Collectors.toList());
+	}
 
-    @Override
-    public boolean taskExistsByProjectAndName(ProjectDTO project, String name) {
-        Project projectEntity = projectRepository.findOne(project.getId());
-        return taskRepository.taskExistsByProjectAndName(projectEntity, name) > 0;
-    }
+	@Override
+	public boolean taskExists(Long taskId) {
+		return taskRepository.exists(taskId);
+	}
 
-    @Override
-    public TaskDTO getTaskByProjectAndName(ProjectDTO projectDTO, String name) {
-        Project project = projectRepository.findOne(projectDTO.getId());
-        Task task = taskRepository.findTaskByProjectAndName(project, name);
-        return Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(task);
-    }
+	@Override
+	public boolean taskExistsByProjectAndName(ProjectDTO project, String name) {
+		Project projectEntity = projectRepository.findOne(project.getId());
+		return taskRepository.taskExistsByProjectAndName(projectEntity, name) > 0;
+	}
 
-    @Override
-    public List<TaskDTO> getProjectTasks(ProjectDTO projectDTO) {
-        Project project = projectRepository.findOne(projectDTO.getId());
-        List<Task> projectTasks = taskRepository.findTasksByProject(project);
+	@Override
+	public TaskDTO getTaskByProjectAndName(ProjectDTO projectDTO, String name) {
+		Project project = projectRepository.findOne(projectDTO.getId());
+		Task task = taskRepository.findTaskByProjectAndName(project, name);
+		return Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(task);
+	}
 
-        return projectTasks.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION::apply)
-                .collect(Collectors.toList());
-    }
+	@Override
+	public List<TaskDTO> getProjectTasks(ProjectDTO projectDTO) {
+		Project project = projectRepository.findOne(projectDTO.getId());
+		List<Task> projectTasks = taskRepository.findTasksByProject(project);
 
-    public List<TaskDTO> getTasksByIds(Set<Long> taskIds) {
-        List<Task> tasks = taskRepository.findTasksByIds(taskIds);
-        return tasks.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION::apply)
-                .collect(Collectors.toList());
-    }
+		return projectTasks.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION::apply)
+				.collect(Collectors.toList());
+	}
 
-    @Override
-    public List<TaskDTO> getTasksAssignedToUser(UserDTO userDTO) {
-        User user = userRepository.findOne(userDTO.getId());
-        List<Task> tasksAssigneToUser = taskRepository.findTasksByAssignee(user);
-        return tasksAssigneToUser.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION::apply)
-                .collect(Collectors.toList());
-    }
+	public List<TaskDTO> getTasksByIds(Set<Long> taskIds) {
+		List<Task> tasks = taskRepository.findTasksByIds(taskIds);
+		return tasks.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION::apply)
+				.collect(Collectors.toList());
+	}
 
-    @Override
-    @Transactional
-    public TaskDTO createTask(TaskDTO taskDTO) {
-        Task newTask = new Task();
-        BeanUtils.copyProperties(taskDTO, newTask);
+	@Override
+	public List<TaskDTO> getTasksAssignedToUser(UserDTO userDTO) {
+		User user = userRepository.findOne(userDTO.getId());
+		List<Task> tasksAssigneToUser = taskRepository.findTasksByAssignee(user);
+		return tasksAssigneToUser.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION::apply)
+				.collect(Collectors.toList());
+	}
 
-        if(taskDTO.getAssignee() != null){
-            newTask.setAssignee(userRepository.findOne(taskDTO.getAssignee().getId()));
-        }
-        newTask.setProject(projectRepository.findOne(taskDTO.getProject().getId()));
+	@Override
+	@Transactional
+	public TaskDTO createTask(TaskDTO taskDTO) {
+		Task newTask = new Task();
+		BeanUtils.copyProperties(taskDTO, newTask);
 
-        newTask = taskRepository.save(newTask);
+		if (taskDTO.getAssignee() != null) {
+			newTask.setAssignee(userRepository.findOne(taskDTO.getAssignee().getId()));
+		}
+		newTask.setProject(projectRepository.findOne(taskDTO.getProject().getId()));
 
-        return Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(newTask);
-    }
+		newTask = taskRepository.save(newTask);
 
-    @Override
-    @Transactional
-    public void updateTask(TaskDTO taskDTO) {
-        Task taskFromDb = taskRepository.findOne(taskDTO.getId());
-        BeanUtils.copyProperties(taskDTO, taskFromDb);
-    }
+		return Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(newTask);
+	}
 
-    @Override
-    @Transactional
-    public void updateTaskByProjectManager(TaskUpdateParamsForPM taskUpdateParamsForPM) {
-        Task taskFromDb = taskRepository.findOne(taskUpdateParamsForPM.getId());
-        BeanUtils.copyProperties(taskUpdateParamsForPM, taskFromDb);
-    }
+	@Override
+	@Transactional
+	public void updateTask(TaskDTO taskDTO) {
+		Task taskFromDb = taskRepository.findOne(taskDTO.getId());
+		BeanUtils.copyProperties(taskDTO, taskFromDb);
+	}
 
-    @Override
-    @Transactional
-    public void updateTaskByDeveloper(TaskUpdateParamsForDev taskUpdateParamsForDev) {
-        Task taskFromDb = taskRepository.findOne(taskUpdateParamsForDev.getId());
-        BeanUtils.copyProperties(taskUpdateParamsForDev, taskFromDb);
-    }
+	@Override
+	@Transactional
+	public void updateTaskByProjectManager(TaskUpdateParamsForPM taskUpdateParamsForPM) {
+		Task taskFromDb = taskRepository.findOne(taskUpdateParamsForPM.getId());
+		BeanUtils.copyProperties(taskUpdateParamsForPM, taskFromDb);
+	}
 
-    @Override
-    @Transactional
-    public void removeTask(Long taskId) {
-        taskRepository.delete(taskId);
-    }
+	@Override
+	@Transactional
+	public void updateTaskByDeveloper(TaskUpdateParamsForDev taskUpdateParamsForDev) {
+		Task taskFromDb = taskRepository.findOne(taskUpdateParamsForDev.getId());
+		BeanUtils.copyProperties(taskUpdateParamsForDev, taskFromDb);
+	}
+
+	@Override
+	@Transactional
+	public void removeTask(Long taskId) {
+		taskRepository.delete(taskId);
+	}
 }

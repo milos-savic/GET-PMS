@@ -1,5 +1,6 @@
 package by.get.pms.web.controller.task;
 
+import by.get.pms.acl.TaskACL;
 import by.get.pms.dto.TaskDTO;
 import by.get.pms.exception.ApplicationException;
 import by.get.pms.model.UserRole;
@@ -31,6 +32,9 @@ public class TaskRestController {
 	@Autowired
 	private TaskFacade taskFacade;
 
+	@Autowired
+	private TaskACL taskACL;
+
 	@RequestMapping(value = WebConstants.CREATE_TASK_URL, method = RequestMethod.POST)
 	@PreAuthorize("hasRole('ROLE_ADMIN') or (hasRole('ROLE_PROJECT_MANAGER') and #taskParams.getProject().getProjectManager().equals(T(by.get.pms.security.Application).getInstance().getUser()))")
 	public Response createTask(@Validated TaskDTO taskParams, BindingResult errors) {
@@ -41,6 +45,9 @@ public class TaskRestController {
 
 		try {
 			TaskDTO taskDtoNew = taskFacade.createTask(taskParams);
+
+			taskACL.createACL(taskDtoNew);
+
 			return builder.indicateSuccess()
 					.addSuccessMessage("tasks.createTask.successfully.added", taskDtoNew.getId())
 					.addObject("task", taskDtoNew).build();

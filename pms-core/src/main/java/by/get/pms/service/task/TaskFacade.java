@@ -11,6 +11,8 @@ import java.util.Set;
  */
 public interface TaskFacade {
 
+	List<TaskDTO> getAll();
+
 	TaskDTO createTask(TaskDTO taskParams) throws ApplicationException;
 
 	void updateTask(TaskDTO taskParams) throws ApplicationException;
@@ -22,4 +24,5 @@ public interface TaskFacade {
 	void removeTask(Long taskId) throws ApplicationException;
 
 	List<TaskDTO> getTasksByIds(Set<Long> taskIds);
+
 }

@@ -1,6 +1,8 @@
 package by.get.pms.web.controller.task;
 
-import by.get.pms.dto.*;
+import by.get.pms.dto.ProjectDTO;
+import by.get.pms.dto.TaskDTO;
+import by.get.pms.dto.UserDTO;
 import by.get.pms.model.TaskStatus;
 import by.get.pms.model.UserRole;
 import by.get.pms.security.Application;
@@ -11,6 +13,7 @@ import by.get.pms.service.user.UserFacade;
 import by.get.pms.service.user.UserService;
 import by.get.pms.web.controller.WebConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -52,7 +54,9 @@ public class TaskController {
 
 		UserDTO loggedInUser = Application.getInstance().getUser();
 
-		List<TaskDTO> projectTasks = retrieveProjectTasks(projectDTO, loggedInUser);
+		//List<TaskDTO> projectTasks = retrieveProjectTasks(projectDTO, loggedInUser);
+		List<TaskDTO> projectTasks = retrieveTasksBasedOnACL();
+
 		modelAndView.getModel().put("projectTasks", projectTasks);
 		modelAndView.getModel().put("taskStatuses", TaskStatus.values());
 
@@ -66,14 +70,19 @@ public class TaskController {
 		return modelAndView;
 	}
 
-	private List<TaskDTO> retrieveProjectTasks(ProjectDTO project, UserDTO user) {
-		List<EntitlementDTO> entitlementsForTasksPermittedToUser = entitlementService
-				.getEntitlementsForObjectTypePermittedToUser(user.getUserName(), ObjectType.TASK);
-		Set<Long> taskIds = entitlementsForTasksPermittedToUser.parallelStream().map(EntitlementDTO::getObjectid)
-				.collect(Collectors.toSet());
-		List<TaskDTO> tasks = taskFacade.getTasksByIds(taskIds);
-
-		return tasks.parallelStream().filter(taskDTO -> project.equals(taskDTO.getProject()))
-				.collect(Collectors.toList());
+	@PostFilter("hasPermission(filterObject, 'read') or hasPermission(filterObject, 'administration')")
+	public List<TaskDTO> retrieveTasksBasedOnACL() {
+		return taskFacade.getAll();
 	}
+
+	//	private List<TaskDTO> retrieveProjectTasks(ProjectDTO project, UserDTO user) {
+	//		List<EntitlementDTO> entitlementsForTasksPermittedToUser = entitlementService
+	//				.getEntitlementsForObjectTypePermittedToUser(user.getUserName(), ObjectType.TASK);
+	//		Set<Long> taskIds = entitlementsForTasksPermittedToUser.parallelStream().map(EntitlementDTO::getObjectid)
+	//				.collect(Collectors.toSet());
+	//		List<TaskDTO> tasks = taskFacade.getTasksByIds(taskIds);
+	//
+	//		return tasks.parallelStream().filter(taskDTO -> project.equals(taskDTO.getProject()))
+	//				.collect(Collectors.toList());
+	//	}
 }

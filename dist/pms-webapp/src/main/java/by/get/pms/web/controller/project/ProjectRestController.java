@@ -1,5 +1,6 @@
 package by.get.pms.web.controller.project;
 
+import by.get.pms.acl.ProjectACL;
 import by.get.pms.dto.ProjectDTO;
 import by.get.pms.dto.UserDTO;
 import by.get.pms.exception.ApplicationException;
@@ -12,20 +13,12 @@ import by.get.pms.web.response.ResponseBuilder;
 import by.get.pms.web.response.ResponseBuilderFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.acls.domain.BasePermission;
-import org.springframework.security.acls.domain.GrantedAuthoritySid;
-import org.springframework.security.acls.domain.ObjectIdentityImpl;
-import org.springframework.security.acls.domain.PrincipalSid;
-import org.springframework.security.acls.model.*;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * Created by Milos.Savic on 10/26/2016.
@@ -41,10 +34,7 @@ public class ProjectRestController {
 	private ProjectFacade projectFacade;
 
 	@Autowired
-	private MutableAclService mutableAclService;
-
-	@Autowired
-	private ProjectRestController self;
+	private ProjectACL projectACL;
 
 	@RequestMapping(value = WebConstants.CREATE_PROJECT_URL, method = RequestMethod.POST)
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PROJECT_MANAGER')")
@@ -70,7 +60,7 @@ public class ProjectRestController {
 		try {
 			ProjectDTO projectDtoNew = projectFacade.createProject(projectParams);
 
-			self.grantAdminAndPMAdministrativePermission(projectDtoNew);
+			projectACL.createProjectACL(projectDtoNew);
 
 			return builder.indicateSuccess()
 					.addSuccessMessage("projects.createProject.successfully.added", projectDtoNew.getId())
@@ -84,7 +74,7 @@ public class ProjectRestController {
 		try {
 			ProjectDTO projectDtoNew = projectFacade.createProjectByPM(projectManager, projectParams);
 
-			self.grantAdminAndPMAdministrativePermission(projectDtoNew);
+			projectACL.createProjectACL(projectDtoNew);
 
 			return builder.indicateSuccess()
 					.addSuccessMessage("projects.createProject.successfully.added", projectDtoNew.getId())
@@ -108,7 +98,7 @@ public class ProjectRestController {
 			projectFacade.updateProject(projectParams);
 
 			if (!projectFromDb.getProjectManager().equals(projectParams.getProjectManager())) {
-				self.updateACL(projectParams, projectFromDb);
+				projectACL.updateProjectACL(projectParams, projectFromDb);
 			}
 
 			return builder.indicateSuccess()
@@ -127,57 +117,11 @@ public class ProjectRestController {
 		try {
 			projectFacade.removeProject(id);
 
-			// Delete the ACL information as well
-			ObjectIdentity oid = new ObjectIdentityImpl(ProjectDTO.class, id);
-			mutableAclService.deleteAcl(oid, false);
+			projectACL.deleteACL(id);
 
 			return builder.indicateSuccess().addSuccessMessage("tasks.removeTask.successfully.removed").build();
 		} catch (ApplicationException e) {
 			return builder.addErrorMessage(e.getMessage(), e.getParams()).build();
 		}
 	}
-
-	@Transactional
-	public void grantAdminAndPMAdministrativePermission(ProjectDTO projectDtoNew) {
-		addPermission(projectDtoNew, new GrantedAuthoritySid(UserRole.ROLE_ADMIN.name()),
-				BasePermission.ADMINISTRATION);
-		addPermission(projectDtoNew, new PrincipalSid(projectDtoNew.getProjectManager().getUserName()),
-				BasePermission.ADMINISTRATION);
-	}
-
-	@Transactional
-	public void updateACL(ProjectDTO newProject, ProjectDTO projectFromDb) {
-		Sid oldPMSid = new PrincipalSid(projectFromDb.getProjectManager().getUserName());
-		Sid newPMSid = new PrincipalSid(newProject.getProjectManager().getUserName());
-		deletePermission(newProject, oldPMSid, BasePermission.ADMINISTRATION);
-		addPermission(newProject, newPMSid, BasePermission.ADMINISTRATION);
-	}
-
-	private void addPermission(ProjectDTO project, Sid recipient, Permission permission) {
-		MutableAcl acl;
-		ObjectIdentity oid = new ObjectIdentityImpl(ProjectDTO.class, project.getId());
-
-		try {
-			acl = (MutableAcl) mutableAclService.readAclById(oid);
-		} catch (NotFoundException nfe) {
-			acl = mutableAclService.createAcl(oid);
-		}
-
-		acl.insertAce(acl.getEntries().size(), permission, recipient, true);
-		mutableAclService.updateAcl(acl);
-	}
-
-	private void deletePermission(ProjectDTO projectDTO, Sid recipient, Permission permission) {
-		ObjectIdentity oid = new ObjectIdentityImpl(ProjectDTO.class, projectDTO.getId());
-		MutableAcl acl = (MutableAcl) mutableAclService.readAclById(oid);
-
-		List<AccessControlEntry> entries = acl.getEntries();
-		for (int i = 0; i < entries.size(); i++) {
-			if (entries.get(i).getSid().equals(recipient) && entries.get(i).getPermission().equals(permission)) {
-				acl.deleteAce(i);
-			}
-		}
-		mutableAclService.updateAcl(acl);
-	}
-
 }
