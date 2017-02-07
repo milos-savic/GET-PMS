@@ -67,8 +67,7 @@ public class ACLConfig extends GlobalMethodSecurityConfiguration {
 
     @Bean
     JdbcMutableAclService aclService() {
-        JdbcMutableAclService service = new JdbcMutableAclService(dataSource, lookupStrategy(), aclCache());
-        return service;
+        return new JdbcMutableAclService(dataSource, lookupStrategy(), aclCache());
     }
 
     @Override

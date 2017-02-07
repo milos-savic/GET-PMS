@@ -1,7 +1,6 @@
 package by.get.pms.validation;
 
 import by.get.pms.dto.UserDTO;
-import by.get.pms.model.UserRole;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -11,15 +10,13 @@ import javax.validation.ConstraintValidatorContext;
  */
 public class ProjectManagerValidator implements ConstraintValidator<ProjectManager, UserDTO> {
 
-    @Override
-    public void initialize(ProjectManager constraintAnnotation) {
-        // nothing to initialize
-    }
+	@Override
+	public void initialize(ProjectManager constraintAnnotation) {
+		// nothing to initialize
+	}
 
-    @Override
-    public boolean isValid(final UserDTO user, final ConstraintValidatorContext context) {
-        if (user == null) return false;
-
-        return user.isProjectManager();
-    }
+	@Override
+	public boolean isValid(final UserDTO user, final ConstraintValidatorContext context) {
+		return user != null && user.isProjectManager();
+	}
 }

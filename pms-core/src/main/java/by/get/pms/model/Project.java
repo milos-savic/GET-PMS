@@ -2,7 +2,6 @@ package by.get.pms.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by milos on 14-Oct-16.

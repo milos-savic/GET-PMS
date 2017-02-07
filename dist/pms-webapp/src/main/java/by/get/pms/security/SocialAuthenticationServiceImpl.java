@@ -55,7 +55,7 @@ public class SocialAuthenticationServiceImpl implements SocialAuthenticationServ
         }
         UserDetails userDetails = createUserDetails(userAccount);
 
-        final List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>(userDetails.getAuthorities());
+        final List<GrantedAuthority> authorities = new ArrayList<>(userDetails.getAuthorities());
         if (authorities.size() == 0) {
             throw new CredentialsExpiredException("No active role available");
         }

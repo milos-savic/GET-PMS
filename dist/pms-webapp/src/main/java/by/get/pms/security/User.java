@@ -44,10 +44,7 @@ public class User extends org.springframework.security.core.userdetails.User {
 
 		final User user = (User) o;
 
-		if (!displayName.equals(user.displayName)) {
-			return false;
-		}
-		return true;
+		return displayName.equals(user.displayName);
 	}
 
 	@Override
@@ -59,9 +56,7 @@ public class User extends org.springframework.security.core.userdetails.User {
 
 	@Override
 	public String toString() {
-		final StringBuffer sb = new StringBuffer("User{");
-		sb.append(", displayName='").append(displayName).append('\'');
-		sb.append('}');
-		return sb.toString();
+		String sb = "User{" + ", displayName='" + displayName + '\'' + '}';
+		return sb;
 	}
 }

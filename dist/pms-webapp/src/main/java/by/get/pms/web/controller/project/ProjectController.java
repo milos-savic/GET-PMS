@@ -1,7 +1,5 @@
 package by.get.pms.web.controller.project;
 
-import by.get.pms.dto.EntitlementDTO;
-import by.get.pms.dto.ObjectType;
 import by.get.pms.dto.ProjectDTO;
 import by.get.pms.dto.UserDTO;
 import by.get.pms.model.UserRole;
@@ -13,16 +11,13 @@ import by.get.pms.service.user.UserService;
 import by.get.pms.web.controller.WebConstants;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -44,13 +39,7 @@ public class ProjectController {
 	private UserService userService;
 
 	@Autowired
-	private ApplicationContext applicationContext;
 	private ProjectController self;
-
-	@PostConstruct
-	private void init() {
-		self = applicationContext.getBean(ProjectController.class);
-	}
 
 	@RequestMapping(value = WebConstants.PROJECTS_URL, method = RequestMethod.GET)
 	public ModelAndView getProjects() {
@@ -59,7 +48,7 @@ public class ProjectController {
 		UserDTO loggedInUser = Application.getInstance().getUser();
 
 		//List<ProjectDTO> projects = retrieveProjects(loggedInUser);
-		List<ProjectDTO> projects = self.retriveProjectsBasedOnACL();
+		List<ProjectDTO> projects = self.retrieveProjectsBasedOnACL();
 
 		modelAndView.getModel().put("projects", projects);
 
@@ -68,7 +57,7 @@ public class ProjectController {
 	}
 
 	@PostFilter("hasPermission(filterObject, 'read') or hasPermission(filterObject, 'administration')")
-	public List<ProjectDTO> retriveProjectsBasedOnACL() {
+	public List<ProjectDTO> retrieveProjectsBasedOnACL() {
 		return projectFacade.getAll();
 	}
 

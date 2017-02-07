@@ -7,15 +7,12 @@ import by.get.pms.dto.UserDTO;
 import by.get.pms.model.Project;
 import by.get.pms.service.task.TaskService;
 import by.get.pms.utility.Transformers;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -40,7 +37,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public List<ProjectDTO> getAll() {
 		Set<Project> projects = Sets.newHashSet(projectRepository.findAll());
 		return projects.parallelStream()
-				.map(project -> Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(project))
+				.map(Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER::apply)
 				.collect(Collectors.toList());
 	}
 
@@ -69,7 +66,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public List<ProjectDTO> getProjectsByIds(Set<Long> projectIds) {
 		List<Project> projects = projectRepository.findProjectsByIds(projectIds);
 		return projects.parallelStream()
-				.map(project -> Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(project))
+				.map(Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER::apply)
 				.collect(Collectors.toList());
 	}
 

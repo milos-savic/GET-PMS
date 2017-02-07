@@ -135,7 +135,7 @@ public class TaskPreconditionsImpl implements TaskPreconditions {
         if (taskId == null || !taskService.taskExists(taskId)) {
             ApplicationException applicationException = new ApplicationException(
                     "tasks.removeTask.NonExistingRecordForRemove");
-            applicationException.setParams(new String[]{taskId == null ? "null" : taskId.longValue() + ""});
+            applicationException.setParams(new String[]{taskId == null ? "null" : taskId + ""});
             throw applicationException;
         }
     }

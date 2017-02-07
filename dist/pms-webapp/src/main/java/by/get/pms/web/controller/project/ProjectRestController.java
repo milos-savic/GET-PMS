@@ -17,6 +17,7 @@ import org.springframework.security.acls.domain.GrantedAuthoritySid;
 import org.springframework.security.acls.domain.ObjectIdentityImpl;
 import org.springframework.security.acls.domain.PrincipalSid;
 import org.springframework.security.acls.model.*;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +43,9 @@ public class ProjectRestController {
 	@Autowired
 	private MutableAclService mutableAclService;
 
+	@Autowired
+	private ProjectRestController self;
+
 	@RequestMapping(value = WebConstants.CREATE_PROJECT_URL, method = RequestMethod.POST)
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_PROJECT_MANAGER')")
 	public Response createProject(@Validated ProjectDTO projectParams, BindingResult errors) {
@@ -66,7 +70,7 @@ public class ProjectRestController {
 		try {
 			ProjectDTO projectDtoNew = projectFacade.createProject(projectParams);
 
-			grantAdminAndPMAdministrativePermission(projectDtoNew);
+			self.grantAdminAndPMAdministrativePermission(projectDtoNew);
 
 			return builder.indicateSuccess()
 					.addSuccessMessage("projects.createProject.successfully.added", projectDtoNew.getId())
@@ -76,32 +80,11 @@ public class ProjectRestController {
 		}
 	}
 
-	private void grantAdminAndPMAdministrativePermission(ProjectDTO projectDtoNew) {
-		addPermission(projectDtoNew, new GrantedAuthoritySid(UserRole.ROLE_ADMIN.name()),
-				BasePermission.ADMINISTRATION);
-		addPermission(projectDtoNew, new PrincipalSid(projectDtoNew.getProjectManager().getUserName()),
-				BasePermission.ADMINISTRATION);
-	}
-
-	private void addPermission(ProjectDTO project, Sid recipient, Permission permission) {
-		MutableAcl acl;
-		ObjectIdentity oid = new ObjectIdentityImpl(ProjectDTO.class, project.getId());
-
-		try {
-			acl = (MutableAcl) mutableAclService.readAclById(oid);
-		} catch (NotFoundException nfe) {
-			acl = mutableAclService.createAcl(oid);
-		}
-
-		acl.insertAce(acl.getEntries().size(), permission, recipient, true);
-		mutableAclService.updateAcl(acl);
-	}
-
 	private Response createProjectByPM(ProjectDTO projectParams, UserDTO projectManager, ResponseBuilder builder) {
 		try {
 			ProjectDTO projectDtoNew = projectFacade.createProjectByPM(projectManager, projectParams);
 
-			grantAdminAndPMAdministrativePermission(projectDtoNew);
+			self.grantAdminAndPMAdministrativePermission(projectDtoNew);
 
 			return builder.indicateSuccess()
 					.addSuccessMessage("projects.createProject.successfully.added", projectDtoNew.getId())
@@ -124,10 +107,9 @@ public class ProjectRestController {
 
 			projectFacade.updateProject(projectParams);
 
-			deletePermission(projectFromDb, new PrincipalSid(projectFromDb.getProjectManager().getUserName()),
-					BasePermission.ADMINISTRATION);
-			addPermission(projectParams, new PrincipalSid(projectParams.getProjectManager().getUserName()),
-					BasePermission.ADMINISTRATION);
+			if (!projectFromDb.getProjectManager().equals(projectParams.getProjectManager())) {
+				self.updateACL(projectParams, projectFromDb);
+			}
 
 			return builder.indicateSuccess()
 					.addSuccessMessage("projects.createProject.successfully.updated", projectParams.getName())
@@ -135,20 +117,6 @@ public class ProjectRestController {
 		} catch (ApplicationException ae) {
 			return builder.addErrorMessage(ae.getMessage(), ae.getParams()).build();
 		}
-	}
-
-	private void deletePermission(ProjectDTO projectDTO, Sid recipient, Permission permission) {
-		ObjectIdentity oid = new ObjectIdentityImpl(ProjectDTO.class, projectDTO.getId());
-		MutableAcl acl = (MutableAcl) mutableAclService.readAclById(oid);
-
-		List<AccessControlEntry> entries = acl.getEntries();
-		for (int i = 0; i < entries.size(); i++) {
-			if (entries.get(i).getSid().equals(recipient) && entries.get(i).getPermission().equals(permission)) {
-				acl.deleteAce(i);
-			}
-		}
-
-		mutableAclService.updateAcl(acl);
 	}
 
 	@RequestMapping(value = WebConstants.DELETE_PROJECT_URL + "/{id}", method = RequestMethod.DELETE)
@@ -167,6 +135,49 @@ public class ProjectRestController {
 		} catch (ApplicationException e) {
 			return builder.addErrorMessage(e.getMessage(), e.getParams()).build();
 		}
+	}
+
+	@Transactional
+	public void grantAdminAndPMAdministrativePermission(ProjectDTO projectDtoNew) {
+		addPermission(projectDtoNew, new GrantedAuthoritySid(UserRole.ROLE_ADMIN.name()),
+				BasePermission.ADMINISTRATION);
+		addPermission(projectDtoNew, new PrincipalSid(projectDtoNew.getProjectManager().getUserName()),
+				BasePermission.ADMINISTRATION);
+	}
+
+	@Transactional
+	public void updateACL(ProjectDTO newProject, ProjectDTO projectFromDb) {
+		Sid oldPMSid = new PrincipalSid(projectFromDb.getProjectManager().getUserName());
+		Sid newPMSid = new PrincipalSid(newProject.getProjectManager().getUserName());
+		deletePermission(newProject, oldPMSid, BasePermission.ADMINISTRATION);
+		addPermission(newProject, newPMSid, BasePermission.ADMINISTRATION);
+	}
+
+	private void addPermission(ProjectDTO project, Sid recipient, Permission permission) {
+		MutableAcl acl;
+		ObjectIdentity oid = new ObjectIdentityImpl(ProjectDTO.class, project.getId());
+
+		try {
+			acl = (MutableAcl) mutableAclService.readAclById(oid);
+		} catch (NotFoundException nfe) {
+			acl = mutableAclService.createAcl(oid);
+		}
+
+		acl.insertAce(acl.getEntries().size(), permission, recipient, true);
+		mutableAclService.updateAcl(acl);
+	}
+
+	private void deletePermission(ProjectDTO projectDTO, Sid recipient, Permission permission) {
+		ObjectIdentity oid = new ObjectIdentityImpl(ProjectDTO.class, projectDTO.getId());
+		MutableAcl acl = (MutableAcl) mutableAclService.readAclById(oid);
+
+		List<AccessControlEntry> entries = acl.getEntries();
+		for (int i = 0; i < entries.size(); i++) {
+			if (entries.get(i).getSid().equals(recipient) && entries.get(i).getPermission().equals(permission)) {
+				acl.deleteAce(i);
+			}
+		}
+		mutableAclService.updateAcl(acl);
 	}
 
 }

@@ -2,9 +2,6 @@ package by.get.pms.service.task;
 
 import by.get.pms.dto.*;
 import by.get.pms.exception.ApplicationException;
-import by.get.pms.validation.Admin;
-import by.get.pms.validation.Developer;
-import by.get.pms.validation.ProjectManager;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -65,7 +65,7 @@ public class ProjectPreconditionsImpl implements ProjectPreconditions {
         if (projectId == null || !projectService.projectExists(projectId)) {
             ApplicationException applicationException = new ApplicationException(
                     "projects.removeProject.NonExistingRecordForRemove");
-            applicationException.setParams(new String[]{projectId == null ? "null" : projectId.longValue() + ""});
+            applicationException.setParams(new String[]{projectId == null ? "null" : projectId + ""});
             throw applicationException;
         }
 

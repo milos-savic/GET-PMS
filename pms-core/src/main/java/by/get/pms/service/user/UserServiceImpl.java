@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> getAllUsers() {
         List<User> users = Lists.newArrayList(userRepository.findAll());
-        return users.parallelStream().map(user -> Transformers.USER_ENTITY_2_USER_DTO_TRANSFORMER.apply(user))
+        return users.parallelStream().map(Transformers.USER_ENTITY_2_USER_DTO_TRANSFORMER::apply)
                 .collect(Collectors.toList());
     }
 

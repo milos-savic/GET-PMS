@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class ApplicationAttributes implements Serializable {
 
-	private Map<String, Object> storage = new HashMap<String, Object>();
+	private Map<String, Object> storage = new HashMap<>();
 
 	public void clearAll() {
 		storage.clear();

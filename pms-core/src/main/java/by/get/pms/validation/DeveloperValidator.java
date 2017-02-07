@@ -15,8 +15,6 @@ public class DeveloperValidator implements ConstraintValidator<Developer, UserDT
 
     @Override
     public boolean isValid(UserDTO userDTO, ConstraintValidatorContext constraintValidatorContext) {
-        if (userDTO == null) return false;
-
-        return userDTO.isDeveloper();
+        return userDTO != null && userDTO.isDeveloper();
     }
 }

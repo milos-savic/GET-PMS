@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <object th:include="fragments/meta :: meta" th:remove="tag"/>
+    <object th:include="fragments/meta :: meta" th:remove="tag"></object>
     <title th:text="#{projects.table.title}">Projects</title>
 
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.css"/>
@@ -81,7 +81,7 @@
             <tbody>
             <tr th:each="project : ${projects}" ondblclick="updateProjectAction(this, true);">
                 <td th:text="${project.id}"></td>
-                <td data-project-code="${project.code}"><a href="projectTasks.html" th:href="@{/tasks/{project}(project=${project.id})}"><span th:text="${project.code}"/></a></td>
+                <td data-project-code="${project.code}"><a href="projectTasks.html" th:href="@{/tasks/{project}(project=${project.id})}"><span th:text="${project.code}"></span></a></td>
                 <td th:text="${project.name}"></td>
                 <td th:text="${project.description}"></td>
                 <td th:text="${project.projectManager.userName}"></td>

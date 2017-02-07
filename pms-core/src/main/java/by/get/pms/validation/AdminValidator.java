@@ -1,7 +1,6 @@
 package by.get.pms.validation;
 
 import by.get.pms.dto.UserDTO;
-import by.get.pms.model.UserRole;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -16,8 +15,6 @@ public class AdminValidator implements ConstraintValidator<Admin, UserDTO> {
 
     @Override
     public boolean isValid(UserDTO user, ConstraintValidatorContext constraintValidatorContext) {
-        if (user == null) return false;
-
-        return user.isAdmin();
+        return user != null && user.isAdmin();
     }
 }

@@ -80,7 +80,7 @@ public class UserPreconditionsImpl implements UserPreconditions {
         if (userId == null || !userService.userExists(userId)) {
             ApplicationException applicationException = new ApplicationException(
                     "users.removeUser.NonExistingRecordForRemove");
-            applicationException.setParams(new String[]{userId == null ? "null" : userId.longValue() + ""});
+            applicationException.setParams(new String[]{userId == null ? "null" : userId + ""});
             throw applicationException;
         }
 

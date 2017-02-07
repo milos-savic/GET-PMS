@@ -1,6 +1,5 @@
 package by.get.pms.utility.jpaconverters;
 
-import javax.accessibility.AccessibleTable;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import java.sql.Date;

@@ -56,9 +56,9 @@ public class AclInitializer implements InitializingBean {
 		projectIdsToAssignedPMUsernames.put(3L, "spiderman");
 
 		Map<Long, List<String>> projectIdsToAllocatedUsers = new HashMap<>();
-		projectIdsToAllocatedUsers.put(1l, Arrays.asList(new String[] { "captain_america", "robin" }));
-		projectIdsToAllocatedUsers.put(2l, Arrays.asList(new String[] { "born", "superman", "spiderman" }));
-		projectIdsToAllocatedUsers.put(3l, Arrays.asList(new String[] { "born", "superman", "spiderman" }));
+		projectIdsToAllocatedUsers.put(1L, Arrays.asList("captain_america", "robin"));
+		projectIdsToAllocatedUsers.put(2L, Arrays.asList("born", "superman", "spiderman"));
+		projectIdsToAllocatedUsers.put(3L, Arrays.asList("born", "superman", "spiderman"));
 
 		createProjectACLs(projectIds);
 		populateProjectACLs(projectIdsToAssignedPMUsernames, projectIdsToAllocatedUsers);
@@ -83,7 +83,7 @@ public class AclInitializer implements InitializingBean {
 
 	private void createProjectACLs(long[] projectIds) {
 		for (long projectId : projectIds) {
-			final ObjectIdentity projectObjectIdentity = new ObjectIdentityImpl(ProjectDTO.class, new Long(projectId));
+			final ObjectIdentity projectObjectIdentity = new ObjectIdentityImpl(ProjectDTO.class, projectId);
 
 			tt.execute((TransactionStatus arg0) -> {
 				mutableAclService.createAcl(projectObjectIdentity);
@@ -101,7 +101,7 @@ public class AclInitializer implements InitializingBean {
 
 	private void populateProjectACLsForAdmin(Set<Long> projectIds) {
 		projectIds.forEach(projectId -> {
-			final ObjectIdentity projectObjectIdentity = new ObjectIdentityImpl(ProjectDTO.class, new Long(projectId));
+			final ObjectIdentity projectObjectIdentity = new ObjectIdentityImpl(ProjectDTO.class, projectId);
 			grantPermissionToObjectIdentityForRole(projectObjectIdentity, UserRole.ROLE_ADMIN,
 					BasePermission.ADMINISTRATION);
 		});
@@ -149,7 +149,7 @@ public class AclInitializer implements InitializingBean {
 
 	private void createTaskACLs(long[] taskIds) {
 		for (long taskId : taskIds) {
-			final ObjectIdentity taskObjectIdentity = new ObjectIdentityImpl(TaskDTO.class, new Long(taskId));
+			final ObjectIdentity taskObjectIdentity = new ObjectIdentityImpl(TaskDTO.class, taskId);
 
 			tt.execute((TransactionStatus arg0) -> {
 				mutableAclService.createAcl(taskObjectIdentity);
@@ -165,7 +165,7 @@ public class AclInitializer implements InitializingBean {
 
 	private void populateTaskACLsForAdmin(Set<Long> taskIds) {
 		taskIds.forEach(taskId -> {
-			final ObjectIdentity taskObjectIdentity = new ObjectIdentityImpl(TaskDTO.class, new Long(taskId));
+			final ObjectIdentity taskObjectIdentity = new ObjectIdentityImpl(TaskDTO.class, taskId);
 			grantPermissionToObjectIdentityForRole(taskObjectIdentity, UserRole.ROLE_ADMIN,
 					BasePermission.ADMINISTRATION);
 		});

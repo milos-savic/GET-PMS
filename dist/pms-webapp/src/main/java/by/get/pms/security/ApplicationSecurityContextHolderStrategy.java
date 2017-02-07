@@ -9,7 +9,7 @@ import org.springframework.util.Assert;
  */
 public class ApplicationSecurityContextHolderStrategy implements SecurityContextHolderStrategy {
 
-	private static final ThreadLocal<SecurityContext> contextHolder = new ThreadLocal<SecurityContext>();
+	private static final ThreadLocal<SecurityContext> contextHolder = new ThreadLocal<>();
 
 	/**
 	 * {@inheritDoc}

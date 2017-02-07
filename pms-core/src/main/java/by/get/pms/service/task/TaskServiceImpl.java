@@ -56,13 +56,13 @@ public class TaskServiceImpl implements TaskService {
         Project project = projectRepository.findOne(projectDTO.getId());
         List<Task> projectTasks = taskRepository.findTasksByProject(project);
 
-        return projectTasks.parallelStream().map(task -> Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(task))
+        return projectTasks.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION::apply)
                 .collect(Collectors.toList());
     }
 
     public List<TaskDTO> getTasksByIds(Set<Long> taskIds) {
         List<Task> tasks = taskRepository.findTasksByIds(taskIds);
-        return tasks.parallelStream().map(task -> Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(task))
+        return tasks.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION::apply)
                 .collect(Collectors.toList());
     }
 
@@ -70,7 +70,7 @@ public class TaskServiceImpl implements TaskService {
     public List<TaskDTO> getTasksAssignedToUser(UserDTO userDTO) {
         User user = userRepository.findOne(userDTO.getId());
         List<Task> tasksAssigneToUser = taskRepository.findTasksByAssignee(user);
-        return tasksAssigneToUser.parallelStream().map(task -> Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(task))
+        return tasksAssigneToUser.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION::apply)
                 .collect(Collectors.toList());
     }
 
