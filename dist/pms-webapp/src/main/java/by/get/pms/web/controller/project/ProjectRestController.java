@@ -97,9 +97,7 @@ public class ProjectRestController {
 
 			projectFacade.updateProject(projectParams);
 
-			if (!projectFromDb.getProjectManager().equals(projectParams.getProjectManager())) {
-				projectACL.updateProjectACL(projectParams, projectFromDb);
-			}
+			projectACL.updateProjectACL(projectFromDb, projectParams);
 
 			return builder.indicateSuccess()
 					.addSuccessMessage("projects.createProject.successfully.updated", projectParams.getName())

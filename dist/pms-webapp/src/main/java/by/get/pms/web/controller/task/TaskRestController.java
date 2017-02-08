@@ -64,7 +64,6 @@ public class TaskRestController {
 		}
 
 		UserRole userRole = Application.getInstance().getCurrentRole();
-
 		switch (userRole) {
 		case ROLE_ADMIN:
 			return updateTaskByAdmin(taskParams, builder);
@@ -80,6 +79,10 @@ public class TaskRestController {
 	private Response updateTaskByAdmin(TaskDTO taskParams, ResponseBuilder builder) {
 		try {
 			taskFacade.updateTask(taskParams);
+
+			TaskDTO oldTask = taskFacade.getTask(taskParams.getId());
+			taskACL.updateACL(oldTask, taskParams);
+
 			return builder.indicateSuccess()
 					.addSuccessMessage("tasks.updateTask.successfully.updated", taskParams.getName())
 					.addObject("task", taskParams).build();
@@ -91,6 +94,10 @@ public class TaskRestController {
 	private Response updateTaskByProjectManager(TaskDTO taskParams, ResponseBuilder builder) {
 		try {
 			taskFacade.updateTaskByProjectManager(taskParams);
+
+			TaskDTO oldTask = taskFacade.getTask(taskParams.getId());
+			taskACL.updateACL(oldTask, taskParams);
+
 			return builder.indicateSuccess()
 					.addSuccessMessage("tasks.updateTask.successfully.updated", taskParams.getName())
 					.addObject("task", taskParams).build();
@@ -102,6 +109,10 @@ public class TaskRestController {
 	private Response updateTaskByDev(TaskDTO taskParams, ResponseBuilder builder) {
 		try {
 			taskFacade.updateTaskByDeveloper(taskParams);
+
+			TaskDTO oldTask = taskFacade.getTask(taskParams.getId());
+			taskACL.updateACL(oldTask, taskParams);
+
 			return builder.indicateSuccess()
 					.addSuccessMessage("tasks.updateTask.successfully.updated", taskParams.getName())
 					.addObject("task", taskParams).build();
@@ -117,6 +128,9 @@ public class TaskRestController {
 
 		try {
 			taskFacade.removeTask(id);
+
+			taskACL.deleteACL(id);
+
 			return builder.indicateSuccess().addSuccessMessage("tasks.removeTask.successfully.removed", id).build();
 		} catch (ApplicationException e) {
 			return builder.addErrorMessage(e.getMessage(), e.getParams()).build();

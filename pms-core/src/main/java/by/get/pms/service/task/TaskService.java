@@ -16,9 +16,9 @@ public interface TaskService {
 
     boolean taskExistsByProjectAndName(ProjectDTO project, String name);
 
-    TaskDTO getTaskByProjectAndName(ProjectDTO projectDTO, String name);
+    TaskDTO getTask(Long taskId);
 
-    List<TaskDTO> getTasksByIds(Set<Long> taskIds);
+    TaskDTO getTaskByProjectAndName(ProjectDTO projectDTO, String name);
 
     List<TaskDTO> getProjectTasks(ProjectDTO projectDTO);
 

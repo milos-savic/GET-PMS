@@ -16,7 +16,7 @@ import java.util.Set;
  * Created by Milos.Savic on 10/24/2016.
  */
 @Component
-public class TaskPreconditionsImpl implements TaskPreconditions {
+class TaskPreconditionsImpl implements TaskPreconditions {
 
     @Autowired
     private TaskService taskService;

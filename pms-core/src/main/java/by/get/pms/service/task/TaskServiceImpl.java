@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional(readOnly = true)
-public class TaskServiceImpl implements TaskService {
+class TaskServiceImpl implements TaskService {
 
 	@Autowired
 	private TaskRepository taskRepository;
@@ -53,6 +53,11 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	@Override
+	public TaskDTO getTask(Long taskId) {
+		return Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(taskRepository.findOne(taskId));
+	}
+
+	@Override
 	public TaskDTO getTaskByProjectAndName(ProjectDTO projectDTO, String name) {
 		Project project = projectRepository.findOne(projectDTO.getId());
 		Task task = taskRepository.findTaskByProjectAndName(project, name);
@@ -65,12 +70,6 @@ public class TaskServiceImpl implements TaskService {
 		List<Task> projectTasks = taskRepository.findTasksByProject(project);
 
 		return projectTasks.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION::apply)
-				.collect(Collectors.toList());
-	}
-
-	public List<TaskDTO> getTasksByIds(Set<Long> taskIds) {
-		List<Task> tasks = taskRepository.findTasksByIds(taskIds);
-		return tasks.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION::apply)
 				.collect(Collectors.toList());
 	}
 

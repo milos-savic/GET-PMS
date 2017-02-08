@@ -1,8 +1,12 @@
 package by.get.pms.acl;
 
 import by.get.pms.dto.ProjectDTO;
+import by.get.pms.dto.TaskDTO;
 import by.get.pms.model.UserRole;
+import by.get.pms.service.project.ProjectFacade;
+import by.get.pms.service.task.TaskFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.acls.domain.BasePermission;
 import org.springframework.security.acls.domain.GrantedAuthoritySid;
 import org.springframework.security.acls.domain.ObjectIdentityImpl;
@@ -12,6 +16,8 @@ import org.springframework.security.acls.model.ObjectIdentity;
 import org.springframework.security.acls.model.Sid;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Created by Milos.Savic on 2/7/2017.
@@ -25,23 +31,60 @@ public class ProjectACL {
 	@Autowired
 	private ACLUtil aclUtil;
 
-	@Transactional
-	public void createProjectACL(ProjectDTO projectDtoNew) {
-		ObjectIdentity oid = new ObjectIdentityImpl(ProjectDTO.class, projectDtoNew.getId());
+	@Autowired
+	private ProjectFacade projectFacade;
 
-		aclUtil.addPermission(oid, new GrantedAuthoritySid(UserRole.ROLE_ADMIN.name()), BasePermission.ADMINISTRATION);
-		aclUtil.addPermission(oid, new PrincipalSid(projectDtoNew.getProjectManager().getUserName()),
-				BasePermission.ADMINISTRATION);
+	@Autowired
+	private TaskFacade taskFacade;
+
+	@PostFilter("hasPermission(filterObject, 'read') or hasPermission(filterObject, 'administration')")
+	public List<ProjectDTO> retrieveProjectsBasedOnACL() {
+		return projectFacade.getAll();
 	}
 
 	@Transactional
-	public void updateProjectACL(ProjectDTO newProject, ProjectDTO projectFromDb) {
-		ObjectIdentity oid = new ObjectIdentityImpl(ProjectDTO.class, newProject.getId());
+	public void createProjectACL(ProjectDTO project) {
+		ObjectIdentity oid = new ObjectIdentityImpl(ProjectDTO.class, project.getId());
 
-		Sid oldPMSid = new PrincipalSid(projectFromDb.getProjectManager().getUserName());
+		aclUtil.addPermission(oid, new GrantedAuthoritySid(UserRole.ROLE_ADMIN.name()), BasePermission.ADMINISTRATION);
+
+		Sid pmSid = new PrincipalSid(project.getProjectManager().getUserName());
+		aclUtil.addPermission(oid, pmSid, BasePermission.ADMINISTRATION);
+		aclUtil.addPermission(oid, pmSid, BasePermission.READ);
+	}
+
+	@Transactional
+	public void updateProjectACL(ProjectDTO oldProject, ProjectDTO newProject) {
+
+		if (oldProject.getProjectManager().equals(newProject.getProjectManager())) {
+			return;
+		}
+
+		ObjectIdentity projetOid = new ObjectIdentityImpl(ProjectDTO.class, oldProject.getId());
+
+		Sid oldPMSid = new PrincipalSid(oldProject.getProjectManager().getUserName());
 		Sid newPMSid = new PrincipalSid(newProject.getProjectManager().getUserName());
-		aclUtil.deletePermission(oid, oldPMSid, BasePermission.ADMINISTRATION);
-		aclUtil.addPermission(oid, newPMSid, BasePermission.ADMINISTRATION);
+
+		aclUtil.deletePermission(projetOid, oldPMSid, BasePermission.ADMINISTRATION);
+		aclUtil.addPermission(projetOid, newPMSid, BasePermission.ADMINISTRATION);
+
+		List<TaskDTO> projectTasks = taskFacade.getProjectTasks(oldProject);
+		int countOfAssigned = 0;
+		for (TaskDTO projectTask : projectTasks) {
+			ObjectIdentity taskOid = new ObjectIdentityImpl(TaskDTO.class, projectTask.getId());
+
+			if (projectTask.getAssignee() != null) {
+				aclUtil.deletePermission(taskOid, oldPMSid, BasePermission.READ);
+				aclUtil.deletePermission(taskOid, oldPMSid, BasePermission.ADMINISTRATION);
+				countOfAssigned++;
+			} else {
+				aclUtil.deletePermission(taskOid, oldPMSid, BasePermission.ADMINISTRATION);
+			}
+		}
+
+		if (countOfAssigned == projectTasks.size()) {
+			aclUtil.deletePermission(projetOid, oldPMSid, BasePermission.READ);
+		}
 	}
 
 	public void deleteACL(Long projectId) {

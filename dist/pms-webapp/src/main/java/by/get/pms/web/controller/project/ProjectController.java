@@ -1,10 +1,10 @@
 package by.get.pms.web.controller.project;
 
+import by.get.pms.acl.ProjectACL;
 import by.get.pms.dto.ProjectDTO;
 import by.get.pms.dto.UserDTO;
 import by.get.pms.model.UserRole;
 import by.get.pms.security.Application;
-import by.get.pms.service.entitlement.EntitlementService;
 import by.get.pms.service.project.ProjectFacade;
 import by.get.pms.service.user.UserFacade;
 import by.get.pms.service.user.UserService;
@@ -30,16 +30,13 @@ public class ProjectController {
 	private ProjectFacade projectFacade;
 
 	@Autowired
-	private EntitlementService entitlementService;
-
-	@Autowired
 	private UserFacade userFacade;
 
 	@Autowired
 	private UserService userService;
 
 	@Autowired
-	private ProjectController self;
+	private ProjectACL projectACL;
 
 	@RequestMapping(value = WebConstants.PROJECTS_URL, method = RequestMethod.GET)
 	public ModelAndView getProjects() {
@@ -48,7 +45,7 @@ public class ProjectController {
 		UserDTO loggedInUser = Application.getInstance().getUser();
 
 		//List<ProjectDTO> projects = retrieveProjects(loggedInUser);
-		List<ProjectDTO> projects = self.retrieveProjectsBasedOnACL();
+		List<ProjectDTO> projects = projectACL.retrieveProjectsBasedOnACL();
 
 		modelAndView.getModel().put("projects", projects);
 
@@ -56,18 +53,14 @@ public class ProjectController {
 		return modelAndView;
 	}
 
-	@PostFilter("hasPermission(filterObject, 'read') or hasPermission(filterObject, 'administration')")
-	public List<ProjectDTO> retrieveProjectsBasedOnACL() {
-		return projectFacade.getAll();
-	}
 
-//	private List<ProjectDTO> retrieveProjects(UserDTO user) {
-//		List<EntitlementDTO> entitlementsForProjectsPermittedToUser = entitlementService
-//				.getEntitlementsForObjectTypePermittedToUser(user.getUserName(), ObjectType.PROJECT);
-//		Set<Long> projectIds = entitlementsForProjectsPermittedToUser.parallelStream().map(EntitlementDTO::getObjectid)
-//				.collect(Collectors.toSet());
-//		return projectFacade.getProjectByIds(projectIds);
-//	}
+	//	private List<ProjectDTO> retrieveProjects(UserDTO user) {
+	//		List<EntitlementDTO> entitlementsForProjectsPermittedToUser = entitlementService
+	//				.getEntitlementsForObjectTypePermittedToUser(user.getUserName(), ObjectType.PROJECT);
+	//		Set<Long> projectIds = entitlementsForProjectsPermittedToUser.parallelStream().map(EntitlementDTO::getObjectid)
+	//				.collect(Collectors.toSet());
+	//		return projectFacade.getProjectByIds(projectIds);
+	//	}
 
 	private List<UserDTO> retrieveProjectManagers(UserDTO loggedInUser) {
 		switch (loggedInUser.getRole()) {

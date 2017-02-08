@@ -1,19 +1,21 @@
 package by.get.pms.service.task;
 
-import by.get.pms.dto.*;
+import by.get.pms.dto.ProjectDTO;
+import by.get.pms.dto.TaskDTO;
+import by.get.pms.dto.TaskUpdateParamsForDev;
+import by.get.pms.dto.TaskUpdateParamsForPM;
 import by.get.pms.exception.ApplicationException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Milos.Savic on 10/24/2016.
  */
 @Service
-public class TaskFacadeImpl implements TaskFacade {
+class TaskFacadeImpl implements TaskFacade {
 
 	@Autowired
 	private TaskPreconditions taskPreconditions;
@@ -21,13 +23,19 @@ public class TaskFacadeImpl implements TaskFacade {
 	@Autowired
 	private TaskService taskService;
 
-	public List<TaskDTO> getTasksByIds(Set<Long> taskIds){
-		return taskService.getTasksByIds(taskIds);
-	}
-
 	@Override
 	public List<TaskDTO> getAll() {
 		return taskService.getAll();
+	}
+
+	@Override
+	public TaskDTO getTask(Long taskId) {
+		return taskService.getTask(taskId);
+	}
+
+	@Override
+	public List<TaskDTO> getProjectTasks(ProjectDTO projectDTO) {
+		return taskService.getProjectTasks(projectDTO);
 	}
 
 	@Override
@@ -43,7 +51,7 @@ public class TaskFacadeImpl implements TaskFacade {
 	}
 
 	@Override
-	public void updateTaskByProjectManager(TaskDTO taskParams) throws ApplicationException{
+	public void updateTaskByProjectManager(TaskDTO taskParams) throws ApplicationException {
 		taskPreconditions.checkUpdateTaskPreconditions(taskParams);
 		taskPreconditions.checkUpdateTaskByProjectManager(taskParams);
 		TaskUpdateParamsForPM taskUpdateParamsForPM = new TaskUpdateParamsForPM();
@@ -52,7 +60,7 @@ public class TaskFacadeImpl implements TaskFacade {
 	}
 
 	@Override
-	public void updateTaskByDeveloper(TaskDTO taskParams) throws ApplicationException{
+	public void updateTaskByDeveloper(TaskDTO taskParams) throws ApplicationException {
 		taskPreconditions.checkUpdateTaskPreconditions(taskParams);
 		taskPreconditions.checkUpdateTaskByDeveloper(taskParams);
 		TaskUpdateParamsForDev taskUpdateParamsForDev = new TaskUpdateParamsForDev();

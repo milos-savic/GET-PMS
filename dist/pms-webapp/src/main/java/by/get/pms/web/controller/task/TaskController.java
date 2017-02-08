@@ -1,19 +1,17 @@
 package by.get.pms.web.controller.task;
 
+import by.get.pms.acl.TaskACL;
 import by.get.pms.dto.ProjectDTO;
 import by.get.pms.dto.TaskDTO;
 import by.get.pms.dto.UserDTO;
 import by.get.pms.model.TaskStatus;
 import by.get.pms.model.UserRole;
-import by.get.pms.security.Application;
-import by.get.pms.service.entitlement.EntitlementService;
 import by.get.pms.service.project.ProjectFacade;
 import by.get.pms.service.task.TaskFacade;
 import by.get.pms.service.user.UserFacade;
 import by.get.pms.service.user.UserService;
 import by.get.pms.web.controller.WebConstants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,13 +35,13 @@ public class TaskController {
 	private TaskFacade taskFacade;
 
 	@Autowired
-	private EntitlementService entitlementService;
-
-	@Autowired
 	private UserFacade userFacade;
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private TaskACL taskACL;
 
 	@RequestMapping(value = WebConstants.TASKS_URL + "/{project}", method = RequestMethod.GET)
 	public ModelAndView getProjectTasks(@PathVariable("project") String project, HttpSession session) {
@@ -52,10 +50,10 @@ public class TaskController {
 
 		ModelAndView modelAndView = new ModelAndView(WebConstants.TASKS_HTML_PATH);
 
-		UserDTO loggedInUser = Application.getInstance().getUser();
+		//		UserDTO loggedInUser = Application.getInstance().getUser();
+		//		List<TaskDTO> projectTasks = retrieveProjectTasks(projectDTO, loggedInUser);
 
-		//List<TaskDTO> projectTasks = retrieveProjectTasks(projectDTO, loggedInUser);
-		List<TaskDTO> projectTasks = retrieveTasksBasedOnACL();
+		List<TaskDTO> projectTasks = taskACL.retrieveTasksBasedOnACL();
 
 		modelAndView.getModel().put("projectTasks", projectTasks);
 		modelAndView.getModel().put("taskStatuses", TaskStatus.values());
@@ -68,11 +66,6 @@ public class TaskController {
 		session.setAttribute("project", projectDTO);
 
 		return modelAndView;
-	}
-
-	@PostFilter("hasPermission(filterObject, 'read') or hasPermission(filterObject, 'administration')")
-	public List<TaskDTO> retrieveTasksBasedOnACL() {
-		return taskFacade.getAll();
 	}
 
 	//	private List<TaskDTO> retrieveProjectTasks(ProjectDTO project, UserDTO user) {

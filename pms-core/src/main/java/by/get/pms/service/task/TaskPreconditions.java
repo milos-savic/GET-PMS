@@ -6,7 +6,7 @@ import by.get.pms.exception.ApplicationException;
 /**
  * Created by Milos.Savic on 10/24/2016.
  */
-public interface TaskPreconditions {
+interface TaskPreconditions {
 
 	void checkCreateTaskPreconditions(TaskDTO taskParams) throws ApplicationException;
 
