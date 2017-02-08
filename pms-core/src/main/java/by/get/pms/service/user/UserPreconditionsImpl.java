@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * Created by Milos.Savic on 10/20/2016.
  */
 @Component
-public class UserPreconditionsImpl implements UserPreconditions {
+class UserPreconditionsImpl implements UserPreconditions {
 
     @Autowired
     private UserService userService;

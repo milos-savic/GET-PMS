@@ -13,7 +13,7 @@ import java.util.Set;
  * Created by Milos.Savic on 10/24/2016.
  */
 @Service
-public class ProjectFacadeImpl implements ProjectFacade {
+class ProjectFacadeImpl implements ProjectFacade {
 
 	@Autowired
 	private ProjectService projectService;
@@ -30,11 +30,6 @@ public class ProjectFacadeImpl implements ProjectFacade {
 	@Override
 	public ProjectDTO getProject(Long projectId) {
 		return projectService.getProject(projectId);
-	}
-
-	@Override
-	public List<ProjectDTO> getProjectByIds(Set<Long> projectIds){
-		return projectService.getProjectsByIds(projectIds);
 	}
 
 	@Override

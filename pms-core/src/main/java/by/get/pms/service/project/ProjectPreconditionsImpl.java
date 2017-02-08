@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * Created by Milos.Savic on 10/26/2016.
  */
 @Component
-public class ProjectPreconditionsImpl implements ProjectPreconditions {
+class ProjectPreconditionsImpl implements ProjectPreconditions {
 
     @Autowired
     private ProjectService projectService;

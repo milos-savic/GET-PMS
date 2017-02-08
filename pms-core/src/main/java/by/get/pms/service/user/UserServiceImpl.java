@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional(readOnly = true)
-public class UserServiceImpl implements UserService {
+class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;

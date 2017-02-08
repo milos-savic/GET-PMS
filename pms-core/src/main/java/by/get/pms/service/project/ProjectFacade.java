@@ -16,8 +16,6 @@ public interface ProjectFacade {
 
 	ProjectDTO getProject(Long projectId);
 
-	List<ProjectDTO> getProjectByIds(Set<Long> projectIds);
-
 	ProjectDTO createProject(ProjectDTO projectParams) throws ApplicationException;
 
 	ProjectDTO createProjectByPM(UserDTO projectManager, ProjectDTO projectParams) throws ApplicationException;

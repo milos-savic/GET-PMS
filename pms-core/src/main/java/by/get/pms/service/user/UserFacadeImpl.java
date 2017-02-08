@@ -11,7 +11,7 @@ import java.util.List;
  * Created by Milos.Savic on 10/20/2016.
  */
 @Service
-public class UserFacadeImpl implements UserFacade {
+class UserFacadeImpl implements UserFacade {
 
 	@Autowired
 	private UserPreconditions userPreconditions;

@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional(readOnly = true)
-public class ProjectServiceImpl implements ProjectService {
+class ProjectServiceImpl implements ProjectService {
 
 	@Autowired
 	private ProjectRepository projectRepository;
@@ -60,14 +60,6 @@ public class ProjectServiceImpl implements ProjectService {
 	public ProjectDTO getProjectByCode(String projectCode) {
 		return Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER
 				.apply(projectRepository.findProjectByCode(projectCode));
-	}
-
-	@Override
-	public List<ProjectDTO> getProjectsByIds(Set<Long> projectIds) {
-		List<Project> projects = projectRepository.findProjectsByIds(projectIds);
-		return projects.parallelStream()
-				.map(Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER::apply)
-				.collect(Collectors.toList());
 	}
 
 	@Override

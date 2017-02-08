@@ -7,11 +7,12 @@ import by.get.pms.exception.ApplicationException;
 /**
  * Created by Milos.Savic on 10/26/2016.
  */
-public interface ProjectPreconditions {
+interface ProjectPreconditions {
 
 	void checkCreateProjectPreconditions(ProjectDTO projectParams) throws ApplicationException;
 
-	void checkCreateProjectByPMPreconditions(UserDTO projectManager, ProjectDTO projectParams) throws ApplicationException;
+	void checkCreateProjectByPMPreconditions(UserDTO projectManager, ProjectDTO projectParams)
+			throws ApplicationException;
 
 	void checkUpdateProjectPreconditions(ProjectDTO projectParams) throws ApplicationException;
 

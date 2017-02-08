@@ -6,7 +6,7 @@ import by.get.pms.exception.ApplicationException;
 /**
  * Created by Milos.Savic on 10/20/2016.
  */
-public interface UserPreconditions {
+interface UserPreconditions {
 
 	void checkCreateUserPreconditions(UserDTO userParams) throws ApplicationException;
 
