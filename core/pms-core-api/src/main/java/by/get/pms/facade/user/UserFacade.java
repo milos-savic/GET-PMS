@@ -1,4 +1,4 @@
-package bg.get.pms.facade.user;
+package by.get.pms.facade.user;
 
 /**
  * Created by Milos.Savic on 2/9/2017.

@@ -1,4 +1,4 @@
-package bg.get.pms.facade.task;
+package by.get.pms.facade.task;
 
 /**
  * Created by Milos.Savic on 2/9/2017.
