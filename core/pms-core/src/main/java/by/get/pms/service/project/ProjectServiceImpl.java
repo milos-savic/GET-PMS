@@ -89,6 +89,7 @@ class ProjectServiceImpl implements ProjectService {
 	public void updateProject(ProjectDTO projectParams) {
 		Project projectFromDb = projectRepository.findOne(projectParams.getId());
 		BeanUtils.copyProperties(projectParams, projectFromDb);
+		projectFromDb.setProjectManager(userRepository.findOne(projectParams.getProjectManager().getId()));
 	}
 
 	@Override

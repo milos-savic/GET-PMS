@@ -17,7 +17,7 @@
     </parent>
 
     <modules>
-        <module>pms-webapp</module>
+        <module>pms-webapp-adapter</module>
     </modules>
 
 </project>
