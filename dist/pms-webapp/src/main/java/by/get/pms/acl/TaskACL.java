@@ -1,5 +1,6 @@
 package by.get.pms.acl;
 
+import by.get.pms.dto.ProjectDTO;
 import by.get.pms.dto.TaskDTO;
 import org.springframework.security.access.prepost.PostFilter;
 
@@ -11,7 +12,7 @@ import java.util.List;
 public interface TaskACL {
 
 	@PostFilter("hasPermission(filterObject, 'read') or hasPermission(filterObject, 'administration')")
-	List<TaskDTO> retrieveTasksBasedOnACL();
+	List<TaskDTO> retrieveProjectTasksBasedOnACL(ProjectDTO project);
 
 	void createACL(TaskDTO task);
 

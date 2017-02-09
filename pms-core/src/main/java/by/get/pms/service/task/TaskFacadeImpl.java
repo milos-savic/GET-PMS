@@ -24,11 +24,6 @@ class TaskFacadeImpl implements TaskFacade {
 	private TaskService taskService;
 
 	@Override
-	public List<TaskDTO> getAll() {
-		return taskService.getAll();
-	}
-
-	@Override
 	public TaskDTO getTask(Long taskId) {
 		return taskService.getTask(taskId);
 	}

@@ -50,10 +50,7 @@ public class TaskController {
 
 		ModelAndView modelAndView = new ModelAndView(WebConstants.TASKS_HTML_PATH);
 
-		//		UserDTO loggedInUser = Application.getInstance().getUser();
-		//		List<TaskDTO> projectTasks = retrieveProjectTasks(projectDTO, loggedInUser);
-
-		List<TaskDTO> projectTasks = taskACL.retrieveTasksBasedOnACL();
+		List<TaskDTO> projectTasks = taskACL.retrieveProjectTasksBasedOnACL(projectDTO);
 
 		modelAndView.getModel().put("projectTasks", projectTasks);
 		modelAndView.getModel().put("taskStatuses", TaskStatus.values());
@@ -67,15 +64,4 @@ public class TaskController {
 
 		return modelAndView;
 	}
-
-	//	private List<TaskDTO> retrieveProjectTasks(ProjectDTO project, UserDTO user) {
-	//		List<EntitlementDTO> entitlementsForTasksPermittedToUser = entitlementService
-	//				.getEntitlementsForObjectTypePermittedToUser(user.getUserName(), ObjectType.TASK);
-	//		Set<Long> taskIds = entitlementsForTasksPermittedToUser.parallelStream().map(EntitlementDTO::getObjectid)
-	//				.collect(Collectors.toSet());
-	//		List<TaskDTO> tasks = taskFacade.getTasksByIds(taskIds);
-	//
-	//		return tasks.parallelStream().filter(taskDTO -> project.equals(taskDTO.getProject()))
-	//				.collect(Collectors.toList());
-	//	}
 }

@@ -11,7 +11,6 @@ import by.get.pms.service.user.UserService;
 import by.get.pms.web.controller.WebConstants;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,7 +43,6 @@ public class ProjectController {
 
 		UserDTO loggedInUser = Application.getInstance().getUser();
 
-		//List<ProjectDTO> projects = retrieveProjects(loggedInUser);
 		List<ProjectDTO> projects = projectACL.retrieveProjectsBasedOnACL();
 
 		modelAndView.getModel().put("projects", projects);
@@ -52,15 +50,6 @@ public class ProjectController {
 		modelAndView.getModel().put("projectManagers", retrieveProjectManagers(loggedInUser));
 		return modelAndView;
 	}
-
-
-	//	private List<ProjectDTO> retrieveProjects(UserDTO user) {
-	//		List<EntitlementDTO> entitlementsForProjectsPermittedToUser = entitlementService
-	//				.getEntitlementsForObjectTypePermittedToUser(user.getUserName(), ObjectType.PROJECT);
-	//		Set<Long> projectIds = entitlementsForProjectsPermittedToUser.parallelStream().map(EntitlementDTO::getObjectid)
-	//				.collect(Collectors.toSet());
-	//		return projectFacade.getProjectByIds(projectIds);
-	//	}
 
 	private List<UserDTO> retrieveProjectManagers(UserDTO loggedInUser) {
 		switch (loggedInUser.getRole()) {

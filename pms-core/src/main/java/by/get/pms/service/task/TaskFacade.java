@@ -11,8 +11,6 @@ import java.util.Set;
  */
 public interface TaskFacade {
 
-	List<TaskDTO> getAll();
-
 	TaskDTO getTask(Long taskId);
 
 	List<TaskDTO> getProjectTasks(ProjectDTO projectDTO);
