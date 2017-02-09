@@ -1,12 +1,12 @@
 package by.get.pms.web.controller.project;
 
 import by.get.pms.acl.ProjectACL;
-import by.get.pms.dto.ProjectDTO;
-import by.get.pms.dto.UserDTO;
-import by.get.pms.dto.UserRole;
+import by.get.pms.dtos.ProjectDTO;
+import by.get.pms.dtos.UserDTO;
+import by.get.pms.dtos.UserRole;
+import by.get.pms.facade.project.ProjectFacade;
+import by.get.pms.facade.user.UserFacade;
 import by.get.pms.security.Application;
-import by.get.pms.service.project.ProjectFacade;
-import by.get.pms.service.user.UserFacade;
 import by.get.pms.web.controller.WebConstants;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;

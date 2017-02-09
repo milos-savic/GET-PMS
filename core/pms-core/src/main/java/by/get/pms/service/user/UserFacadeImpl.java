@@ -1,7 +1,8 @@
 package by.get.pms.service.user;
 
-import by.get.pms.dto.UserDTO;
+import by.get.pms.dtos.UserDTO;
 import by.get.pms.exception.ApplicationException;
+import by.get.pms.facade.user.UserFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

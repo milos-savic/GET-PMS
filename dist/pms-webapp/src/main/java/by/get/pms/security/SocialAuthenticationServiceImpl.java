@@ -1,8 +1,8 @@
 package by.get.pms.security;
 
-import by.get.pms.dto.UserDTO;
-import by.get.pms.dto.UserRole;
-import by.get.pms.service.user.UserFacade;
+import by.get.pms.dtos.UserDTO;
+import by.get.pms.dtos.UserRole;
+import by.get.pms.facade.user.UserFacade;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;

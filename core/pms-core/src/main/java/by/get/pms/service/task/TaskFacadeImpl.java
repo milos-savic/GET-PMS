@@ -1,10 +1,11 @@
 package by.get.pms.service.task;
 
-import by.get.pms.dto.ProjectDTO;
-import by.get.pms.dto.TaskDTO;
-import by.get.pms.dto.TaskUpdateParamsForDev;
-import by.get.pms.dto.TaskUpdateParamsForPM;
+import by.get.pms.dtos.ProjectDTO;
+import by.get.pms.dtos.TaskDTO;
+import by.get.pms.dtos.TaskUpdateParamsForDev;
+import by.get.pms.dtos.TaskUpdateParamsForPM;
 import by.get.pms.exception.ApplicationException;
+import by.get.pms.facade.task.TaskFacade;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

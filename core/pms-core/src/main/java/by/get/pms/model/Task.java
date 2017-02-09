@@ -1,6 +1,6 @@
 package by.get.pms.model;
 
-import by.get.pms.dto.TaskStatus;
+import by.get.pms.dtos.TaskStatus;
 import com.google.common.base.Objects;
 
 import javax.persistence.*;

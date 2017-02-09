@@ -1,10 +1,9 @@
 package by.get.pms.service.project;
 
-import by.get.pms.dto.ProjectDTO;
-import by.get.pms.dto.UserDTO;
+import by.get.pms.dtos.ProjectDTO;
+import by.get.pms.dtos.UserDTO;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by milos on 19-Oct-16.

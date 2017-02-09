@@ -1,7 +1,7 @@
 package by.get.pms.web.conversion;
 
-import by.get.pms.dto.ProjectDTO;
-import by.get.pms.service.project.ProjectFacade;
+import by.get.pms.dtos.ProjectDTO;
+import by.get.pms.facade.project.ProjectFacade;
 import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;

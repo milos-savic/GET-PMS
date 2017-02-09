@@ -1,6 +1,6 @@
 package by.get.pms.service.task;
 
-import by.get.pms.dto.TaskDTO;
+import by.get.pms.dtos.TaskDTO;
 import by.get.pms.exception.ApplicationException;
 
 /**

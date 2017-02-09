@@ -3,7 +3,7 @@ package by.get.pms.service.task;
 import by.get.pms.dataaccess.ProjectRepository;
 import by.get.pms.dataaccess.TaskRepository;
 import by.get.pms.dataaccess.UserRepository;
-import by.get.pms.dto.*;
+import by.get.pms.dtos.*;
 import by.get.pms.model.Project;
 import by.get.pms.model.Task;
 import by.get.pms.model.User;

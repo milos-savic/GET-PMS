@@ -39,8 +39,14 @@
         </dependency>
         <dependency>
             <groupId>by.get.pms</groupId>
+            <artifactId>pms-core-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>by.get.pms</groupId>
             <artifactId>pms-core</artifactId>
             <version>${project.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <!-- Starters -->
@@ -181,6 +187,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

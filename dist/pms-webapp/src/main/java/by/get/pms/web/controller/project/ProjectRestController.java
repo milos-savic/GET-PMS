@@ -1,12 +1,12 @@
 package by.get.pms.web.controller.project;
 
 import by.get.pms.acl.ProjectACL;
-import by.get.pms.dto.ProjectDTO;
-import by.get.pms.dto.UserDTO;
+import by.get.pms.dtos.ProjectDTO;
+import by.get.pms.dtos.UserDTO;
 import by.get.pms.exception.ApplicationException;
-import by.get.pms.dto.UserRole;
+import by.get.pms.dtos.UserRole;
+import by.get.pms.facade.project.ProjectFacade;
 import by.get.pms.security.Application;
-import by.get.pms.service.project.ProjectFacade;
 import by.get.pms.web.controller.WebConstants;
 import by.get.pms.web.response.Response;
 import by.get.pms.web.response.ResponseBuilder;

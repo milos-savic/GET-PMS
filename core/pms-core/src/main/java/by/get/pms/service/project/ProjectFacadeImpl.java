@@ -1,13 +1,13 @@
 package by.get.pms.service.project;
 
-import by.get.pms.dto.ProjectDTO;
-import by.get.pms.dto.UserDTO;
+import by.get.pms.dtos.ProjectDTO;
+import by.get.pms.dtos.UserDTO;
 import by.get.pms.exception.ApplicationException;
+import by.get.pms.facade.project.ProjectFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Milos.Savic on 10/24/2016.

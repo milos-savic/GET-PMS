@@ -17,4 +17,12 @@
     <packaging>jar</packaging>
     <description>API ports for pms-core component</description>
 
+    <dependencies>
+        <!-- javax.validation (JSR-303) API -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>

@@ -1,11 +1,11 @@
 package by.get.pms.web.controller.task;
 
 import by.get.pms.acl.TaskACL;
-import by.get.pms.dto.TaskDTO;
+import by.get.pms.dtos.TaskDTO;
 import by.get.pms.exception.ApplicationException;
-import by.get.pms.dto.UserRole;
+import by.get.pms.dtos.UserRole;
+import by.get.pms.facade.task.TaskFacade;
 import by.get.pms.security.Application;
-import by.get.pms.service.task.TaskFacade;
 import by.get.pms.web.controller.WebConstants;
 import by.get.pms.web.response.Response;
 import by.get.pms.web.response.ResponseBuilder;

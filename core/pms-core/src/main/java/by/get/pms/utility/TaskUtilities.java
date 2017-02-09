@@ -1,8 +1,8 @@
 package by.get.pms.utility;
 
-import by.get.pms.dto.TaskDTO;
-import by.get.pms.dto.TaskUpdateParamsForDev;
-import by.get.pms.dto.TaskUpdateParamsForPM;
+import by.get.pms.dtos.TaskDTO;
+import by.get.pms.dtos.TaskUpdateParamsForDev;
+import by.get.pms.dtos.TaskUpdateParamsForPM;
 import com.google.common.collect.Sets;
 import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.beanutils.PropertyUtilsBean;

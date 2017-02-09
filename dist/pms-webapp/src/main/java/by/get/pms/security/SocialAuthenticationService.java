@@ -1,6 +1,6 @@
 package by.get.pms.security;
 
-import by.get.pms.dto.UserDTO;
+import by.get.pms.dtos.UserDTO;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;

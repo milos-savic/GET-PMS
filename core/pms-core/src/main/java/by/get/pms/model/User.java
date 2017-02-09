@@ -1,6 +1,6 @@
 package by.get.pms.model;
 
-import by.get.pms.dto.UserRole;
+import by.get.pms.dtos.UserRole;
 
 import javax.persistence.*;
 

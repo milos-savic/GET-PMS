@@ -1,6 +1,6 @@
 package by.get.pms.web.conversion;
 
-import by.get.pms.dto.UserRole;
+import by.get.pms.dtos.UserRole;
 import org.springframework.format.Formatter;
 
 import java.text.ParseException;

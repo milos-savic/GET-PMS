@@ -2,7 +2,7 @@ package by.get.pms.service.user;
 
 import by.get.pms.dataaccess.UserAccountRepository;
 import by.get.pms.dataaccess.UserRepository;
-import by.get.pms.dto.UserDTO;
+import by.get.pms.dtos.UserDTO;
 import by.get.pms.model.User;
 import by.get.pms.model.UserAccount;
 import by.get.pms.utility.Transformers;

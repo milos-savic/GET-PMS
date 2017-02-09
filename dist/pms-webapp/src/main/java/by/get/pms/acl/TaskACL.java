@@ -1,7 +1,7 @@
 package by.get.pms.acl;
 
-import by.get.pms.dto.ProjectDTO;
-import by.get.pms.dto.TaskDTO;
+import by.get.pms.dtos.ProjectDTO;
+import by.get.pms.dtos.TaskDTO;
 import org.springframework.security.access.prepost.PostFilter;
 
 import java.util.List;

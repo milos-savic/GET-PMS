@@ -1,8 +1,8 @@
 package by.get.pms.utility;
 
-import by.get.pms.dto.ProjectDTO;
-import by.get.pms.dto.TaskDTO;
-import by.get.pms.dto.UserDTO;
+import by.get.pms.dtos.ProjectDTO;
+import by.get.pms.dtos.TaskDTO;
+import by.get.pms.dtos.UserDTO;
 import by.get.pms.model.Project;
 import by.get.pms.model.Task;
 import by.get.pms.model.User;

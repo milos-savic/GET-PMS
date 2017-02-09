@@ -1,14 +1,14 @@
 package by.get.pms.web.controller.task;
 
 import by.get.pms.acl.TaskACL;
-import by.get.pms.dto.ProjectDTO;
-import by.get.pms.dto.TaskDTO;
-import by.get.pms.dto.UserDTO;
-import by.get.pms.dto.TaskStatus;
-import by.get.pms.dto.UserRole;
-import by.get.pms.service.project.ProjectFacade;
-import by.get.pms.service.task.TaskFacade;
-import by.get.pms.service.user.UserFacade;
+import by.get.pms.dtos.ProjectDTO;
+import by.get.pms.dtos.TaskDTO;
+import by.get.pms.dtos.UserDTO;
+import by.get.pms.dtos.TaskStatus;
+import by.get.pms.dtos.UserRole;
+import by.get.pms.facade.project.ProjectFacade;
+import by.get.pms.facade.task.TaskFacade;
+import by.get.pms.facade.user.UserFacade;
 import by.get.pms.web.controller.WebConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

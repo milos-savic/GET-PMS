@@ -1,9 +1,9 @@
 package by.get.pms.security;
 
-import by.get.pms.dto.UserDTO;
+import by.get.pms.dtos.UserDTO;
 import by.get.pms.exception.ApplicationException;
-import by.get.pms.dto.UserRole;
-import by.get.pms.service.user.UserFacade;
+import by.get.pms.dtos.UserRole;
+import by.get.pms.facade.user.UserFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;

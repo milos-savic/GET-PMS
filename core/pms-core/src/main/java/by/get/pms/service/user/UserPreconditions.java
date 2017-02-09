@@ -1,6 +1,6 @@
 package by.get.pms.service.user;
 
-import by.get.pms.dto.UserDTO;
+import by.get.pms.dtos.UserDTO;
 import by.get.pms.exception.ApplicationException;
 
 /**

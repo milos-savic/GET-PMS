@@ -1,9 +1,8 @@
 package by.get.pms.service.task;
 
-import by.get.pms.dto.*;
+import by.get.pms.dtos.*;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by milos on 19-Oct-16.

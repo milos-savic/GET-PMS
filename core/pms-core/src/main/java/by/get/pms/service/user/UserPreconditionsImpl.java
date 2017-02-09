@@ -1,8 +1,8 @@
 package by.get.pms.service.user;
 
-import by.get.pms.dto.ProjectDTO;
-import by.get.pms.dto.TaskDTO;
-import by.get.pms.dto.UserDTO;
+import by.get.pms.dtos.ProjectDTO;
+import by.get.pms.dtos.TaskDTO;
+import by.get.pms.dtos.UserDTO;
 import by.get.pms.exception.ApplicationException;
 import by.get.pms.service.project.ProjectService;
 import by.get.pms.service.task.TaskService;

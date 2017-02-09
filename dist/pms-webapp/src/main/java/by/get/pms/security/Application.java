@@ -1,7 +1,7 @@
 package by.get.pms.security;
 
-import by.get.pms.dto.UserDTO;
-import by.get.pms.dto.UserRole;
+import by.get.pms.dtos.UserDTO;
+import by.get.pms.dtos.UserRole;
 
 import java.time.LocalDateTime;
 import java.util.Locale;

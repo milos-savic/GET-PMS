@@ -1,11 +1,11 @@
 package by.get.pms.acl;
 
-import by.get.pms.dto.ProjectDTO;
-import by.get.pms.dto.TaskDTO;
-import by.get.pms.dto.UserDTO;
-import by.get.pms.dto.UserRole;
-import by.get.pms.service.task.TaskFacade;
-import by.get.pms.service.user.UserFacade;
+import by.get.pms.dtos.ProjectDTO;
+import by.get.pms.dtos.TaskDTO;
+import by.get.pms.dtos.UserDTO;
+import by.get.pms.dtos.UserRole;
+import by.get.pms.facade.task.TaskFacade;
+import by.get.pms.facade.user.UserFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.acls.domain.BasePermission;
