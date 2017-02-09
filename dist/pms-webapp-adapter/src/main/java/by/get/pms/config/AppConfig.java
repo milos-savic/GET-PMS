@@ -5,7 +5,6 @@ package by.get.pms.config;
  */
 
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 
 /**
  * Stuff configured here will be available on root application context level.
@@ -14,6 +13,5 @@ import org.springframework.context.annotation.Import;
  * dispatcher servlet should go into WebMvcConfig.
  */
 @Configuration
-@Import({SpringJpaConfig.class, SecurityConfiguration.class})
 public class AppConfig {
 }
