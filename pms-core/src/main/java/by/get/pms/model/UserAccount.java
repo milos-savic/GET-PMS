@@ -1,5 +1,7 @@
 package by.get.pms.model;
 
+import by.get.pms.dto.UserRole;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;

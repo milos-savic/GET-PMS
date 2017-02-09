@@ -4,7 +4,7 @@ import by.get.pms.acl.ProjectACL;
 import by.get.pms.dto.ProjectDTO;
 import by.get.pms.dto.UserDTO;
 import by.get.pms.exception.ApplicationException;
-import by.get.pms.model.UserRole;
+import by.get.pms.dto.UserRole;
 import by.get.pms.security.Application;
 import by.get.pms.service.project.ProjectFacade;
 import by.get.pms.web.controller.WebConstants;

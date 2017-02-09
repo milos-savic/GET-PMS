@@ -3,7 +3,7 @@ package by.get.pms.security;
 import by.get.pms.dto.ProjectDTO;
 
 import by.get.pms.dto.TaskDTO;
-import by.get.pms.model.UserRole;
+import by.get.pms.dto.UserRole;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.acls.domain.*;
 import org.springframework.security.acls.model.MutableAcl;

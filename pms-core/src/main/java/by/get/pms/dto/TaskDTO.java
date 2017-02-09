@@ -1,7 +1,5 @@
 package by.get.pms.dto;
 
-import by.get.pms.model.TaskStatus;
-
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

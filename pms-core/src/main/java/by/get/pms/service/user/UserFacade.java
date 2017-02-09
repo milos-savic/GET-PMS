@@ -10,7 +10,11 @@ import java.util.List;
  */
 public interface UserFacade {
 
+    boolean userExistsByUserName(String username);
+
     List<UserDTO> getAllUsers();
+
+    UserDTO getUserByUserName(String username);
 
     UserDTO createUser(UserDTO userParams) throws ApplicationException;
 

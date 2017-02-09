@@ -3,7 +3,7 @@ package by.get.pms.service.task;
 import by.get.pms.dto.ProjectDTO;
 import by.get.pms.dto.TaskDTO;
 import by.get.pms.exception.ApplicationException;
-import by.get.pms.model.TaskStatus;
+import by.get.pms.dto.TaskStatus;
 import by.get.pms.utility.TaskUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

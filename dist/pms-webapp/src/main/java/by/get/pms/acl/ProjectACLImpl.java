@@ -2,7 +2,7 @@ package by.get.pms.acl;
 
 import by.get.pms.dto.ProjectDTO;
 import by.get.pms.dto.TaskDTO;
-import by.get.pms.model.UserRole;
+import by.get.pms.dto.UserRole;
 import by.get.pms.service.project.ProjectFacade;
 import by.get.pms.service.task.TaskFacade;
 import org.springframework.beans.factory.annotation.Autowired;

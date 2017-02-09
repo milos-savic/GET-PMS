@@ -1,7 +1,7 @@
 package by.get.pms.web.controller.user;
 
 import by.get.pms.dto.UserDTO;
-import by.get.pms.model.UserRole;
+import by.get.pms.dto.UserRole;
 import by.get.pms.service.user.UserFacade;
 import by.get.pms.web.controller.WebConstants;
 import org.springframework.beans.factory.annotation.Autowired;

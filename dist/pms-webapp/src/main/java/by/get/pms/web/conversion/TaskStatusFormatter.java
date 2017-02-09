@@ -1,6 +1,6 @@
 package by.get.pms.web.conversion;
 
-import by.get.pms.model.TaskStatus;
+import by.get.pms.dto.TaskStatus;
 import org.springframework.format.Formatter;
 
 import java.text.ParseException;

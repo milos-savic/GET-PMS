@@ -1,8 +1,9 @@
 package by.get.pms.security;
 
 import by.get.pms.dto.UserDTO;
-import by.get.pms.model.UserRole;
-import by.get.pms.service.user.UserService;
+import by.get.pms.exception.ApplicationException;
+import by.get.pms.dto.UserRole;
+import by.get.pms.service.user.UserFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 public class AccountConnectionSignUpService implements ConnectionSignUp {
 
 	@Autowired
-	private UserService userService;
+	private UserFacade userFacade;
 
 	@Override
 	public String execute(Connection<?> connection) {
@@ -39,11 +40,15 @@ public class AccountConnectionSignUpService implements ConnectionSignUp {
 			userParams = new UserDTO(-1L, profile.getFirstName(), profile.getLastName(), profile.getEmail(),
 					profile.getEmail(), LocalDateTime.now(), true, UserRole.ROLE_GUEST);
 		}
-		if (userService.userExistsByUserName(userParams.getUserName())) {
+		if (userFacade.userExistsByUserName(userParams.getUserName())) {
 			return userParams.getUserName();
 		} else {
-			UserDTO newUser = userService.createUser(userParams);
-			return newUser.getUserName();
+			try {
+				UserDTO newUser = userFacade.createUser(userParams);
+				return newUser.getUserName();
+			} catch (ApplicationException ae) {
+				throw new RuntimeException(ae);
+			}
 		}
 	}
 }

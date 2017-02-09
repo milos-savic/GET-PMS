@@ -20,8 +20,18 @@ class UserFacadeImpl implements UserFacade {
 	private UserService userService;
 
 	@Override
+	public boolean userExistsByUserName(String username) {
+		return userService.userExistsByUserName(username);
+	}
+
+	@Override
 	public List<UserDTO> getAllUsers() {
 		return userService.getAllUsers();
+	}
+
+	@Override
+	public UserDTO getUserByUserName(String username) {
+		return userService.getUserByUserName(username);
 	}
 
 	@Override

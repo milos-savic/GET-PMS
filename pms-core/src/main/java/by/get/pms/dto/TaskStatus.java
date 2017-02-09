@@ -1,4 +1,4 @@
-package by.get.pms.model;
+package by.get.pms.dto;
 
 /**
  * Created by milos on 14-Oct-16.
