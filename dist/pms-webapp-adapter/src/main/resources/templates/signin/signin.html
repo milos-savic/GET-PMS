@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <object th:include="fragments/meta :: meta" th:remove="tag" ></object>
+    <title th:text="#{view.signin.title}">Sign in</title>
+
+    <link rel="stylesheet" href="../../../resources/css/signin/signin.css" media="screen" th:href="@{/resources/css/signin/signin.css}"/>
+    <link rel="stylesheet" href="../../../resources/css/signin/font-awesome.css" media="screen" th:href="@{/resources/css/signin/font-awesome.css}"/>
+</head>
+<body>
+
+<div id="wrap">
+
+    <div th:if="${param.logout != null}" th:remove="tag">
+        <div class="alert alert-success">
+            <div id="logout_message" th:text="#{logout.successful}"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div>
+            <legend class="col-lg-6" th:text="#{signin.form.title}">Please Sign In</legend>
+            <div class="col-lg-4 col-lg-offset-2" style="margin-left: -102px; margin-top: -10px;">
+                <img alt="Brand Image" th:src="@{/resources/images/pms_logo.png}" />
+            </div>
+        </div>
+
+        <div style="padding-bottom: 5px">
+
+            <th:block th:if="${param.error != null}">
+                <div class="form-group">
+                    <div th:replace="fragments/alert :: alert (type='danger', message='Sign in error. Please try again.')">Alert
+                    </div>
+                </div>
+            </th:block>
+            <div style="height: 34px; width: 205px;">
+                <button class="loginBtn loginBtn--facebook" onclick="window.location.href= baseUrl + '/auth/facebook';">
+                    <span th:text="#{signin.form.signinWithFB}"></span>
+                </button>
+
+                <!--<button class="loginBtn loginBtn&#45;&#45;facebook" onclick="window.location.href= baseUrl + '/signin/facebook';">-->
+                    <!--<span th:text="#{signin.form.signinWithFB}"></span>-->
+                <!--</button>-->
+            </div>
+
+            <th:block th:if="${param.error != null}">
+                <div class="form-group">
+                    <div th:replace="fragments/alert :: alert (type='danger', message='Sign in error. Please try again.')">Alert
+                    </div>
+                </div>
+            </th:block>
+            <div style="margin-left: 250px; margin-top: 12px; width: 170px; height: 34px;">
+                <button class="btn btn-github" onclick="window.location.href= baseUrl + '/auth/github';">
+                    <i class="fa fa-github"></i> | <span th:text="#{signin.form.signinWithGitHub}"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
+</body>
+</html>

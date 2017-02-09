@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <object th:include="fragments/meta :: meta" th:remove="tag"></object>
+    <title th:text="#{user.management.table.title}">User Management</title>
+
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.css"/>
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/buttons/1.2.0/css/buttons.dataTables.min.css"/>
+    <link rel="stylesheet" href="../../../resources/css/bootstrap-3.1.1.min.css" media="screen" th:href="@{/resources/css/bootstrap-3.1.1.min.css}"/>
+    <link rel="stylesheet" href="../../../resources/css/bootstrap-select-1.5.2.min.css" media="screen" th:href="@{/resources/css/bootstrap-select-1.5.2.min.css}"/>
+    <link rel="stylesheet" href="../../../resources/css/select2.css" media="screen" th:href="@{/resources/css/select2.css}"/>
+    <link rel="stylesheet" href="../../../resources/css/select2-bootstrap.css" media="screen" th:href="@{/resources/css/select2-bootstrap.css}"/>
+    <link rel="stylesheet" href="../../../resources/css/jquery-ui-1.10.4.css" media="screen" th:href="@{/resources/css/jquery-ui-1.10.4.css}"/>
+
+    <!-- our custom css -->
+    <link rel="stylesheet" href="../../../resources/css/core.css" media="screen" th:href="@{/resources/css/core.css}"/>
+    <link rel="stylesheet" href="../../../resources/css/users/user.css" media="screen" th:href="@{/resources/css/users/user.css}"/>
+
+
+
+    <script src="../../../resources/js/jquery.dataTables-1.10.11.min.js" th:src="@{/resources/js/jquery.dataTables-1.10.11.min.js}"></script>
+    <script src="//cdn.datatables.net/buttons/1.2.0/js/dataTables.buttons.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.2.0/js/buttons.html5.min.js"></script>
+    <script src="../../../resources/js/bootstrap-select-1.5.2.min.js" th:src="@{/resources/js/bootstrap-select-1.5.2.min.js}"></script>
+    <script src="../../../resources/js/numeral-1.4.5.min.js" th:src="@{/resources/js/numeral-1.4.5.min.js}"></script>
+    <script src="../../../resources/js/select2.js" th:src="@{/resources/js/select2.js}"></script>
+
+    <!-- our custom js -->
+    <script src="../../../resources/js/custom/Config.js" th:src="@{/resources/js/custom/Config.js}"></script>
+    <script src="../../../resources/js/custom/Utils.js" th:src="@{/resources/js/custom/Utils.js}"></script>
+    <script src="../../../resources/js/user/user.js" th:src="@{/resources/js/user/user.js}"></script>
+</head>
+<body>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var propsNames = {
+        userName: "User Name",
+        firstName: "First Name",
+        lastName: "Last Name",
+        email: "Email",
+        role: "Role",
+        active: "Active"
+    };
+    /*]]>*/
+</script>
+
+<div id="wrap">
+    <div th:replace="fragments/header :: header">&nbsp;</div>
+
+    <div class="container">
+
+        <h2 th:text="#{user.management.table.title}">User Management</h2>
+
+        <div style="padding-bottom: 25px" >
+            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') }" th:remove="tag">
+                <button id="createUserButton" data-toggle="modal" data-target="#createUserDialog"
+                        class="btn btn-default" th:text="#{user.management.button.add}">Add User
+                </button>
+            </div>
+            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') }" th:remove="tag">
+                <button style="margin-left: 10px;" id="updateUserButton" data-toggle="modal" data-target="#updateUserDialog"
+                        class="btn btn-default" th:text="#{user.management.button.update}">Update User
+                </button>
+            </div>
+            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') }" th:remove="tag">
+                <button style="margin-left: 10px;" id="removeUserButton" data-toggle="modal" data-target="#removeUserDialog"
+                        class="btn btn-default" th:text="#{user.management.button.remove}">Remove User
+                </button>
+            </div>
+        </div>
+
+        <table id="tableUser" class="table table-striped">
+            <thead>
+            <tr role="row">
+                <th th:text="#{user.management.table.header.id}">Id</th>
+                <th th:text="#{user.management.table.header.user.name}">User Name</th>
+                <th th:text="#{user.management.table.header.first.name}">First Name</th>
+                <th th:text="#{user.management.table.header.last.name}">Last Name</th>
+                <th th:text="#{user.management.table.header.email}">Email</th>
+                <th th:text="#{user.management.table.header.role}">Role</th>
+                <th th:text="#{user.management.table.header.active}">Active</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:attr="data-code=${user.id}, data-name=${user.firstName + ' ' + user.lastName}"
+                th:each="user : ${users}" ondblclick="updateUserAction(this, true);"
+                th:with="activeMsgKey=${'user.active.' + (user.active ? 'Yes' : 'No')}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.userName}"></td>
+                <td th:text="${user.firstName}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.role.name()}"></td>
+                <td th:text="#{${activeMsgKey}}"></td>
+            </tr>
+            </tbody>
+
+            <tfoot>
+            <tr role="row">
+                <th th:text="#{user.management.table.header.id}">Id</th>
+                <th th:text="#{user.management.table.header.user.name}">User Name</th>
+                <th th:text="#{user.management.table.header.first.name}">First Name</th>
+                <th th:text="#{user.management.table.header.last.name}">Last Name</th>
+                <th th:text="#{user.management.table.header.email}">Email</th>
+                <th th:text="#{user.management.table.header.role}">Role</th>
+                <th th:text="#{user.management.table.header.active}">Active</th>
+            </tr>
+            </tfoot>
+        </table>
+
+        <!-- dialogs -->
+        <div th:replace="fragments/messageDialog :: messageDialog">&nbsp;</div>
+        <div th:replace="fragments/loadingDialog :: loadingDialog">&nbsp;</div>
+
+        <div th:replace="users/createUserDialog :: createUserDialog">&nbsp;</div>
+        <div th:replace="users/updateUserDialog :: updateUserDialog">&nbsp;</div>
+        <div th:replace="users/removeUserDialog :: removeUserDialog">&nbsp;</div>
+    </div>
+</div>
+<!-- dialogs -->
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
+</body>
+</html>

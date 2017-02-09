@@ -24,17 +24,20 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!-- secondary adapter -->
+        <dependency>
+            <groupId>by.get.pms</groupId>
+            <artifactId>infrastructure-spring-jpa</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>by.get.pms</groupId>
-            <artifactId>infrastructure-spring-jpa</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>

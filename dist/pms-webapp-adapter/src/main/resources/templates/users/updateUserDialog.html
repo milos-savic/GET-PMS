@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="updateUserDialog" style="z-index: 1000;">
+    <script src="../../../resources/js/user/updateUser.js" th:src="@{/resources/js/user/updateUser.js}"></script>
+    <!-- Modal -->
+    <div class="modal fade" id="updateUserDialog" tabindex="-1" role="dialog" aria-labelledby="updateUserTitle"
+         aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 id="updateUserDialogTitle" class="modal-title" th:text="#{users.updateUser.dialog.edit.title}">Update Table User</h4>
+                </div>
+                <div class="modal-body">
+                    <div th:replace="users/updateUserForm :: updateUserForm">&nbsp;</div>
+                </div>
+                <div class="modal-footer centered">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" th:text="#{button.cancel}">Cancel</button>
+                    <button type="button" id="updateRecordOkButton" class="btn btn-large btn-primary" align="center" th:text="#{button.save}">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+
+</div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <object th:include="fragments/meta :: meta" th:remove="tag"></object>
+    <title th:text="#{view.index.title}">Welcome!</title>
+</head>
+<body>
+<div id="wrap">
+    <div th:replace="fragments/header :: header">&nbsp;</div>
+
+    <div class="container">
+        <p>
+            Empty Index Page
+        </p>
+    </div>
+
+</div>
+<div th:replace="fragments/footer :: footer">&nbsp;</div>
+</body>
+</html>

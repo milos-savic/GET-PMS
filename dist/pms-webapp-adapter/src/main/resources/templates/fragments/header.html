@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span> <span class="icon-bar">A</span> <span class="icon-bar">B</span> <span
+                    class="icon-bar">C</span>
+            </button>
+            <nav>
+                <div class="navbar-header">
+                    <a class="navbar-brand" th:href="@{/}"> <img alt="Brand" th:src="@{/resources/images/pms_logo.png}" /></a>
+                    <span class="project-name navbar-brand" th:text="#{project.name.oob} + ' ' + #{project.name.pms}"></span>
+                </div>
+                <div class="clear"></div>
+            </nav>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/projects}" th:text="#{menu.item.projects}"></a></li>
+
+                <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') }" th:remove="tag">
+                    <li><a th:href="@{/userManagement}" th:text="#{menu.item.usermanagement}"></a></li>
+                </div>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <div th:if="${#authentication != null and #authentication.principal != null}" th:remove="tag">
+                    <li><p class="navbar-text" th:text="${#authentication.principal.username}" style="margin-bottom: 0"></p></li>
+                    <br />
+                </div>
+                <li><a th:href="@{/logout}" onclick="$('#form').submit();" th:text="#{button.logout}"></a>
+                    <form style="visibility: hidden" id="form" method="post" th:action="@{/logout}"></form></li>
+            </ul>
+
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="loadingDialog">
+    <!-- Modal -->
+    <div class="modal fade" id="loadingDialog" tabindex="-1" role="dialog" aria-labelledby="loadingModalAlertBody"
+         aria-hidden="true" data-keyboard="false" data-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div align="center">
+                    <img style="display: block" src="../../../resources/images/loading.gif" th:src="@{/resources/images/loading.gif}" />
+                </div>
+                <div align="center" id="loadingModalAlertBody">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+
+</div>
+</body>
+</html>
