@@ -80,12 +80,7 @@ public class ProjectDTO extends DTO {
 
 	@Override
 	public String toString() {
-		return "ProjectDTO{" +
-				"id='" + getId() + '\'' +
-				"code='" + code + '\'' +
-				", name='" + name + '\'' +
-				", description='" + description + '\'' +
-				", projectManager=" + projectManager +
-				'}';
+		return "ProjectDTO{" + "id='" + getId() + '\'' + "code='" + code + '\'' + ", name='" + name + '\''
+				+ ", description='" + description + '\'' + ", projectManager=" + projectManager + '}';
 	}
 }
