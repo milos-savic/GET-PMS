@@ -94,7 +94,8 @@
     </build>
 
     <modules>
-        <module>pms-core</module>
+        <module>core/pms-core-api</module>
+        <module>core/pms-core</module>
         <module>infrastructure</module>
         <module>dependencies</module>
         <module>dist</module>
