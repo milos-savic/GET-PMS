@@ -17,4 +17,12 @@
         <relativePath>../../dependencies/pom.xml</relativePath>
     </parent>
 
+    <dependencies>
+        <!-- javax.validation (JSR-303) API -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
