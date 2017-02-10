@@ -1,20 +1,21 @@
 package by.get.pms.service.project;
 
-import by.get.pms.dataaccess.ProjectRepository;
-import by.get.pms.dataaccess.UserRepository;
+import by.get.pms.data.ProjectData;
+import by.get.pms.data.UserData;
+import by.get.pms.dataaccess.ProjectDAO;
+import by.get.pms.dataaccess.UserDAO;
 import by.get.pms.dtos.ProjectDTO;
 import by.get.pms.dtos.UserDTO;
 import by.get.pms.model.Project;
 import by.get.pms.service.task.TaskService;
-import by.get.pms.utility.Transformers;
-import com.google.common.collect.Sets;
+import by.get.pms.utility.Data2DtoTransformers;
+import by.get.pms.utility.Dto2DataTransformers;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -25,76 +26,70 @@ import java.util.stream.Collectors;
 class ProjectServiceImpl implements ProjectService {
 
 	@Autowired
-	private ProjectRepository projectRepository;
-
+	private ProjectDAO projectDAO;
 	@Autowired
-	private UserRepository userRepository;
+	private UserDAO userDAO;
 
 	@Autowired
 	private TaskService taskService;
 
 	@Override
 	public List<ProjectDTO> getAll() {
-		Set<Project> projects = Sets.newHashSet(projectRepository.findAll());
+		List<ProjectData> projects = projectDAO.findAll();
 		return projects.parallelStream()
-				.map(Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER::apply)
+				.map(Data2DtoTransformers.PROJECT_DATA_2_PROJECT_DTO_TRANSFORMER::apply)
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	public boolean projectExists(Long projectId) {
-		return projectRepository.exists(projectId);
+		return projectDAO.exists(projectId);
 	}
 
 	@Override
 	public boolean projectExistsByCode(String projectCode) {
-		return projectRepository.projectExistsByCode(projectCode) > 0;
+		return projectDAO.projectExistsByCode(projectCode) > 0;
 	}
 
 	@Override
 	public ProjectDTO getProject(Long projectId) {
-		return Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(projectRepository.findOne(projectId));
+		return Data2DtoTransformers.PROJECT_DATA_2_PROJECT_DTO_TRANSFORMER.apply(projectDAO.findOne(projectId));
 	}
 
 	@Override
 	public ProjectDTO getProjectByCode(String projectCode) {
-		return Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER
-				.apply(projectRepository.findProjectByCode(projectCode));
+		return Data2DtoTransformers.PROJECT_DATA_2_PROJECT_DTO_TRANSFORMER
+				.apply(projectDAO.findProjectByCode(projectCode));
 	}
 
 	@Override
 	public List<ProjectDTO> getProjectManagerProjects(UserDTO projectManager) {
-		List<Project> projectManagerProjects = projectRepository
-				.findProjectsByProjectManager(userRepository.findOne(projectManager.getId()));
+		List<ProjectData> projectManagerProjectDatas = projectDAO
+				.findProjectsByProjectManager(userDAO.findOne(projectManager.getId()));
 
-		return projectManagerProjects.parallelStream()
-				.map(project -> Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(project))
+		return projectManagerProjectDatas.parallelStream()
+				.map(projectData -> Data2DtoTransformers.PROJECT_DATA_2_PROJECT_DTO_TRANSFORMER.apply(projectData))
 				.collect(Collectors.toList());
 	}
 
 	@Override
 	@Transactional
 	public ProjectDTO createProject(ProjectDTO projectParams) {
-		Project newProject = new Project();
-		BeanUtils.copyProperties(projectParams, newProject);
-		newProject.setProjectManager(userRepository.findOne(projectParams.getProjectManager().getId()));
-
-		newProject = projectRepository.save(newProject);
-
-		return Transformers.PROJECT_ENTITY_2_PROJECT_DTO_TRANSFORMER.apply(newProject);
+		ProjectData projectData = projectDAO.createProject(Dto2DataTransformers.PROJECT_DTO_2_PROJECT_DATA_TRANSFORMER.apply(projectParams));
+		return Data2DtoTransformers.PROJECT_DATA_2_PROJECT_DTO_TRANSFORMER.apply(projectData);
 	}
 
 	@Override
 	@Transactional
 	public void updateProject(ProjectDTO projectParams) {
-		Project projectFromDb = projectRepository.findOne(projectParams.getId());
+		Project projectFromDb = projectDAO.findOne(projectParams.getId());
 		BeanUtils.copyProperties(projectParams, projectFromDb);
-		projectFromDb.setProjectManager(userRepository.findOne(projectParams.getProjectManager().getId()));
+		projectFromDb.setProjectManager(userDAO.findOne(projectParams.getProjectManager().getId()));
 	}
 
 	@Override
 	@Transactional
 	public void removeProject(Long projectId) {
-		projectRepository.delete(projectId);
+		projectDAO.delete(projectId);
 	}
 }

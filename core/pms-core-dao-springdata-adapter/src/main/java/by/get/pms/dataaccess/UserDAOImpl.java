@@ -25,10 +25,17 @@ class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public UserData getUserByUserName(String username){
+	public UserData findOne(Long userId) {
+		User user = userRepository.findOne(userId);
+		return Transformers.USER_ENTITY_2_USER_DATA_TRANSFORMER.apply(user);
+	}
+
+	@Override
+	public UserData getUserByUserName(String username) {
 		UserAccount userAccount = userAccountRepository.findUserAccountByUsername(username);
 
-		if (userAccount == null) return null;
+		if (userAccount == null)
+			return null;
 
 		User user = userAccount.getUser();
 		return Transformers.USER_ENTITY_2_USER_DATA_TRANSFORMER.apply(user);

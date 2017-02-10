@@ -1,13 +1,12 @@
 package by.get.pms.service.task;
 
-import by.get.pms.dataaccess.ProjectRepository;
 import by.get.pms.dataaccess.TaskRepository;
 import by.get.pms.dataaccess.UserRepository;
 import by.get.pms.dtos.*;
 import by.get.pms.model.Project;
 import by.get.pms.model.Task;
 import by.get.pms.model.User;
-import by.get.pms.utility.Transformers;
+import by.get.pms.utility.Dto2DataTransformers;
 import com.google.common.collect.Sets;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,7 @@ class TaskServiceImpl implements TaskService {
     @Override
     public List<TaskDTO> getAll() {
         Set<Task> tasks = Sets.newHashSet(taskRepository.findAll());
-        return tasks.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION::apply)
+        return tasks.parallelStream().map(Dto2DataTransformers.TASK_ENTITY_2_TASK_DTO_FUNCTION::apply)
                 .collect(Collectors.toList());
     }
 
@@ -54,14 +53,14 @@ class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDTO getTask(Long taskId) {
-        return Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(taskRepository.findOne(taskId));
+        return Dto2DataTransformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(taskRepository.findOne(taskId));
     }
 
     @Override
     public TaskDTO getTaskByProjectAndName(ProjectDTO projectDTO, String name) {
         Project project = projectRepository.findOne(projectDTO.getId());
         Task task = taskRepository.findTaskByProjectAndName(project, name);
-        return Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(task);
+        return Dto2DataTransformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(task);
     }
 
     @Override
@@ -69,7 +68,7 @@ class TaskServiceImpl implements TaskService {
         Project project = projectRepository.findOne(projectDTO.getId());
         List<Task> projectTasks = taskRepository.findTasksByProject(project);
 
-        return projectTasks.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION::apply)
+        return projectTasks.parallelStream().map(Dto2DataTransformers.TASK_ENTITY_2_TASK_DTO_FUNCTION::apply)
                 .collect(Collectors.toList());
     }
 
@@ -77,7 +76,7 @@ class TaskServiceImpl implements TaskService {
     public List<TaskDTO> getTasksAssignedToUser(UserDTO userDTO) {
         User user = userRepository.findOne(userDTO.getId());
         List<Task> tasksAssigneToUser = taskRepository.findTasksByAssignee(user);
-        return tasksAssigneToUser.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION::apply)
+        return tasksAssigneToUser.parallelStream().map(Dto2DataTransformers.TASK_ENTITY_2_TASK_DTO_FUNCTION::apply)
                 .collect(Collectors.toList());
     }
 
@@ -94,7 +93,7 @@ class TaskServiceImpl implements TaskService {
 
         newTask = taskRepository.save(newTask);
 
-        return Transformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(newTask);
+        return Dto2DataTransformers.TASK_ENTITY_2_TASK_DTO_FUNCTION.apply(newTask);
     }
 
     @Override

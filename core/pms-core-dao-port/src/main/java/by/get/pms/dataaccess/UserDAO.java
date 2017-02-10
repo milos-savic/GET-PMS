@@ -7,5 +7,8 @@ import by.get.pms.data.UserData;
  */
 public interface UserDAO {
 	boolean userExistsByUserName(String userName);
+
+	UserData findOne(Long userId);
+
 	UserData getUserByUserName(String username);
 }

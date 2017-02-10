@@ -27,9 +27,15 @@
         <!-- secondary adapter -->
         <dependency>
             <groupId>by.get.pms</groupId>
-            <artifactId>infrastructure-spring-jpa</artifactId>
+            <artifactId>pms-core-dao-port</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>by.get.pms</groupId>-->
+            <!--<artifactId>infrastructure-spring-jpa</artifactId>-->
+            <!--<version>${project.version}</version>-->
+        <!--</dependency>-->
 
         <!-- Spring -->
         <dependency>

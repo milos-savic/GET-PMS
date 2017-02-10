@@ -5,7 +5,7 @@ import by.get.pms.dataaccess.UserRepository;
 import by.get.pms.dtos.UserDTO;
 import by.get.pms.model.User;
 import by.get.pms.model.UserAccount;
-import by.get.pms.utility.Transformers;
+import by.get.pms.utility.Dto2DataTransformers;
 import com.google.common.collect.Lists;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,14 +42,14 @@ class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> getAllUsers() {
         List<User> users = Lists.newArrayList(userRepository.findAll());
-        return users.parallelStream().map(Transformers.USER_ENTITY_2_USER_DTO_TRANSFORMER::apply)
+        return users.parallelStream().map(Dto2DataTransformers.USER_ENTITY_2_USER_DTO_TRANSFORMER::apply)
                 .collect(Collectors.toList());
     }
 
     @Override
     public UserDTO getUser(Long userId) {
         User user = userRepository.findOne(userId);
-        return Transformers.USER_ENTITY_2_USER_DTO_TRANSFORMER.apply(user);
+        return Dto2DataTransformers.USER_ENTITY_2_USER_DTO_TRANSFORMER.apply(user);
     }
 
     @Override
@@ -59,7 +59,7 @@ class UserServiceImpl implements UserService {
         if (userAccount == null) return null;
 
         User user = userAccount.getUser();
-        return Transformers.USER_ENTITY_2_USER_DTO_TRANSFORMER.apply(user);
+        return Dto2DataTransformers.USER_ENTITY_2_USER_DTO_TRANSFORMER.apply(user);
     }
 
     @Override
@@ -78,7 +78,7 @@ class UserServiceImpl implements UserService {
 
         newUser.setUserAccount(newUserAccount);
 
-        return Transformers.USER_ENTITY_2_USER_DTO_TRANSFORMER.apply(newUser);
+        return Dto2DataTransformers.USER_ENTITY_2_USER_DTO_TRANSFORMER.apply(newUser);
     }
 
     @Override
