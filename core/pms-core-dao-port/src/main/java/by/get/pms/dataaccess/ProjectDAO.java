@@ -22,5 +22,9 @@ public interface ProjectDAO {
 
 	List<ProjectData> findProjectsByProjectManager(UserData projectManager);
 
-	ProjectData createProject(ProjectData projectParams);
+	ProjectData create(ProjectData projectParams);
+
+	void update(ProjectData projectParams);
+
+	void delete(Long projectId);
 }
