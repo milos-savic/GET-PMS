@@ -23,7 +23,7 @@ public interface TaskService {
 
     List<TaskDTO> getTasksAssignedToUser(UserDTO userDTO);
 
-    TaskDTO createTask(TaskDTO taskDTO);
+    TaskDTO createTask(TaskDTO taskParams);
 
     void updateTask(TaskDTO taskDTO);
 

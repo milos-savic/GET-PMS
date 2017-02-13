@@ -17,10 +17,17 @@ public interface TaskDAO {
 
 	List<TaskData> findAll();
 
+	TaskData findOne(Long taskId);
+
 	TaskData findTaskByProjectAndName(ProjectData projectData, String name);
 
 	List<TaskData> findTasksByAssignee(UserData assignee);
 
 	List<TaskData> findTasksByProject(ProjectData project);
 
+	TaskData create(TaskData taskParams);
+
+	void update(TaskData taskParams);
+
+	void delete(Long taskId);
 }
