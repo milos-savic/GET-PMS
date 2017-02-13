@@ -11,11 +11,16 @@ import java.util.List;
  */
 public interface TaskDAO {
 
+	boolean exists(Long taskId);
+
+	boolean taskExistsByProjectAndName(ProjectData project, String name);
+
+	List<TaskData> findAll();
+
 	TaskData findTaskByProjectAndName(ProjectData projectData, String name);
 
 	List<TaskData> findTasksByAssignee(UserData assignee);
 
 	List<TaskData> findTasksByProject(ProjectData project);
 
-	boolean taskExistsByProjectAndName(ProjectData project, String name);
 }

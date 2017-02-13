@@ -10,6 +10,7 @@ import by.get.pms.springdata.ProjectRepository;
 import by.get.pms.springdata.TaskRepository;
 import by.get.pms.springdata.UserRepository;
 import by.get.pms.utility.Transformers;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -28,6 +29,18 @@ class TaskDAOImpl implements TaskDAO {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Override
+	public boolean exists(Long taskId) {
+		return taskRepository.exists(taskId);
+	}
+
+	@Override
+	public List<TaskData> findAll() {
+		List<Task> tasks = Lists.newArrayList(taskRepository.findAll());
+		return tasks.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DATA_FUNCTION::apply)
+				.collect(Collectors.toList());
+	}
 
 	@Override
 	public TaskData findTaskByProjectAndName(ProjectData projectData, String name) {
