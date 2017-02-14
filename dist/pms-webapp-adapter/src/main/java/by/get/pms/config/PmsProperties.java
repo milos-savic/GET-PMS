@@ -1,4 +1,4 @@
-package by.get.pms.config.spring;
+package by.get.pms.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * Properties specific to PMS.
  * <p/>
  * <p>
- * Properties are configured in the application.properites file.
+ * Properties are configured in the application.properties file.
  * </p>
  */
 @ConfigurationProperties(prefix = "pms", ignoreUnknownFields = false)

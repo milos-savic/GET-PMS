@@ -27,6 +27,12 @@
 
         <dependency>
             <groupId>by.get.pms</groupId>
+            <artifactId>infrastructure-spring</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>by.get.pms</groupId>
             <artifactId>infrastructure-spring-jpa</artifactId>
             <version>${project.version}</version>
         </dependency>

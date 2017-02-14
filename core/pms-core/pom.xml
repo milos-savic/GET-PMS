@@ -30,12 +30,12 @@
             <artifactId>pms-core-dao-port</artifactId>
             <version>${project.version}</version>
         </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>by.get.pms</groupId>-->
-            <!--<artifactId>infrastructure-spring-jpa</artifactId>-->
-            <!--<version>${project.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>by.get.pms</groupId>
+            <artifactId>pms-core-dao-springdata-adapter</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
 
         <!-- Spring -->
         <dependency>

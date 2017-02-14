@@ -1,6 +1,6 @@
 package by.get.pms;
 
-import by.get.pms.config.spring.PmsProperties;
+import by.get.pms.config.PmsProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

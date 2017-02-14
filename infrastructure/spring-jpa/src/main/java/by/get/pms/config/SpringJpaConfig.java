@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan("by.get.pms.config")
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = { "by.get.pms.dataaccess" })
+@EnableJpaRepositories(basePackages = { "by.get.pms.springdata" })
 public class SpringJpaConfig {
 
 	@Autowired
