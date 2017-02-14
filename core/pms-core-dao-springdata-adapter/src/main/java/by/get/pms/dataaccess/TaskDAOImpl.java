@@ -39,20 +39,20 @@ class TaskDAOImpl implements TaskDAO {
     @Override
     public List<TaskData> findAll() {
         List<Task> tasks = Lists.newArrayList(taskRepository.findAll());
-        return tasks.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DATA_FUNCTION::apply)
+        return tasks.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DATA_TRANSFORMER::apply)
                 .collect(Collectors.toList());
     }
 
     @Override
     public TaskData findOne(Long taskId) {
-        return Transformers.TASK_ENTITY_2_TASK_DATA_FUNCTION.apply(taskRepository.findOne(taskId));
+        return Transformers.TASK_ENTITY_2_TASK_DATA_TRANSFORMER.apply(taskRepository.findOne(taskId));
     }
 
     @Override
     public TaskData findTaskByProjectAndName(ProjectData projectData, String name) {
         Project project = projectRepository.findOne(projectData.getId());
         Task task = taskRepository.findTaskByProjectAndName(project, name);
-        return Transformers.TASK_ENTITY_2_TASK_DATA_FUNCTION.apply(task);
+        return Transformers.TASK_ENTITY_2_TASK_DATA_TRANSFORMER.apply(task);
     }
 
     @Override
@@ -60,7 +60,7 @@ class TaskDAOImpl implements TaskDAO {
         User assigneeUser = userRepository.findOne(assignee.getId());
         List<Task> assigneeTasks = taskRepository.findTasksByAssignee(assigneeUser);
 
-        return assigneeTasks.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DATA_FUNCTION::apply)
+        return assigneeTasks.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DATA_TRANSFORMER::apply)
                 .collect(Collectors.toList());
     }
 
@@ -69,7 +69,7 @@ class TaskDAOImpl implements TaskDAO {
         Project project = projectRepository.findOne(projectData.getId());
         List<Task> projectTasks = taskRepository.findTasksByProject(project);
 
-        return projectTasks.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DATA_FUNCTION::apply)
+        return projectTasks.parallelStream().map(Transformers.TASK_ENTITY_2_TASK_DATA_TRANSFORMER::apply)
                 .collect(Collectors.toList());
     }
 
@@ -85,7 +85,7 @@ class TaskDAOImpl implements TaskDAO {
 
         newTask = taskRepository.save(newTask);
 
-        return Transformers.TASK_ENTITY_2_TASK_DATA_FUNCTION.apply(newTask);
+        return Transformers.TASK_ENTITY_2_TASK_DATA_TRANSFORMER.apply(newTask);
     }
 
     @Override

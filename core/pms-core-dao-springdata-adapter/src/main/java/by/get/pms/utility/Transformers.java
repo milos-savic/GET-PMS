@@ -23,7 +23,7 @@ public final class Transformers {
 			project.getId(), project.getCode(), project.getName(), project.getDescription(),
 			USER_ENTITY_2_USER_DATA_TRANSFORMER.apply(project.getProjectManager()));
 
-	public static final Function<Task, TaskData> TASK_ENTITY_2_TASK_DATA_FUNCTION = task -> new TaskData(task.getId(),
+	public static final Function<Task, TaskData> TASK_ENTITY_2_TASK_DATA_TRANSFORMER = task -> new TaskData(task.getId(),
 			task.getName(), task.getTaskStatus(), task.getProgress(), task.getDeadline(), task.getDescription(),
 			task.getAssignee() != null ? USER_ENTITY_2_USER_DATA_TRANSFORMER.apply(task.getAssignee()) : null,
 			PROJECT_ENTITY_2_PROJECT_DATA_TRANSFORMER.apply(task.getProject()));

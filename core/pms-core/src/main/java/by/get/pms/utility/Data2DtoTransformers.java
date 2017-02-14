@@ -22,7 +22,7 @@ public class Data2DtoTransformers {
 			projectData.getId(), projectData.getCode(), projectData.getName(), projectData.getDescription(),
 			USER_DATA_2_USER_DTO_TRANSFORMER.apply(projectData.getProjectManager()));
 
-	public static final Function<TaskData, TaskDTO> TASK_DATA_2_TASK_DTO_FUNCTION = taskData -> new TaskDTO(
+	public static final Function<TaskData, TaskDTO> TASK_DATA_2_TASK_DTO_TRANSORMER = taskData -> new TaskDTO(
 			taskData.getId(), taskData.getName(), by.get.pms.dtos.TaskStatus.make(taskData.getTaskStatus().name()),
 			taskData.getProgress(), taskData.getDeadline(), taskData.getDescription(),
 			taskData.getAssignee() != null ? USER_DATA_2_USER_DTO_TRANSFORMER.apply(taskData.getAssignee()) : null,
