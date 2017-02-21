@@ -13,10 +13,10 @@ import java.lang.annotation.Target;
 
 @Target({ ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = ProjectManagerValidator.class)
-public @interface ProjectManager {
+@Constraint(validatedBy = ProjectManagerDataValidator.class)
+public @interface ProjectManagerData {
 
-    String message() default "{by.get.pms.validation.ProjectManager.message}";
+    String message() default "{by.get.pms.validation.ProjectManagerData.message}";
 
     Class<?>[] groups() default {};
 

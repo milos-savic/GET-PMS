@@ -8,10 +8,10 @@ import javax.validation.ConstraintValidatorContext;
 /**
  * Created by milos on 19-Oct-16.
  */
-public class ProjectManagerValidator implements ConstraintValidator<ProjectManager, UserDTO> {
+public class ProjectManagerDtoValidator implements ConstraintValidator<ProjectManagerDto, UserDTO> {
 
 	@Override
-	public void initialize(ProjectManager constraintAnnotation) {
+	public void initialize(ProjectManagerDto constraintAnnotation) {
 		// nothing to initialize
 	}
 

@@ -101,7 +101,7 @@ class TaskDAOImpl implements TaskDAO {
 
     @Override
     public void delete(Long taskId) {
-        projectRepository.delete(taskId);
+        taskRepository.delete(taskId);
     }
 
     @Override

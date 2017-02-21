@@ -12,7 +12,7 @@ public class DTO implements Serializable {
     public DTO() {
     }
 
-    public DTO(long id) {
+    public DTO(Long id) {
         this.id = id;
     }
 

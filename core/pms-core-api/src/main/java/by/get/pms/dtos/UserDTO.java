@@ -35,7 +35,7 @@ public class UserDTO extends DTO {
     public UserDTO() {
     }
 
-    public UserDTO(long id, String firstName, String lastName, String email, String userName,
+    public UserDTO(Long id, String firstName, String lastName, String email, String userName,
                    LocalDateTime creationDate, Boolean active, UserRole role) {
         super(id);
         this.firstName = firstName;

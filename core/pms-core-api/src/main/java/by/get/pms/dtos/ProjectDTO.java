@@ -1,6 +1,6 @@
 package by.get.pms.dtos;
 
-import by.get.pms.validation.ProjectManager;
+import by.get.pms.validation.ProjectManagerDto;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -23,13 +23,13 @@ public class ProjectDTO extends DTO {
 	private String description;
 
 	@NotNull
-	@ProjectManager
+	@ProjectManagerDto
 	private UserDTO projectManager;
 
 	public ProjectDTO() {
 	}
 
-	public ProjectDTO(long id, String code, String name, String description, UserDTO projectManager) {
+	public ProjectDTO(Long id, String code, String name, String description, UserDTO projectManager) {
 		super(id);
 		this.code = code;
 		this.name = name;

@@ -37,7 +37,7 @@ public class TaskDTO extends DTO {
     public TaskDTO() {
     }
 
-    public TaskDTO(long id, String name, TaskStatus taskStatus, int progress, LocalDate deadline, String description,
+    public TaskDTO(Long id, String name, TaskStatus taskStatus, int progress, LocalDate deadline, String description,
                    UserDTO assignee, ProjectDTO project) {
         super(id);
         this.name = name;

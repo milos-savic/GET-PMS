@@ -36,7 +36,7 @@ public class TaskData extends Data{
 	public TaskData() {
 	}
 
-	public TaskData(long id, String name, TaskStatus taskStatus, int progress, LocalDate deadline, String description,
+	public TaskData(Long id, String name, TaskStatus taskStatus, int progress, LocalDate deadline, String description,
 			UserData assignee, ProjectData project) {
 		super(id);
 		this.name = name;

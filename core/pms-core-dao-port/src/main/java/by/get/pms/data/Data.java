@@ -12,7 +12,7 @@ public class Data implements Serializable {
 	public Data() {
 	}
 
-	public Data(long id) {
+	public Data(Long id) {
 		this.id = id;
 	}
 

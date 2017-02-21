@@ -35,7 +35,7 @@ public class UserData extends Data {
 	public UserData() {
 	}
 
-	public UserData(long id, String firstName, String lastName, String email, String userName,
+	public UserData(Long id, String firstName, String lastName, String email, String userName,
 			LocalDateTime creationDate, Boolean active, UserRole role) {
 		super(id);
 		this.firstName = firstName;

@@ -1,6 +1,6 @@
 package by.get.pms.data;
 
-import by.get.pms.validation.ProjectManager;
+import by.get.pms.validation.ProjectManagerData;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -23,13 +23,13 @@ public class ProjectData extends Data {
 	private String description;
 
 	@NotNull
-	@ProjectManager
+	@ProjectManagerData
 	private UserData projectManager;
 
 	public ProjectData() {
 	}
 
-	public ProjectData(long id, String code, String name, String description, UserData projectManager) {
+	public ProjectData(Long id, String code, String name, String description, UserData projectManager) {
 		super(id);
 		this.code = code;
 		this.name = name;
