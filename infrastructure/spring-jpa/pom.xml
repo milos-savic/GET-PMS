@@ -72,6 +72,19 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
+        <!-- javax.validation (JSR-303) API -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+
+        <!-- Utilities -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>
