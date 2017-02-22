@@ -69,7 +69,7 @@ class ProjectPreconditionsImpl implements ProjectPreconditions {
             throw applicationException;
         }
 
-        // precondition for referential integrities (project has tasks)
+        // precondition for referential integrity (project has tasks)
         ProjectDTO project = projectService.getProject(projectId);
         List<TaskDTO> projectTasks = taskService.getProjectTasks(project);
         if (!projectTasks.isEmpty()) {

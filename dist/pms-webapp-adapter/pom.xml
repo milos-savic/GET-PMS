@@ -21,19 +21,7 @@
     </properties>
 
     <dependencies>
-        <!-- because of H2 console-->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
-
-        <!-- project deps -->
-        <dependency>
-            <groupId>by.get.pms</groupId>
-            <artifactId>infrastructure-liquibase</artifactId>
-            <version>${project.version}</version>
-            <scope>runtime</scope>
-        </dependency>
+        <!-- project dependencies -->
         <dependency>
             <groupId>by.get.pms</groupId>
             <artifactId>pms-core-api</artifactId>
@@ -45,6 +33,19 @@
             <version>${project.version}</version>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>by.get.pms</groupId>
+            <artifactId>infrastructure-liquibase</artifactId>
+            <version>${project.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- because of H2 console-->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+
 
         <!-- Starters -->
         <dependency>

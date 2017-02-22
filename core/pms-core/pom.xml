@@ -24,12 +24,13 @@
             <version>${project.version}</version>
         </dependency>
 
-        <!-- secondary adapter -->
+        <!-- secondary port -->
         <dependency>
             <groupId>by.get.pms</groupId>
             <artifactId>pms-core-dao-port</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- secondary adapter -->
         <dependency>
             <groupId>by.get.pms</groupId>
             <artifactId>pms-core-dao-springdata-adapter</artifactId>
