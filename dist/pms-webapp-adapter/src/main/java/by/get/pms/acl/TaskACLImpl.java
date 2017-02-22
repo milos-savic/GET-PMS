@@ -48,17 +48,20 @@ class TaskACLImpl implements TaskACL {
 		ObjectIdentity oidTask = new ObjectIdentityImpl(TaskDTO.class, task.getId());
 		ObjectIdentity oidProject = new ObjectIdentityImpl(ProjectDTO.class, task.getProject().getId());
 
+		aclUtil.addPermission(oidTask, new GrantedAuthoritySid(UserRole.ROLE_ADMIN.name()), BasePermission.READ);
+		aclUtil.addPermission(oidTask, new GrantedAuthoritySid(UserRole.ROLE_ADMIN.name()), BasePermission.WRITE);
+		aclUtil.addPermission(oidTask, new GrantedAuthoritySid(UserRole.ROLE_ADMIN.name()), BasePermission.DELETE);
 		aclUtil.addPermission(oidTask, new GrantedAuthoritySid(UserRole.ROLE_ADMIN.name()),
 				BasePermission.ADMINISTRATION);
 
 		Sid pmSid = new PrincipalSid(task.getProject().getProjectManager().getUserName());
-		aclUtil.addPermission(oidTask, pmSid, BasePermission.ADMINISTRATION);
 		aclUtil.addPermission(oidTask, pmSid, BasePermission.READ);
+		aclUtil.addPermission(oidTask, pmSid, BasePermission.WRITE);
 
 		if (task.getAssignee() != null) {
 			Sid assigneeSid = new PrincipalSid(task.getAssignee().getUserName());
-			aclUtil.addPermission(oidTask, assigneeSid, BasePermission.ADMINISTRATION);
 			aclUtil.addPermission(oidTask, assigneeSid, BasePermission.READ);
+			aclUtil.addPermission(oidTask, assigneeSid, BasePermission.WRITE);
 
 			aclUtil.addPermission(oidProject, assigneeSid, BasePermission.READ);
 		} else {

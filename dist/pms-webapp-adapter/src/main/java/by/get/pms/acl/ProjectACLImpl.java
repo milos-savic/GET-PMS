@@ -46,11 +46,14 @@ class ProjectACLImpl implements ProjectACL {
 	public void createProjectACL(ProjectDTO project) {
 		ObjectIdentity oid = new ObjectIdentityImpl(ProjectDTO.class, project.getId());
 
+		aclUtil.addPermission(oid, new GrantedAuthoritySid(UserRole.ROLE_ADMIN.name()), BasePermission.READ);
+		aclUtil.addPermission(oid, new GrantedAuthoritySid(UserRole.ROLE_ADMIN.name()), BasePermission.WRITE);
+		aclUtil.addPermission(oid, new GrantedAuthoritySid(UserRole.ROLE_ADMIN.name()), BasePermission.DELETE);
 		aclUtil.addPermission(oid, new GrantedAuthoritySid(UserRole.ROLE_ADMIN.name()), BasePermission.ADMINISTRATION);
 
 		Sid pmSid = new PrincipalSid(project.getProjectManager().getUserName());
-		aclUtil.addPermission(oid, pmSid, BasePermission.ADMINISTRATION);
 		aclUtil.addPermission(oid, pmSid, BasePermission.READ);
+		aclUtil.addPermission(oid, pmSid, BasePermission.WRITE);
 	}
 
 	@Override
@@ -61,13 +64,13 @@ class ProjectACLImpl implements ProjectACL {
 			return;
 		}
 
-		ObjectIdentity projetOid = new ObjectIdentityImpl(ProjectDTO.class, oldProject.getId());
+		ObjectIdentity projectOid = new ObjectIdentityImpl(ProjectDTO.class, oldProject.getId());
 
 		Sid oldPMSid = new PrincipalSid(oldProject.getProjectManager().getUserName());
 		Sid newPMSid = new PrincipalSid(newProject.getProjectManager().getUserName());
 
-		aclUtil.deletePermission(projetOid, oldPMSid, BasePermission.ADMINISTRATION);
-		aclUtil.addPermission(projetOid, newPMSid, BasePermission.ADMINISTRATION);
+		aclUtil.deletePermission(projectOid, oldPMSid, BasePermission.WRITE);
+		aclUtil.addPermission(projectOid, newPMSid, BasePermission.WRITE);
 
 		List<TaskDTO> projectTasks = taskFacade.getProjectTasks(oldProject);
 		int countOfAssigned = 0;
@@ -76,15 +79,15 @@ class ProjectACLImpl implements ProjectACL {
 
 			if (projectTask.getAssignee() != null) {
 				aclUtil.deletePermission(taskOid, oldPMSid, BasePermission.READ);
-				aclUtil.deletePermission(taskOid, oldPMSid, BasePermission.ADMINISTRATION);
+				aclUtil.deletePermission(taskOid, oldPMSid, BasePermission.WRITE);
 				countOfAssigned++;
 			} else {
-				aclUtil.deletePermission(taskOid, oldPMSid, BasePermission.ADMINISTRATION);
+				aclUtil.deletePermission(taskOid, oldPMSid, BasePermission.WRITE);
 			}
 		}
 
 		if (countOfAssigned == projectTasks.size()) {
-			aclUtil.deletePermission(projetOid, oldPMSid, BasePermission.READ);
+			aclUtil.deletePermission(projectOid, oldPMSid, BasePermission.READ);
 		}
 	}
 

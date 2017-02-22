@@ -63,16 +63,23 @@
                         class="btn btn-default" th:text="#{task.button.add}">Add task
                 </button>
             </div>
-            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') }" th:remove="tag">
-                <button style="margin-left: 10px;" id="updateTaskButton" data-toggle="modal" data-target="#updateTaskDialog"
-                        class="btn btn-default" th:text="#{task.button.update}">Update task
-                </button>
+
+            <div th:unless="${ #lists.isEmpty(projectTasks) }" th:remove="tag">
+                <div sec:authorize-acl="${projectTasks[0]} :: '2'" th:remove="tag">
+                    <button style="margin-left: 10px;" id="updateTaskButton" data-toggle="modal" data-target="#updateTaskDialog"
+                            class="btn btn-default" th:text="#{task.button.update}">Update task
+                    </button>
+                </div>
             </div>
-            <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') }" th:remove="tag">
-                <button style="margin-left: 10px;" id="removeTaskButton" data-toggle="modal" data-target="#removeTaskDialog"
-                        class="btn btn-default" th:text="#{task.button.remove}">Remove task
-                </button>
+
+            <div th:unless="${ #lists.isEmpty(projectTasks) }" th:remove="tag">
+                <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')') }" th:remove="tag">
+                    <button style="margin-left: 10px;" id="removeTaskButton" data-toggle="modal" data-target="#removeTaskDialog"
+                            class="btn btn-default" th:text="#{task.button.remove}">Remove task
+                    </button>
+                </div>
             </div>
+
         </div>
 
         <table id="tableProjectTasks" class="table table-striped">

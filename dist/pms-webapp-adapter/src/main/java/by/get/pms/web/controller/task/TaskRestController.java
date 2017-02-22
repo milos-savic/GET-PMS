@@ -57,6 +57,7 @@ public class TaskRestController {
     }
 
     @RequestMapping(value = WebConstants.UPDATE_TASK_URL, method = RequestMethod.POST)
+    @PreAuthorize("hasPermission(#newTaskParams, 'write')")
     public Response updateTask(@Validated TaskDTO newTaskParams, BindingResult errors) {
         ResponseBuilder builder = responseBuilder.instance();
         if (errors.hasErrors()) {

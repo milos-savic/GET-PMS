@@ -1,7 +1,6 @@
 package by.get.pms.security;
 
 import by.get.pms.dtos.ProjectDTO;
-
 import by.get.pms.dtos.TaskDTO;
 import by.get.pms.dtos.UserRole;
 import org.springframework.beans.factory.InitializingBean;
@@ -102,6 +101,9 @@ public class AclInitializer implements InitializingBean {
 	private void populateProjectACLsForAdmin(Set<Long> projectIds) {
 		projectIds.forEach(projectId -> {
 			final ObjectIdentity projectObjectIdentity = new ObjectIdentityImpl(ProjectDTO.class, projectId);
+			grantPermissionToObjectIdentityForRole(projectObjectIdentity, UserRole.ROLE_ADMIN, BasePermission.READ);
+			grantPermissionToObjectIdentityForRole(projectObjectIdentity, UserRole.ROLE_ADMIN, BasePermission.WRITE);
+			grantPermissionToObjectIdentityForRole(projectObjectIdentity, UserRole.ROLE_ADMIN, BasePermission.DELETE);
 			grantPermissionToObjectIdentityForRole(projectObjectIdentity, UserRole.ROLE_ADMIN,
 					BasePermission.ADMINISTRATION);
 		});
@@ -124,8 +126,7 @@ public class AclInitializer implements InitializingBean {
 	private void populateProjectACLsForPMs(Map<Long, String> projectIdsToAssignedPMUsernames) {
 		for (Map.Entry<Long, String> entry : projectIdsToAssignedPMUsernames.entrySet()) {
 			final ObjectIdentity projectObjectIdentity = new ObjectIdentityImpl(ProjectDTO.class, entry.getKey());
-			grantPermissionToObjectIdentityForPrincipal(projectObjectIdentity, entry.getValue(),
-					BasePermission.ADMINISTRATION);
+			grantPermissionToObjectIdentityForPrincipal(projectObjectIdentity, entry.getValue(), BasePermission.READ);
 		}
 	}
 
@@ -166,6 +167,9 @@ public class AclInitializer implements InitializingBean {
 	private void populateTaskACLsForAdmin(Set<Long> taskIds) {
 		taskIds.forEach(taskId -> {
 			final ObjectIdentity taskObjectIdentity = new ObjectIdentityImpl(TaskDTO.class, taskId);
+			grantPermissionToObjectIdentityForRole(taskObjectIdentity, UserRole.ROLE_ADMIN, BasePermission.READ);
+			grantPermissionToObjectIdentityForRole(taskObjectIdentity, UserRole.ROLE_ADMIN, BasePermission.WRITE);
+			grantPermissionToObjectIdentityForRole(taskObjectIdentity, UserRole.ROLE_ADMIN, BasePermission.DELETE);
 			grantPermissionToObjectIdentityForRole(taskObjectIdentity, UserRole.ROLE_ADMIN,
 					BasePermission.ADMINISTRATION);
 		});
@@ -175,7 +179,9 @@ public class AclInitializer implements InitializingBean {
 		for (Map.Entry<Long, String> longStringEntry : taskIdsToAssignedUsernames.entrySet()) {
 			final ObjectIdentity taskObjectIdentity = new ObjectIdentityImpl(TaskDTO.class, longStringEntry.getKey());
 			grantPermissionToObjectIdentityForPrincipal(taskObjectIdentity, longStringEntry.getValue(),
-					BasePermission.ADMINISTRATION);
+					BasePermission.READ);
+			grantPermissionToObjectIdentityForPrincipal(taskObjectIdentity, longStringEntry.getValue(),
+					BasePermission.WRITE);
 		}
 	}
 
