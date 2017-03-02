@@ -16,7 +16,7 @@ public class Application {
 	private UserRole currentRole;
 	private UserDTO user;
 
-	public Application(ApplicationAttributes attributes) {
+	private Application(ApplicationAttributes attributes) {
 		if (attributes == null) {
 			throw new IllegalArgumentException("ApplicationAttributes must be specified");
 		}

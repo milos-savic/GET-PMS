@@ -38,7 +38,6 @@ class TaskACLImpl implements TaskACL {
 	@Autowired
 	private TaskFacade taskFacade;
 
-	@PostFilter("hasPermission(filterObject, 'read') or hasPermission(filterObject, 'administration')")
 	public List<TaskDTO> retrieveProjectTasksBasedOnACL(ProjectDTO project) {
 		return taskFacade.getProjectTasks(project);
 	}
