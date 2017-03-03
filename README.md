@@ -1,7 +1,7 @@
 # GET-PMS
-* Git Repository: `https://github.com/milos-savic/GET-PMS`
+* Git Repository: https://github.com/milos-savic/GET-PMS *
 
-##  Instruction for Run Designer Application
+##  Instruction for Run Application
 
 1) Open project folder
 
@@ -31,7 +31,7 @@ PMS Web App is available at http://127.0.0.1:8080
 
 
 
-## Packaging to executable archive
+### Packaging to executable archive
 
 Build
 
