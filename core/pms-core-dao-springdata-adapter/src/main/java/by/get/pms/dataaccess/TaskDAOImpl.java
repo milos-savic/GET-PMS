@@ -5,6 +5,7 @@ import by.get.pms.data.TaskData;
 import by.get.pms.data.UserData;
 import by.get.pms.model.Project;
 import by.get.pms.model.Task;
+import by.get.pms.model.TaskStatus;
 import by.get.pms.model.User;
 import by.get.pms.springdata.ProjectRepository;
 import by.get.pms.springdata.TaskRepository;
@@ -97,6 +98,7 @@ class TaskDAOImpl implements TaskDAO {
         taskFromDb.setAssignee(
                 taskParams.getAssignee() == null ? null : userRepository.findOne(taskParams.getAssignee().getId()));
         taskFromDb.setProject(projectRepository.findOne(taskParams.getProject().getId()));
+        taskFromDb.setTaskStatus(TaskStatus.make(taskParams.getTaskStatus().name()));
     }
 
     @Override
