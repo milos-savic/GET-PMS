@@ -33,7 +33,7 @@
 
         <dependency>
             <groupId>by.get.pms</groupId>
-            <artifactId>infrastructure-spring-jpa</artifactId>
+            <artifactId>infrastructure-springdata-jpa</artifactId>
             <version>${project.version}</version>
         </dependency>
 
