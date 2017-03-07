@@ -27,13 +27,13 @@
 
         <dependency>
             <groupId>by.get.pms</groupId>
-            <artifactId>infrastructure-spring</artifactId>
+            <artifactId>infrastructure-springdata-jpa</artifactId>
             <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>by.get.pms</groupId>
-            <artifactId>infrastructure-springdata-jpa</artifactId>
+            <artifactId>infrastructure-spring</artifactId>
             <version>${project.version}</version>
         </dependency>
 
