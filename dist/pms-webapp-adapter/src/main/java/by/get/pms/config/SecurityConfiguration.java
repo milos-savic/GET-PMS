@@ -39,7 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(WebConstants.SIGNIN_PAGE)).and().logout()
                 .logoutUrl(WebConstants.LOGOUT_URL).logoutSuccessUrl(WebConstants.LOGOUT_SUCCESS_URL)
                 .clearAuthentication(true).invalidateHttpSession(true).deleteCookies("JSESSIONID").permitAll().and()
-                .csrf().disable().headers().frameOptions().disable().and().rememberMe().and()
+                .csrf().disable().headers().frameOptions().disable().and()
                 .apply(new SpringSocialConfigurer().postLoginUrl("/").alwaysUsePostLoginUrl(true)).and()
                 .addFilterAfter(ajaxAuthExceptionTranslationFilter(), ExceptionTranslationFilter.class);
     }
