@@ -16,6 +16,7 @@ public interface ProjectRepository extends CrudRepository<Project, Long> {
 
 	List<Project> findProjectsByProjectManager(User projectManager);
 
-	@Query("select count(p) from Project p where p.code = :projectCode")
+	@Query("select case when exists (select p from Project p where p.code = :projectCode"
+			+ ") then 1 else 0 end")
 	Integer projectExistsByCode(@Param("projectCode") String projectCode);
 }

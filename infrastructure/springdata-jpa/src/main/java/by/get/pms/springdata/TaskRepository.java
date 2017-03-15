@@ -20,6 +20,7 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
 
 	List<Task> findTasksByProject(Project project);
 
-	@Query("select count(t) from Task t where t.project = :project and t.name = :name")
+	@Query("select case when exists (select t from Task t where t.project = :project and t.name = :name)"
+			+ " then 1 else 0 end")
 	Integer taskExistsByProjectAndName(@Param("project") Project project, @Param("name") String name);
 }

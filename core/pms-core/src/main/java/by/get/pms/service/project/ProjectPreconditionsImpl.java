@@ -80,7 +80,6 @@ class ProjectPreconditionsImpl implements ProjectPreconditions {
         }
     }
 
-    // TODO: change to count(*) check
     private boolean projectExistsByCode(String projectCode) {
         return projectService.projectExistsByCode(projectCode);
     }
