@@ -8,20 +8,17 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Milos.Savic on 2/10/2017.
  */
 public interface TaskRepository extends CrudRepository<Task, Long> {
 
-	Task findTaskByProjectAndName(@Param("project") Project project, @Param("name") String name);
+	Task findTaskByProjectAndName(Project project, String name);
 
-	// @Query("select t from Task t where t.assignee = :assignee")
-	List<Task> findTasksByAssignee(@Param("assignee") User assignee);
+	List<Task> findTasksByAssignee(User assignee);
 
-	// @Query("select t from Task t where t.project = :project")
-	List<Task> findTasksByProject(@Param("project") Project project);
+	List<Task> findTasksByProject(Project project);
 
 	@Query("select count(t) from Task t where t.project = :project and t.name = :name")
 	Integer taskExistsByProjectAndName(@Param("project") Project project, @Param("name") String name);

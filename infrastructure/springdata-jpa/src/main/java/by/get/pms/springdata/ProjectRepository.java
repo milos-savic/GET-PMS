@@ -12,9 +12,9 @@ import java.util.List;
  * Created by Milos.Savic on 2/10/2017.
  */
 public interface ProjectRepository extends CrudRepository<Project, Long> {
-	Project findProjectByCode(@Param("projectCode") String projectCode);
+	Project findProjectByCode(String projectCode);
 
-	List<Project> findProjectsByProjectManager(@Param("projectManager") User projectManager);
+	List<Project> findProjectsByProjectManager(User projectManager);
 
 	@Query("select count(p) from Project p where p.code = :projectCode")
 	Integer projectExistsByCode(@Param("projectCode") String projectCode);
